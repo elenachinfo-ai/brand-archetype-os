@@ -123,7 +123,7 @@ body {
         opacity: 1;
     }
     50% {
-        transform: scale(1.5);
+        transform: scale(1.2);
         opacity: 0.5;
     }
 }
@@ -177,11 +177,11 @@ body {
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: var(--text);
+    background: rgba(0,0,0,0.06);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--text);
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -205,7 +205,7 @@ body {
     cursor: pointer;
 }
 .nav-dot.active {
-    background: var(--text);
+    background: rgba(0,0,0,0.4);
     transform: scale(1.3);
 }
 .nav-status {
@@ -362,8 +362,8 @@ body {
     gap: 10px;
     padding: 16px 36px;
     border-radius: var(--radius-md);
-    background: var(--text);
-    color: white;
+    background: linear-gradient(135deg, var(--accent-blue-strong), var(--accent-beige-strong));
+    color: #fff;
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.3px;
@@ -378,7 +378,7 @@ body {
     box-shadow: var(--shadow-lg);
 }
 .hero-cta:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.99);
 }
 .hero-cta-arrow {
     transition: transform 0.3s ease;
@@ -419,7 +419,7 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: var(--text);
+    background: rgba(0,0,0,0.5);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -609,7 +609,7 @@ body {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: var(--text);
+    background: rgba(0,0,0,0.5);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -621,7 +621,7 @@ body {
 }
 .preview-field-dot:active {
     cursor: grabbing;
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%) scale(1.1);
 }
 .preview-field-dot::after {
     content: "";
@@ -795,8 +795,8 @@ body {
     gap: 10px;
     padding: 18px 40px;
     border-radius: var(--radius-md);
-    background: var(--text);
-    color: white;
+    background: linear-gradient(135deg, var(--accent-blue-strong), var(--accent-beige-strong));
+    color: #fff;
     font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.3px;
@@ -810,7 +810,7 @@ body {
     box-shadow: var(--shadow-lg);
 }
 .cta-button:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.99);
 }
 .cta-note {
     margin-top: 24px;
@@ -873,7 +873,7 @@ body {
 }
 .system-close:hover {
     background: white;
-    transform: rotate(90deg);
+    transform: rotate(45deg);
 }
 
 /* SYSTEM LAYERS */
@@ -960,7 +960,7 @@ body {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: var(--text);
+    background: rgba(0,0,0,0.5);
     cursor: grab;
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -970,7 +970,7 @@ body {
 }
 .field-dot:active {
     cursor: grabbing;
-    transform: translate(-50%, -50%) scale(1.25);
+    transform: translate(-50%, -50%) scale(1.1);
 }
 .field-dot::after {
     content: "";
@@ -1119,7 +1119,7 @@ body {
 }
 .synthesis-curve-handle:active {
     cursor: grabbing;
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%) scale(1.1);
 }
 .synthesis-right {
     display: flex;
@@ -1510,8 +1510,8 @@ body {
     gap: 8px;
     padding: 14px 32px;
     border-radius: var(--radius-md);
-    background: var(--text);
-    color: white;
+    background: linear-gradient(135deg, var(--accent-blue-strong), var(--accent-beige-strong));
+    color: #fff;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.2px;
@@ -1525,7 +1525,7 @@ body {
     box-shadow: var(--shadow-lg);
 }
 .btn-primary:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.99);
 }
 .btn-secondary {
     display: inline-flex;
