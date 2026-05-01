@@ -111,3 +111,45 @@ git push
 ```
 
 Всё.
+
+---
+
+## Ветки в Git
+
+```
+main      — боевая ветка, с неё идёт деплой на reg.ru
+stable    — последняя стабильная версия (точка отката)
+dev       — временная ветка для новых фич
+```
+
+### Процесс работы с ветками
+
+**Перед большими изменениями:**
+```
+git checkout -b dev        # создать ветку dev и переключиться
+```
+
+**Работаешь, тестишь. Если всё ок:**
+```
+git checkout main
+git merge dev
+git push
+git checkout stable
+git merge main
+git push origin stable
+git checkout main
+```
+
+**Если что-то сломалось — откат на stable:**
+```
+git checkout main
+git reset --hard stable
+git push --force
+```
+
+**Вернуться к обычной работе:**
+```
+git checkout main
+```
+
+Важно: файлы редактируются только в `dev` или `main`. `stable` не трогаешь руками — она нужна как точка восстановления.
