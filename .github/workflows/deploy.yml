@@ -16,7 +16,7 @@ jobs:
           server: 31.31.196.45
           username: u3458917
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: www/archetypeos.ru/
+          server-dir: ./
           local-dir: ./
           exclude: |
             **/.git/**
