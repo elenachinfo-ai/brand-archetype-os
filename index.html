@@ -4,23 +4,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Brand Archetype OS</title>
-
-        <!-- Tailwind CSS CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
-
-        <!-- Google Fonts -->
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap"
             rel="stylesheet"
         />
-
-        <!-- Design System -->
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <!-- ============================================================
-    NAVIGATION
-    ============================================================ -->
+        <!-- NAVIGATION -->
         <nav
             class="fixed top-0 left-0 right-0 z-50 glass-strong px-8 py-4 flex justify-between items-center"
         >
@@ -38,15 +30,14 @@
                 <div class="nav-dot active" data-layer="0"></div>
                 <div class="nav-dot" data-layer="1"></div>
                 <div class="nav-dot" data-layer="2"></div>
+                <div class="nav-dot" data-layer="3"></div>
             </div>
             <div class="text-xs text-gray-500" id="current-archetype">
                 Определение...
             </div>
         </nav>
 
-        <!-- ============================================================
-    LAYER 1: FIELD — Поле архетипов
-    ============================================================ -->
+        <!-- LAYER 0: FIELD -->
         <div class="layer active gradient-field" id="layer-field">
             <div
                 class="min-h-screen flex flex-col items-center justify-center relative px-8 pt-20"
@@ -60,13 +51,11 @@
                         ощущение вашего бренда
                     </p>
                 </div>
-
                 <div
                     class="relative w-full max-w-3xl aspect-square max-h-[60vh] section-enter"
                     style="animation-delay: 0.1s"
                     id="field-container"
                 >
-                    <!-- Zone influences -->
                     <div
                         class="zone-influence archetype-hero"
                         style="
@@ -118,8 +107,6 @@
                             transform: translate(-50%, -50%);
                         "
                     ></div>
-
-                    <!-- Field grid -->
                     <div
                         class="absolute inset-0 border border-black/5 rounded-3xl overflow-hidden"
                     >
@@ -134,8 +121,6 @@
                                 background-size: 40px 40px;
                             "
                         ></div>
-
-                        <!-- Axis labels -->
                         <div
                             class="absolute top-4 left-1/2 -translate-x-1/2 text-xs text-gray-400 tracking-widest uppercase"
                         >
@@ -157,15 +142,11 @@
                             Метод →
                         </div>
                     </div>
-
-                    <!-- Draggable point -->
                     <div
                         class="brand-point"
                         id="brand-point"
                         style="left: 50%; top: 50%"
                     ></div>
-
-                    <!-- Real-time feedback -->
                     <div
                         class="absolute bottom-6 left-6 right-6 glass rounded-2xl p-6 transition-all duration-500"
                         id="field-feedback"
@@ -207,7 +188,6 @@
                         </div>
                     </div>
                 </div>
-
                 <button
                     class="btn-primary mt-8 section-enter"
                     style="animation-delay: 0.2s"
@@ -218,9 +198,7 @@
             </div>
         </div>
 
-        <!-- ============================================================
-    LAYER 2: SYNTHESIS — Синтез архетипа
-    ============================================================ -->
+        <!-- LAYER 1: SYNTHESIS -->
         <div class="layer" id="layer-synthesis">
             <div class="min-h-screen pt-24 px-8 pb-12">
                 <div class="max-w-6xl mx-auto">
@@ -231,9 +209,7 @@
                             бренда
                         </p>
                     </div>
-
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                        <!-- Curve Controls -->
                         <div
                             class="space-y-8 section-enter"
                             style="animation-delay: 0.1s"
@@ -245,8 +221,7 @@
                                     <span
                                         class="text-sm font-medium uppercase tracking-wider text-gray-500"
                                         >Control</span
-                                    >
-                                    <span
+                                    ><span
                                         class="text-2xl text-thin"
                                         id="val-control"
                                         >50</span
@@ -259,7 +234,7 @@
                                 >
                                     <path
                                         class="curve-track"
-                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                        d="M0,50 Q75,50 150,50 T300,50"
                                     ></path>
                                     <circle
                                         class="curve-handle"
@@ -270,7 +245,6 @@
                                     ></circle>
                                 </svg>
                             </div>
-
                             <div class="glass rounded-3xl p-8">
                                 <div
                                     class="flex justify-between items-center mb-6"
@@ -278,8 +252,7 @@
                                     <span
                                         class="text-sm font-medium uppercase tracking-wider text-gray-500"
                                         >Energy</span
-                                    >
-                                    <span
+                                    ><span
                                         class="text-2xl text-thin"
                                         id="val-energy"
                                         >50</span
@@ -292,7 +265,7 @@
                                 >
                                     <path
                                         class="curve-track"
-                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                        d="M0,50 Q75,50 150,50 T300,50"
                                     ></path>
                                     <circle
                                         class="curve-handle"
@@ -303,7 +276,6 @@
                                     ></circle>
                                 </svg>
                             </div>
-
                             <div class="glass rounded-3xl p-8">
                                 <div
                                     class="flex justify-between items-center mb-6"
@@ -311,8 +283,7 @@
                                     <span
                                         class="text-sm font-medium uppercase tracking-wider text-gray-500"
                                         >Focus</span
-                                    >
-                                    <span
+                                    ><span
                                         class="text-2xl text-thin"
                                         id="val-focus"
                                         >50</span
@@ -325,7 +296,7 @@
                                 >
                                     <path
                                         class="curve-track"
-                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                        d="M0,50 Q75,50 150,50 T300,50"
                                     ></path>
                                     <circle
                                         class="curve-handle"
@@ -336,7 +307,6 @@
                                     ></circle>
                                 </svg>
                             </div>
-
                             <div class="glass rounded-3xl p-8">
                                 <div
                                     class="flex justify-between items-center mb-6"
@@ -344,8 +314,7 @@
                                     <span
                                         class="text-sm font-medium uppercase tracking-wider text-gray-500"
                                         >Method</span
-                                    >
-                                    <span
+                                    ><span
                                         class="text-2xl text-thin"
                                         id="val-method"
                                         >50</span
@@ -358,7 +327,7 @@
                                 >
                                     <path
                                         class="curve-track"
-                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                        d="M0,50 Q75,50 150,50 T300,50"
                                     ></path>
                                     <circle
                                         class="curve-handle"
@@ -370,13 +339,10 @@
                                 </svg>
                             </div>
                         </div>
-
-                        <!-- Right Panel: Morph + Ranking -->
                         <div
                             class="space-y-8 section-enter"
                             style="animation-delay: 0.2s"
                         >
-                            <!-- Morphing Shape -->
                             <div
                                 class="glass rounded-3xl p-12 flex flex-col items-center justify-center min-h-[300px]"
                             >
@@ -398,20 +364,17 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Live Ranking -->
                             <div class="glass rounded-3xl p-8">
                                 <div
                                     class="text-xs text-gray-400 uppercase tracking-wider mb-6"
                                 >
                                     Рейтинг архетипов
                                 </div>
-                                <div class="space-y-4" id="archetype-ranking">
-                                    <!-- Generated dynamically -->
-                                </div>
+                                <div
+                                    class="space-y-4"
+                                    id="archetype-ranking"
+                                ></div>
                             </div>
-
-                            <!-- Vector Display -->
                             <div class="glass rounded-3xl p-8">
                                 <div
                                     class="text-xs text-gray-400 uppercase tracking-wider mb-4"
@@ -467,7 +430,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="flex justify-center gap-4 mt-12">
                         <button class="btn-secondary" onclick="goToLayer(0)">
                             ← Назад к полю
@@ -480,9 +442,7 @@
             </div>
         </div>
 
-        <!-- ============================================================
-    LAYER 3: CONSTRUCTION — Конструкция интерфейса
-    ============================================================ -->
+        <!-- LAYER 2: CONSTRUCTION -->
         <div class="layer" id="layer-construction">
             <div class="min-h-screen pt-24 pb-12">
                 <div class="max-w-[1600px] mx-auto px-8">
@@ -495,9 +455,7 @@
                             бренда
                         </p>
                     </div>
-
                     <div class="grid grid-cols-12 gap-6">
-                        <!-- Left: UI Components Library -->
                         <div
                             class="col-span-3 section-enter"
                             style="animation-delay: 0.1s"
@@ -508,13 +466,12 @@
                                 >
                                     Компоненты
                                 </div>
-                                <div class="space-y-4" id="components-library">
-                                    <!-- Generated dynamically -->
-                                </div>
+                                <div
+                                    class="space-y-4"
+                                    id="components-library"
+                                ></div>
                             </div>
                         </div>
-
-                        <!-- Center: Live Preview -->
                         <div
                             class="col-span-6 section-enter"
                             style="animation-delay: 0.2s"
@@ -522,12 +479,8 @@
                             <div
                                 class="preview-frame h-full min-h-[700px] p-8"
                                 id="live-preview"
-                            >
-                                <!-- Generated dynamically -->
-                            </div>
+                            ></div>
                         </div>
-
-                        <!-- Right: Archetype Rules Engine -->
                         <div
                             class="col-span-3 section-enter"
                             style="animation-delay: 0.3s"
@@ -538,37 +491,87 @@
                                 >
                                     Правила архетипа
                                 </div>
-                                <div class="space-y-6" id="rules-engine">
-                                    <!-- Generated dynamically -->
-                                </div>
+                                <div class="space-y-6" id="rules-engine"></div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Result Output -->
                     <div
                         class="mt-12 glass-strong rounded-3xl p-12 max-w-4xl mx-auto section-enter"
                         style="animation-delay: 0.4s"
                         id="result-output"
-                    >
-                        <!-- Generated dynamically -->
-                    </div>
-
+                    ></div>
                     <div class="flex justify-center gap-4 mt-8 mb-12">
                         <button class="btn-secondary" onclick="goToLayer(1)">
                             ← Назад к синтезу
                         </button>
-                        <button class="btn-primary" onclick="generateSite()">
-                            Создать сайт на основе этого архетипа
+                        <button
+                            class="btn-primary"
+                            onclick="
+                                goToLayer(3);
+                                renderTemplatePreview();
+                            "
+                        >
+                            👁 Смотреть шаблон сайта
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ============================================================
-    SCRIPTS (load order matters: data → engine)
-    ============================================================ -->
+        <!-- LAYER 3: TEMPLATE PREVIEW -->
+        <div class="layer" id="layer-template-preview">
+            <div class="min-h-screen pt-24 pb-8 px-8">
+                <div class="max-w-[1600px] mx-auto">
+                    <div
+                        class="flex justify-between items-start mb-8 section-enter flex-wrap gap-4"
+                    >
+                        <div>
+                            <h2 class="text-4xl text-thin mb-2">
+                                Ваш шаблон сайта
+                            </h2>
+                            <p
+                                class="text-light text-gray-500"
+                                id="template-archetype-label"
+                            >
+                                Архетип: —
+                            </p>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <button
+                                class="btn-secondary text-sm"
+                                onclick="downloadCurrentTemplate()"
+                            >
+                                💾 Скачать HTML
+                            </button>
+                            <button
+                                class="btn-secondary text-sm"
+                                onclick="openCurrentTemplate()"
+                            >
+                                🔗 Открыть в новом окне
+                            </button>
+                            <button
+                                class="btn-secondary text-sm"
+                                onclick="goToLayer(2)"
+                            >
+                                ← Назад к конструктору
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="preview-frame w-full section-enter"
+                        style="animation-delay: 0.1s; min-height: 80vh"
+                        id="template-visual-container"
+                    >
+                        <div
+                            class="flex items-center justify-center h-64 text-gray-400 text-light"
+                        >
+                            Загрузка шаблона...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="data.js"></script>
         <script src="engine.js"></script>
     </body>

@@ -390,6 +390,11 @@ function goToLayer(index) {
   if (index === 2) {
     updateConstruction(getRankings());
   }
+
+  // Re-trigger template preview on export layer
+  if (index === 3) {
+    renderTemplatePreview();
+  }
 }
 
 // ==================== INTERACTIONS ====================
@@ -662,16 +667,59 @@ function generateAll12Templates() {
   });
 }
 
-// Основная функция — вызывается по кнопке «Создать сайт»
-function generateSite() {
+// Кэш последнего сгенерированного шаблона
+let _lastTemplateHTML = null;
+let _lastTemplatePrimary = null;
+
+function renderTemplatePreview() {
   const rankings = getRankings();
   const { primary, secondary } = rankings;
+  _lastTemplateHTML = generateFullTemplate(primary, secondary);
+  _lastTemplatePrimary = primary;
+  const container = document.getElementById("template-visual-container");
+  const label = document.getElementById("template-archetype-label");
+  if (label)
+    label.textContent =
+      "Архетип: " + primary.nameRu + " • Цвет: " + primary.color;
+  if (container) {
+    container.innerHTML =
+      '<iframe src="about:blank" style="width:100%;height:80vh;border:none;border-radius:12px" id="template-iframe"></iframe>';
+    const iframe = document.getElementById("template-iframe");
+    if (iframe) iframe.srcdoc = _lastTemplateHTML;
+  }
+}
 
-  const tildaHTML = generateFullTemplate(primary, secondary);
-  const tildaConfig = generateTildaConfig(rankings);
-  const configJSON = JSON.stringify(tildaConfig, null, 2);
+function downloadCurrentTemplate() {
+  if (!_lastTemplateHTML) {
+    const r = getRankings();
+    _lastTemplateHTML = generateFullTemplate(r.primary, r.secondary);
+    _lastTemplatePrimary = r.primary;
+  }
+  downloadFile(
+    (_lastTemplatePrimary ? _lastTemplatePrimary.id : "template") +
+      "-landing.html",
+    _lastTemplateHTML,
+    "text/html",
+  );
+}
 
-  showExportModal(primary, tildaHTML, configJSON);
+function openCurrentTemplate() {
+  if (!_lastTemplateHTML) {
+    const r = getRankings();
+    _lastTemplateHTML = generateFullTemplate(r.primary, r.secondary);
+    _lastTemplatePrimary = r.primary;
+  }
+  const w = window.open("", "_blank");
+  if (w) {
+    w.document.write(_lastTemplateHTML);
+    w.document.close();
+  }
+}
+
+// Основная функция — вызывается по кнопке «Создать сайт»
+function generateSite() {
+  goToLayer(3);
+  renderTemplatePreview();
 }
 
 // Модальное окно экспорта
