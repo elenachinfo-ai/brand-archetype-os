@@ -15,7 +15,7 @@ jobs:
         with:
           server: 31.31.196.45
           username: u3458917
-          password: 13ywE2fDOP498SxU
+          password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /www/elenach.com/
           local-dir: ./
           exclude: |
