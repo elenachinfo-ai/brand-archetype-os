@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Brand Archetype OS</title>
+
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Design System -->
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <!-- ============================================================
+    NAVIGATION
+    ============================================================ -->
+        <nav
+            class="fixed top-0 left-0 right-0 z-50 glass-strong px-8 py-4 flex justify-between items-center"
+        >
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-black flex items-center justify-center"
+                >
+                    <span class="text-white text-xs font-medium">BA</span>
+                </div>
+                <span class="text-sm font-medium tracking-wide"
+                    >Brand Archetype OS</span
+                >
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="nav-dot active" data-layer="0"></div>
+                <div class="nav-dot" data-layer="1"></div>
+                <div class="nav-dot" data-layer="2"></div>
+            </div>
+            <div class="text-xs text-gray-500" id="current-archetype">
+                Определение...
+            </div>
+        </nav>
+
+        <!-- ============================================================
+    LAYER 1: FIELD — Поле архетипов
+    ============================================================ -->
+        <div class="layer active gradient-field" id="layer-field">
+            <div
+                class="min-h-screen flex flex-col items-center justify-center relative px-8 pt-20"
+            >
+                <div class="text-center mb-12 section-enter">
+                    <h1 class="text-5xl text-thin mb-4 tracking-tight">
+                        Почувствуй свой бренд
+                    </h1>
+                    <p class="text-light text-gray-500 text-lg">
+                        Перетащите точку в пространство, которое отражает
+                        ощущение вашего бренда
+                    </p>
+                </div>
+
+                <div
+                    class="relative w-full max-w-3xl aspect-square max-h-[60vh] section-enter"
+                    style="animation-delay: 0.1s"
+                    id="field-container"
+                >
+                    <!-- Zone influences -->
+                    <div
+                        class="zone-influence archetype-hero"
+                        style="
+                            top: 10%;
+                            left: 10%;
+                            width: 200px;
+                            height: 200px;
+                            background: rgba(231, 76, 60, 0.15);
+                        "
+                    ></div>
+                    <div
+                        class="zone-influence archetype-magician"
+                        style="
+                            top: 10%;
+                            right: 10%;
+                            width: 200px;
+                            height: 200px;
+                            background: rgba(155, 89, 182, 0.15);
+                        "
+                    ></div>
+                    <div
+                        class="zone-influence archetype-ruler"
+                        style="
+                            bottom: 10%;
+                            left: 10%;
+                            width: 200px;
+                            height: 200px;
+                            background: rgba(243, 156, 18, 0.15);
+                        "
+                    ></div>
+                    <div
+                        class="zone-influence archetype-caregiver"
+                        style="
+                            bottom: 10%;
+                            right: 10%;
+                            width: 200px;
+                            height: 200px;
+                            background: rgba(39, 174, 96, 0.15);
+                        "
+                    ></div>
+                    <div
+                        class="zone-influence archetype-lover"
+                        style="
+                            top: 50%;
+                            left: 50%;
+                            width: 250px;
+                            height: 250px;
+                            background: rgba(233, 30, 99, 0.1);
+                            transform: translate(-50%, -50%);
+                        "
+                    ></div>
+
+                    <!-- Field grid -->
+                    <div
+                        class="absolute inset-0 border border-black/5 rounded-3xl overflow-hidden"
+                    >
+                        <div
+                            class="absolute inset-0"
+                            style="
+                                background-image: radial-gradient(
+                                    circle,
+                                    rgba(0, 0, 0, 0.03) 1px,
+                                    transparent 1px
+                                );
+                                background-size: 40px 40px;
+                            "
+                        ></div>
+
+                        <!-- Axis labels -->
+                        <div
+                            class="absolute top-4 left-1/2 -translate-x-1/2 text-xs text-gray-400 tracking-widest uppercase"
+                        >
+                            Энергия ↑
+                        </div>
+                        <div
+                            class="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-gray-400 tracking-widest uppercase"
+                        >
+                            Контроль ↓
+                        </div>
+                        <div
+                            class="absolute left-4 top-1/2 -translate-y-1/2 -rotate-90 text-xs text-gray-400 tracking-widest uppercase"
+                        >
+                            Фокус ←
+                        </div>
+                        <div
+                            class="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-xs text-gray-400 tracking-widest uppercase"
+                        >
+                            Метод →
+                        </div>
+                    </div>
+
+                    <!-- Draggable point -->
+                    <div
+                        class="brand-point"
+                        id="brand-point"
+                        style="left: 50%; top: 50%"
+                    ></div>
+
+                    <!-- Real-time feedback -->
+                    <div
+                        class="absolute bottom-6 left-6 right-6 glass rounded-2xl p-6 transition-all duration-500"
+                        id="field-feedback"
+                    >
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-wider mb-1"
+                                >
+                                    Первичный архетип
+                                </div>
+                                <div
+                                    class="text-2xl text-light"
+                                    id="field-primary"
+                                >
+                                    —
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-wider mb-1"
+                                >
+                                    Конфликт
+                                </div>
+                                <div
+                                    class="text-sm text-light text-gray-500"
+                                    id="field-conflict"
+                                >
+                                    —
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rank-bar">
+                            <div
+                                class="rank-fill bg-black/20"
+                                id="field-confidence"
+                                style="width: 0%"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    class="btn-primary mt-8 section-enter"
+                    style="animation-delay: 0.2s"
+                    onclick="goToLayer(1)"
+                >
+                    Перейти к синтезу →
+                </button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+    LAYER 2: SYNTHESIS — Синтез архетипа
+    ============================================================ -->
+        <div class="layer" id="layer-synthesis">
+            <div class="min-h-screen pt-24 px-8 pb-12">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-12 section-enter">
+                        <h2 class="text-4xl text-thin mb-3">Синтез архетипа</h2>
+                        <p class="text-light text-gray-500">
+                            Настройте кривые для точного определения вектора
+                            бренда
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <!-- Curve Controls -->
+                        <div
+                            class="space-y-8 section-enter"
+                            style="animation-delay: 0.1s"
+                        >
+                            <div class="glass rounded-3xl p-8">
+                                <div
+                                    class="flex justify-between items-center mb-6"
+                                >
+                                    <span
+                                        class="text-sm font-medium uppercase tracking-wider text-gray-500"
+                                        >Control</span
+                                    >
+                                    <span
+                                        class="text-2xl text-thin"
+                                        id="val-control"
+                                        >50</span
+                                    >
+                                </div>
+                                <svg
+                                    class="w-full h-32"
+                                    viewBox="0 0 300 100"
+                                    id="svg-control"
+                                >
+                                    <path
+                                        class="curve-track"
+                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                    ></path>
+                                    <circle
+                                        class="curve-handle"
+                                        cx="150"
+                                        cy="50"
+                                        r="6"
+                                        data-dim="control"
+                                    ></circle>
+                                </svg>
+                            </div>
+
+                            <div class="glass rounded-3xl p-8">
+                                <div
+                                    class="flex justify-between items-center mb-6"
+                                >
+                                    <span
+                                        class="text-sm font-medium uppercase tracking-wider text-gray-500"
+                                        >Energy</span
+                                    >
+                                    <span
+                                        class="text-2xl text-thin"
+                                        id="val-energy"
+                                        >50</span
+                                    >
+                                </div>
+                                <svg
+                                    class="w-full h-32"
+                                    viewBox="0 0 300 100"
+                                    id="svg-energy"
+                                >
+                                    <path
+                                        class="curve-track"
+                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                    ></path>
+                                    <circle
+                                        class="curve-handle"
+                                        cx="150"
+                                        cy="50"
+                                        r="6"
+                                        data-dim="energy"
+                                    ></circle>
+                                </svg>
+                            </div>
+
+                            <div class="glass rounded-3xl p-8">
+                                <div
+                                    class="flex justify-between items-center mb-6"
+                                >
+                                    <span
+                                        class="text-sm font-medium uppercase tracking-wider text-gray-500"
+                                        >Focus</span
+                                    >
+                                    <span
+                                        class="text-2xl text-thin"
+                                        id="val-focus"
+                                        >50</span
+                                    >
+                                </div>
+                                <svg
+                                    class="w-full h-32"
+                                    viewBox="0 0 300 100"
+                                    id="svg-focus"
+                                >
+                                    <path
+                                        class="curve-track"
+                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                    ></path>
+                                    <circle
+                                        class="curve-handle"
+                                        cx="150"
+                                        cy="50"
+                                        r="6"
+                                        data-dim="focus"
+                                    ></circle>
+                                </svg>
+                            </div>
+
+                            <div class="glass rounded-3xl p-8">
+                                <div
+                                    class="flex justify-between items-center mb-6"
+                                >
+                                    <span
+                                        class="text-sm font-medium uppercase tracking-wider text-gray-500"
+                                        >Method</span
+                                    >
+                                    <span
+                                        class="text-2xl text-thin"
+                                        id="val-method"
+                                        >50</span
+                                    >
+                                </div>
+                                <svg
+                                    class="w-full h-32"
+                                    viewBox="0 0 300 100"
+                                    id="svg-method"
+                                >
+                                    <path
+                                        class="curve-track"
+                                        d="M 0,50 Q 75,50 150,50 T 300,50"
+                                    ></path>
+                                    <circle
+                                        class="curve-handle"
+                                        cx="150"
+                                        cy="50"
+                                        r="6"
+                                        data-dim="method"
+                                    ></circle>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Morph + Ranking -->
+                        <div
+                            class="space-y-8 section-enter"
+                            style="animation-delay: 0.2s"
+                        >
+                            <!-- Morphing Shape -->
+                            <div
+                                class="glass rounded-3xl p-12 flex flex-col items-center justify-center min-h-[300px]"
+                            >
+                                <div
+                                    class="morph-shape animate-morph"
+                                    id="morph-shape"
+                                ></div>
+                                <div class="mt-8 text-center">
+                                    <div
+                                        class="text-xs text-gray-400 uppercase tracking-wider mb-2"
+                                    >
+                                        Форма архетипа
+                                    </div>
+                                    <div
+                                        class="text-lg text-light"
+                                        id="morph-label"
+                                    >
+                                        Нейтральная
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Live Ranking -->
+                            <div class="glass rounded-3xl p-8">
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-wider mb-6"
+                                >
+                                    Рейтинг архетипов
+                                </div>
+                                <div class="space-y-4" id="archetype-ranking">
+                                    <!-- Generated dynamically -->
+                                </div>
+                            </div>
+
+                            <!-- Vector Display -->
+                            <div class="glass rounded-3xl p-8">
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-wider mb-4"
+                                >
+                                    Текущий вектор
+                                </div>
+                                <div class="grid grid-cols-4 gap-4 text-center">
+                                    <div>
+                                        <div
+                                            class="text-3xl text-thin"
+                                            id="vec-control"
+                                        >
+                                            50
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-1">
+                                            Control
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-3xl text-thin"
+                                            id="vec-energy"
+                                        >
+                                            50
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-1">
+                                            Energy
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-3xl text-thin"
+                                            id="vec-focus"
+                                        >
+                                            50
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-1">
+                                            Focus
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-3xl text-thin"
+                                            id="vec-method"
+                                        >
+                                            50
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-1">
+                                            Method
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-4 mt-12">
+                        <button class="btn-secondary" onclick="goToLayer(0)">
+                            ← Назад к полю
+                        </button>
+                        <button class="btn-primary" onclick="goToLayer(2)">
+                            Перейти к конструкции →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+    LAYER 3: CONSTRUCTION — Конструкция интерфейса
+    ============================================================ -->
+        <div class="layer" id="layer-construction">
+            <div class="min-h-screen pt-24 pb-12">
+                <div class="max-w-[1600px] mx-auto px-8">
+                    <div class="text-center mb-8 section-enter">
+                        <h2 class="text-4xl text-thin mb-3">
+                            Конструкция интерфейса
+                        </h2>
+                        <p class="text-light text-gray-500">
+                            Автоматическая адаптация UI под архетип вашего
+                            бренда
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-6">
+                        <!-- Left: UI Components Library -->
+                        <div
+                            class="col-span-3 section-enter"
+                            style="animation-delay: 0.1s"
+                        >
+                            <div class="glass rounded-3xl p-6 sticky top-24">
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-wider mb-6"
+                                >
+                                    Компоненты
+                                </div>
+                                <div class="space-y-4" id="components-library">
+                                    <!-- Generated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Center: Live Preview -->
+                        <div
+                            class="col-span-6 section-enter"
+                            style="animation-delay: 0.2s"
+                        >
+                            <div
+                                class="preview-frame h-full min-h-[700px] p-8"
+                                id="live-preview"
+                            >
+                                <!-- Generated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Right: Archetype Rules Engine -->
+                        <div
+                            class="col-span-3 section-enter"
+                            style="animation-delay: 0.3s"
+                        >
+                            <div class="glass rounded-3xl p-6 sticky top-24">
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-wider mb-6"
+                                >
+                                    Правила архетипа
+                                </div>
+                                <div class="space-y-6" id="rules-engine">
+                                    <!-- Generated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Output -->
+                    <div
+                        class="mt-12 glass-strong rounded-3xl p-12 max-w-4xl mx-auto section-enter"
+                        style="animation-delay: 0.4s"
+                        id="result-output"
+                    >
+                        <!-- Generated dynamically -->
+                    </div>
+
+                    <div class="flex justify-center gap-4 mt-8 mb-12">
+                        <button class="btn-secondary" onclick="goToLayer(1)">
+                            ← Назад к синтезу
+                        </button>
+                        <button class="btn-primary" onclick="generateSite()">
+                            Создать сайт на основе этого архетипа
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+    SCRIPTS (load order matters: data → engine)
+    ============================================================ -->
+        <script src="data.js"></script>
+        <script src="engine.js"></script>
+    </body>
+</html>
