@@ -1117,3 +1117,40 @@ body {
 
 /* ==================== STEP BADGE ==================== */
 .holo-step-badge{position:absolute;top:-10px;right:-10px;width:24px;height:24px;border-radius:50%;background:var(--accent-blue);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;opacity:0.85;}
+
+/* ==================== QUEST PANEL ELEMENTS ==================== */
+.quest-panel-header{font-size:10px;font-weight:600;letter-spacing:0.15em;color:var(--text-tertiary);margin-bottom:12px;text-transform:uppercase;}
+.quest-question-block{display:flex;flex-direction:column;gap:12px;}
+.quest-q-num{font-size:10px;font-weight:600;letter-spacing:0.12em;color:var(--accent-blue);text-transform:uppercase;}
+.quest-q-title{font-size:16px;font-weight:400;color:var(--text-primary);line-height:1.3;letter-spacing:-0.01em;}
+.quest-q-bar{width:100%;height:2px;background:rgba(255,255,255,0.06);border-radius:1px;}
+.quest-q-bar-fill{height:100%;background:var(--accent-blue);border-radius:1px;transition:width 0.5s ease;}
+.quest-answers-list{display:flex;flex-direction:column;gap:8px;}
+.quest-answer-card{display:flex;align-items:center;gap:14px;padding:13px 16px;background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:var(--radius-md);cursor:pointer;transition:all 0.25s ease;}
+.quest-answer-card:hover{border-color:var(--accent-blue);background:var(--bg-glass-strong);box-shadow:0 0 16px var(--accent-blue-dim);}
+.quest-answer-card.selected{border-color:var(--accent-green)!important;background:rgba(165,214,167,0.08)!important;box-shadow:0 0 20px var(--accent-green-dim)!important;}
+.quest-answer-card.selected .quest-ans-label{color:var(--accent-green);}
+.quest-ans-icon{font-size:24px;flex-shrink:0;width:36px;text-align:center;}
+.quest-ans-content{flex:1;min-width:0;}
+.quest-ans-label{display:block;font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px;}
+.quest-ans-text{display:block;font-size:11px;color:var(--text-secondary);line-height:1.4;}
+.quest-sound-card .quest-waveform{color:var(--accent-blue);margin-right:4px;}
+.quest-next-btn{width:100%;padding:12px;background:var(--bg-glass-strong);border:1px solid var(--border-mid);border-radius:var(--radius-md);color:var(--text-primary);font-family:"Manrope","Inter",sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.25s;margin-top:4px;}
+.quest-next-btn:disabled{opacity:0.35;cursor:not-allowed;}
+.quest-next-btn:not(:disabled):hover{background:var(--accent-blue);border-color:var(--accent-blue);color:#fff;}
+
+/* Right panel elements */
+.quest-right-card{padding:14px;border:1px solid;border-radius:var(--radius-md);text-align:center;margin-bottom:12px;}
+.quest-right-archetype{font-size:18px;font-weight:500;letter-spacing:-0.01em;}
+.quest-right-sub{font-size:10px;color:var(--text-tertiary);margin-top:4px;text-transform:uppercase;letter-spacing:0.1em;}
+.quest-right-section{margin-bottom:14px;}
+.quest-right-section-title{font-size:9px;font-weight:600;letter-spacing:0.12em;color:var(--text-tertiary);margin-bottom:8px;}
+.quest-vector-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.quest-vector-label{font-size:10px;color:var(--text-secondary);width:60px;flex-shrink:0;}
+.quest-vector-track{flex:1;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.quest-vector-fill{height:100%;border-radius:2px;transition:width 0.5s ease;}
+.quest-vector-val{font-size:10px;font-weight:500;color:var(--text-primary);width:26px;text-align:right;}
+.quest-right-steps{display:flex;gap:8px;flex-wrap:wrap;}
+.quest-step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;border:1px solid var(--border-subtle);color:var(--text-tertiary);transition:all 0.3s;}
+.quest-step-dot.done{background:var(--accent-green-dim);border-color:var(--accent-green);color:var(--accent-green);}
+.quest-step-dot.current{border-color:var(--accent-blue);color:var(--accent-blue);box-shadow:0 0 8px var(--accent-blue-dim);}

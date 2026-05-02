@@ -1,21 +1,19 @@
-// ==================== HOLOGRAPHIC QUEST v2 ====================
-// Obvious start → non-blocking floating cards → persistent help → result.
-// Questions appear as small cards at field edges, never block the canvas.
+// ==================== HOLOGRAPHIC QUEST v3 ====================
+// Dashboard-native: questions in left panel, canvas always visible,
+// right panel shows progress. "Next" button after each answer.
+// Integrated into the existing dashboard structure.
 
 const HolographicQuest = {
   _active: false,
   _step: 0,
   _answers: [],
-  _mouseX: 0,
-  _mouseY: 0,
-  _fieldRect: null,
-  _container: null,
-  _helpEl: null,
   _selectedIdx: -1,
-  _hoveredIdx: -1,
-  _confirmTimer: null,
-  _animFrame: null,
   _onComplete: null,
+  _helpEl: null,
+
+  // Saved panel states for restore
+  _savedLeftHTML: "",
+  _savedRightHTML: "",
 
   questions: [
     {
@@ -50,7 +48,7 @@ const HolographicQuest = {
     },
     {
       id: "emotion",
-      title: "Какие эмоции вызывает?",
+      title: "Какие эмоции вызывает бренд?",
       answers: [
         {
           icon: "🎉",
@@ -67,13 +65,13 @@ const HolographicQuest = {
         {
           icon: "💋",
           label: "Страсть",
-          text: "Желание, наслаждение",
+          text: "Желание, эстетическое наслаждение",
           delta: { control: -2, energy: +6, focus: -2, method: +4 },
         },
         {
           icon: "📚",
           label: "Уважение",
-          text: "Ясность, экспертиза",
+          text: "Ясность, уверенность в экспертизе",
           delta: { control: +6, energy: -6, focus: +8, method: +6 },
         },
       ],
@@ -97,37 +95,37 @@ const HolographicQuest = {
         {
           icon: "🤝",
           label: "Честность",
-          text: "Просто, без прикрас",
+          text: "Просто, без прикрас и пафоса",
           delta: { control: 0, energy: -2, focus: -2, method: 0 },
         },
         {
           icon: "🥂",
           label: "Престиж",
-          text: "Элегантно, с достоинством",
+          text: "Элегантно, с чувством превосходства",
           delta: { control: +8, energy: 0, focus: +2, method: +4 },
         },
       ],
     },
     {
       id: "need",
-      title: "Что ищет клиент?",
+      title: "Что ищет ваш клиент?",
       answers: [
         {
           icon: "🧭",
           label: "Свободу",
-          text: "Приключения, горизонты",
+          text: "Приключения, новые горизонты",
           delta: { control: -4, energy: +6, focus: -6, method: 0 },
         },
         {
           icon: "🔍",
           label: "Истину",
-          text: "Знания, мудрость",
+          text: "Знания, понимание, мудрость",
           delta: { control: +4, energy: -8, focus: +10, method: +6 },
         },
         {
           icon: "🛡️",
           label: "Безопасность",
-          text: "Заботу, тепло, защиту",
+          text: "Заботу, тепло и защиту",
           delta: { control: +2, energy: -6, focus: 0, method: +4 },
         },
         {
@@ -140,30 +138,30 @@ const HolographicQuest = {
     },
     {
       id: "product",
-      title: "Характер продукта?",
+      title: "Характер вашего продукта?",
       answers: [
         {
           icon: "🔮",
           label: "Инновация",
-          text: "Магический, преображает",
+          text: "Магический — преображает реальность",
           delta: { control: 0, energy: +6, focus: +4, method: +8 },
         },
         {
           icon: "⚙️",
           label: "Надёжность",
-          text: "Качественный, проверенный",
+          text: "Качественный, проверенный временем",
           delta: { control: +4, energy: -4, focus: 0, method: +2 },
         },
         {
           icon: "💥",
           label: "Дерзость",
-          text: "Ломает правила",
+          text: "Ломает правила и стандарты",
           delta: { control: -8, energy: +10, focus: -4, method: -4 },
         },
         {
           icon: "💎",
           label: "Красота",
-          text: "Чувственный, желанный",
+          text: "Чувственный — им хочется обладать",
           delta: { control: +2, energy: +4, focus: -2, method: +6 },
         },
       ],
@@ -203,7 +201,6 @@ const HolographicQuest = {
 
   // ==================== START SCREEN ====================
   showStartScreen() {
-    // Remove existing
     const ex = document.getElementById("quest-start-overlay");
     if (ex) ex.remove();
 
@@ -219,14 +216,12 @@ const HolographicQuest = {
         <button class="quest-start-btn" id="quest-start-btn">
           <span>🚀</span> Пройти тест
         </button>
-        <p class="quest-start-hint">Займёт ~2 минуты</p>
+        <p class="quest-start-hint">~2 минуты</p>
       </div>
     `;
     document.body.appendChild(overlay);
-
     document.getElementById("quest-start-btn").addEventListener("click", () => {
       overlay.style.opacity = "0";
-      overlay.style.transition = "opacity 0.3s ease";
       setTimeout(() => {
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
       }, 300);
@@ -234,38 +229,28 @@ const HolographicQuest = {
     });
   },
 
-  // ==================== START QUEST ====================
+  // ==================== START ====================
   start(onComplete) {
     if (this._active) return;
     this._active = true;
     this._step = 1;
     this._answers = [];
     this._selectedIdx = -1;
-    this._hoveredIdx = -1;
     this._onComplete = onComplete;
 
-    this._createContainer();
+    // Save panel states
+    const left = document.getElementById("panel-controllers");
+    const right = document.getElementById("panel-output");
+    if (left) this._savedLeftHTML = left.innerHTML;
+    if (right) this._savedRightHTML = right.innerHTML;
+
     this._createHelpButton();
     this._renderStep();
-    this._loop();
 
     const statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Шаг 1/7";
 
-    console.log("[HoloQuest] 🌀 Started.");
-  },
-
-  _createContainer() {
-    let c = document.getElementById("holo-bubbles");
-    if (!c) {
-      c = document.createElement("div");
-      c.id = "holo-bubbles";
-      c.style.cssText =
-        "position:absolute;inset:0;pointer-events:none;z-index:50;";
-      const field = document.getElementById("panel-field");
-      if (field) field.appendChild(c);
-    }
-    this._container = c;
+    console.log("[HoloQuest] 🌀 Quest started in dashboard panels.");
   },
 
   _createHelpButton() {
@@ -289,9 +274,9 @@ const HolographicQuest = {
     help.innerHTML = `
       <div class="quest-help-inner">
         <strong>Как это работает</strong>
-        <p>Вы отвечаете на 6 вопросов о своём бренде + выбираете звуковую волну.</p>
-        <p>Каждый ответ сдвигает белую точку на голографическом поле — вы видите, как определяется архетип.</p>
-        <p>В конце — детальный разбор с цветами, шрифтами и рекомендациями для сайта.</p>
+        <p>Вы отвечаете на 6 вопросов о бренде + выбираете звуковую волну.</p>
+        <p>Каждый ответ сдвигает точку на голографическом поле — видно, как определяется архетип.</p>
+        <p>В конце — детальный разбор с рекомендациями для сайта.</p>
         <button class="quest-help-close">Понятно</button>
       </div>
     `;
@@ -306,166 +291,193 @@ const HolographicQuest = {
 
   // ==================== RENDER STEP ====================
   _renderStep() {
-    const field = document.getElementById("panel-field");
-    if (field) this._fieldRect = field.getBoundingClientRect();
+    this._selectedIdx = -1;
+    const left = document.getElementById("panel-controllers");
+    const right = document.getElementById("panel-output");
+    if (!left || !right) return;
 
     const statusEl = document.getElementById("hud-status-text");
-    if (statusEl) {
-      if (this._step <= 5) statusEl.textContent = `Вопрос ${this._step}/7`;
-      else if (this._step === 6) statusEl.textContent = "Звуковая волна 6/7";
-    }
+    const totalSteps = 7;
 
-    this._bubbles = [];
-    this._selectedIdx = -1;
-    if (this._confirmTimer) clearTimeout(this._confirmTimer);
-
-    if (this._step >= 1 && this._step <= 5) {
+    if (this._step <= 5) {
       const q = this.questions[this._step - 1];
-      // Title at top
-      this._bubbles.push({
-        type: "title",
-        x: 0.5,
-        y: 0.08,
-        text: q.title,
-        step: this._step,
-      });
-      // 4 answer cards — 2 columns, 2 rows, positioned at edges
-      const pos = [
-        { x: 0.18, y: 0.38 }, // left-top
-        { x: 0.82, y: 0.38 }, // right-top
-        { x: 0.18, y: 0.72 }, // left-bottom
-        { x: 0.82, y: 0.72 }, // right-bottom
-      ];
-      q.answers.forEach((a, i) => {
-        this._bubbles.push({
-          type: "answer",
-          idx: i,
-          x: pos[i].x,
-          y: pos[i].y,
-          icon: a.icon,
-          label: a.label,
-          text: a.text,
-          delta: a.delta,
+      if (statusEl) statusEl.textContent = `Вопрос ${this._step}/${totalSteps}`;
+
+      // LEFT PANEL: question + answers
+      let answersHTML = q.answers
+        .map(
+          (a, i) => `
+        <div class="quest-answer-card" data-idx="${i}" id="quest-ans-${i}">
+          <span class="quest-ans-icon">${a.icon}</span>
+          <div class="quest-ans-content">
+            <span class="quest-ans-label">${a.label}</span>
+            <span class="quest-ans-text">${a.text}</span>
+          </div>
+        </div>
+      `,
+        )
+        .join("");
+
+      left.innerHTML = `
+        <div class="quest-panel-header">АРХЕТИП БРЕНДА</div>
+        <div class="quest-question-block">
+          <div class="quest-q-num">Шаг ${this._step} из ${totalSteps}</div>
+          <div class="quest-q-title">${q.title}</div>
+          <div class="quest-q-bar"><div class="quest-q-bar-fill" style="width:${(this._step / totalSteps) * 100}%"></div></div>
+          <div class="quest-answers-list" id="quest-answers-list">
+            ${answersHTML}
+          </div>
+          <button class="quest-next-btn" id="quest-next-btn" disabled>Выберите вариант ↑</button>
+        </div>
+      `;
+
+      // Bind answer clicks
+      document.querySelectorAll(".quest-answer-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const idx = parseInt(card.dataset.idx);
+          this._selectAnswer(idx);
         });
       });
+
+      // RIGHT PANEL: live status
+      this._renderRightPanel(right, totalSteps);
     } else if (this._step === 6) {
-      this._bubbles.push({
-        type: "title",
-        x: 0.5,
-        y: 0.06,
-        text: "Выберите звуковую волну",
-        step: 6,
-        sub: "Какая частота резонирует с брендом?",
-      });
-      const sp = [
-        { x: 0.18, y: 0.35 },
-        { x: 0.82, y: 0.35 },
-        { x: 0.18, y: 0.7 },
-        { x: 0.82, y: 0.7 },
-      ];
-      this.soundWaves.forEach((sw, i) => {
-        this._bubbles.push({
-          type: "sound",
-          idx: i,
-          x: sp[i].x,
-          y: sp[i].y,
-          icon: sw.icon,
-          label: sw.label,
-          text: sw.desc,
-          delta: sw.delta,
-          waveId: sw.id,
+      if (statusEl)
+        statusEl.textContent = `Звуковая волна ${this._step}/${totalSteps}`;
+
+      let wavesHTML = this.soundWaves
+        .map(
+          (sw, i) => `
+        <div class="quest-answer-card quest-sound-card" data-idx="${i}" id="quest-ans-${i}">
+          <div class="quest-waveform"><svg width="64" height="20" viewBox="0 0 64 20">
+            <rect x="0" y="9" width="2" height="2" rx="1" fill="currentColor" opacity="0.3"/>
+            <rect x="3" y="7" width="2" height="6" rx="1" fill="currentColor" opacity="0.5"/>
+            <rect x="6" y="4" width="2" height="12" rx="1" fill="currentColor" opacity="0.7"/>
+            <rect x="9" y="2" width="2" height="16" rx="1" fill="currentColor"/>
+            <rect x="12" y="1" width="2" height="18" rx="1" fill="currentColor"/>
+            <rect x="15" y="2" width="2" height="16" rx="1" fill="currentColor"/>
+            <rect x="18" y="4" width="2" height="12" rx="1" fill="currentColor" opacity="0.9"/>
+            <rect x="21" y="7" width="2" height="6" rx="1" fill="currentColor" opacity="0.5"/>
+            <rect x="24" y="9" width="2" height="2" rx="1" fill="currentColor" opacity="0.3"/>
+          </svg></div>
+          <div class="quest-ans-content">
+            <span class="quest-ans-label">${sw.label}</span>
+            <span class="quest-ans-text">${sw.desc}</span>
+          </div>
+        </div>
+      `,
+        )
+        .join("");
+
+      left.innerHTML = `
+        <div class="quest-panel-header">ЗВУКОВАЯ ВОЛНА</div>
+        <div class="quest-question-block">
+          <div class="quest-q-num">Шаг ${this._step} из ${totalSteps}</div>
+          <div class="quest-q-title">Выберите звуковую волну бренда</div>
+          <div class="quest-q-bar"><div class="quest-q-bar-fill" style="width:${(this._step / totalSteps) * 100}%"></div></div>
+          <div class="quest-answers-list" id="quest-answers-list">
+            ${wavesHTML}
+          </div>
+          <button class="quest-next-btn" id="quest-next-btn" disabled>Выберите вариант ↑</button>
+        </div>
+      `;
+
+      document.querySelectorAll(".quest-answer-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const idx = parseInt(card.dataset.idx);
+          this._selectAnswer(idx);
         });
       });
+
+      this._renderRightPanel(right, totalSteps);
     }
   },
 
-  // ==================== LOOP ====================
-  _loop() {
-    if (!this._active) return;
-    const field = document.getElementById("panel-field");
-    if (field) this._fieldRect = field.getBoundingClientRect();
-    if (this._step >= 1) this._checkProximity();
-    this._drawBubbles();
-    this._animFrame = requestAnimationFrame(() => this._loop());
+  _renderRightPanel(right, total) {
+    const r = typeof getRankings === "function" ? getRankings() : null;
+    const primaryName = r ? r.primary.nameRu : "—";
+    const primaryColor = r ? r.primary.color : "var(--accent-blue)";
+    const dims = ["control", "energy", "focus", "method"];
+    const labels = {
+      control: "Контроль",
+      energy: "Энергия",
+      focus: "Фокус",
+      method: "Метод",
+    };
+
+    let barsHTML = dims
+      .map((d) => {
+        const val = typeof userVector !== "undefined" ? userVector[d] : 50;
+        return `<div class="quest-vector-row">
+        <span class="quest-vector-label">${labels[d]}</span>
+        <div class="quest-vector-track"><div class="quest-vector-fill" style="width:${val}%;background:${primaryColor};"></div></div>
+        <span class="quest-vector-val">${val}</span>
+      </div>`;
+      })
+      .join("");
+
+    right.innerHTML = `
+      <div class="output-header">РЕЗУЛЬТАТ</div>
+      <div class="quest-right-card" style="border-color:${primaryColor}44;">
+        <div class="quest-right-archetype" style="color:${primaryColor}">${primaryName}</div>
+        <div class="quest-right-sub">Текущий архетип</div>
+      </div>
+      <div class="quest-right-section">
+        <div class="quest-right-section-title">4D-ВЕКТОР</div>
+        ${barsHTML}
+      </div>
+      <div class="quest-right-section">
+        <div class="quest-right-section-title">ПРОГРЕСС</div>
+        <div class="quest-right-steps">
+          ${Array.from(
+            { length: total },
+            (_, i) => `
+            <div class="quest-step-dot ${i + 1 <= this._step ? "done" : ""} ${i + 1 === this._step ? "current" : ""}">
+              ${i + 1 <= this._step ? "✓" : i + 1}
+            </div>
+          `,
+          ).join("")}
+        </div>
+      </div>
+    `;
   },
 
-  _checkProximity() {
-    if (!this._fieldRect || this._selectedIdx >= 0) return;
-    const rx = (this._mouseX - this._fieldRect.left) / this._fieldRect.width;
-    const ry = (this._mouseY - this._fieldRect.top) / this._fieldRect.height;
-    let closest = -1,
-      closestDist = Infinity;
-    this._bubbles.forEach((b) => {
-      if (b.type === "answer" || b.type === "sound") {
-        const dx = rx - b.x,
-          dy = ry - b.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 0.12 && dist < closestDist) {
-          closestDist = dist;
-          closest = b.idx;
-        }
-      }
-    });
-    this._hoveredIdx = closest;
-  },
-
-  _drawBubbles() {
-    const c = this._container;
-    if (!c || !this._fieldRect) return;
-    const W = this._fieldRect.width,
-      H = this._fieldRect.height;
-    c.innerHTML = "";
-    this._bubbles.forEach((b) => {
-      const el = document.createElement("div");
-      el.style.left = b.x * W + "px";
-      el.style.top = b.y * H + "px";
-      el.style.position = "absolute";
-      el.style.transform = "translate(-50%, -50%)";
-
-      if (b.type === "title") {
-        el.className = "holo-bubble holo-title";
-        el.innerHTML = `<span>${b.text}</span>${b.sub ? `<small>${b.sub}</small>` : ""}<div class="holo-step-badge">${b.step}/7</div>`;
-      } else if (b.type === "answer") {
-        const hov = b.idx === this._hoveredIdx;
-        const sel = b.idx === this._selectedIdx;
-        el.className = `holo-bubble holo-answer${hov ? " hovered" : ""}${sel ? " selected" : ""}`;
-        el.innerHTML = `<span class="holo-answer-icon">${b.icon}</span><span class="holo-answer-label">${b.label}</span><span class="holo-answer-text">${b.text}</span>`;
-        el.style.cursor = "pointer";
-        el.style.pointerEvents = "auto";
-        el.addEventListener("click", (e) => {
-          e.stopPropagation();
-          this._select(b.idx);
-        });
-      } else if (b.type === "sound") {
-        const hov = b.idx === this._hoveredIdx;
-        const sel = b.idx === this._selectedIdx;
-        el.className = `holo-bubble holo-sound${hov ? " hovered" : ""}${sel ? " selected" : ""}`;
-        el.innerHTML = `<div class="holo-waveform"><svg width="64" height="20" viewBox="0 0 64 20"><rect x="0" y="9" width="2" height="2" rx="1" fill="currentColor" opacity="0.3"/><rect x="3" y="7" width="2" height="6" rx="1" fill="currentColor" opacity="0.5"/><rect x="6" y="4" width="2" height="12" rx="1" fill="currentColor" opacity="0.7"/><rect x="9" y="2" width="2" height="16" rx="1" fill="currentColor"/><rect x="12" y="1" width="2" height="18" rx="1" fill="currentColor"/><rect x="15" y="2" width="2" height="16" rx="1" fill="currentColor"/><rect x="18" y="4" width="2" height="12" rx="1" fill="currentColor" opacity="0.9"/><rect x="21" y="7" width="2" height="6" rx="1" fill="currentColor" opacity="0.5"/><rect x="24" y="9" width="2" height="2" rx="1" fill="currentColor" opacity="0.3"/></svg></div><span class="holo-answer-label">${b.label}</span><span class="holo-answer-text">${b.text}</span>`;
-        el.style.cursor = "pointer";
-        el.style.pointerEvents = "auto";
-        el.addEventListener("click", (e) => {
-          e.stopPropagation();
-          this._select(b.idx);
-        });
-      }
-      c.appendChild(el);
-    });
-  },
-
-  // ==================== SELECT ====================
-  _select(idx) {
-    if (this._selectedIdx >= 0 || idx < 0) return;
+  // ==================== SELECT ANSWER ====================
+  _selectAnswer(idx) {
+    if (this._selectedIdx >= 0) return; // already selected
     this._selectedIdx = idx;
+
+    // Highlight selected, dim others
+    document.querySelectorAll(".quest-answer-card").forEach((card, i) => {
+      if (i === idx) {
+        card.classList.add("selected");
+      } else {
+        card.style.opacity = "0.35";
+        card.style.pointerEvents = "none";
+      }
+    });
+
+    // Enable next button
+    const nextBtn = document.getElementById("quest-next-btn");
+    if (nextBtn) {
+      nextBtn.disabled = false;
+      nextBtn.textContent = "Далее →";
+      nextBtn.addEventListener("click", () => this._advance(), { once: true });
+    }
+
+    // Apply delta to vector
     let delta = null,
       label = "";
     if (this._step <= 5) {
-      const q = this.questions[this._step - 1];
-      delta = q.answers[idx].delta;
-      label = q.answers[idx].label;
+      const a = this.questions[this._step - 1].answers[idx];
+      delta = a.delta;
+      label = a.label;
     } else if (this._step === 6) {
-      delta = this.soundWaves[idx].delta;
-      label = this.soundWaves[idx].label;
+      const a = this.soundWaves[idx];
+      delta = a.delta;
+      label = a.label;
     }
+
     if (delta) {
       this._answers.push({ step: this._step, idx, label, delta });
       ["control", "energy", "focus", "method"].forEach((d) => {
@@ -476,21 +488,26 @@ const HolographicQuest = {
       if (typeof updateBrandPositionFromVector === "function")
         updateBrandPositionFromVector();
       if (typeof updateAll === "function") updateAll();
+
+      // Update right panel live
+      const right = document.getElementById("panel-output");
+      if (right) this._renderRightPanel(right, 7);
     }
-    this._confirmTimer = setTimeout(() => {
-      this._step++;
-      if (this._step >= 7) this._finish();
-      else this._renderStep();
-    }, 700);
+  },
+
+  _advance() {
+    this._step++;
+    if (this._step >= 7) {
+      this._finish();
+    } else {
+      this._renderStep();
+    }
   },
 
   // ==================== FINISH ====================
   _finish() {
     this._active = false;
-    if (this._animFrame) cancelAnimationFrame(this._animFrame);
     if (this._helpEl) this._helpEl.style.display = "none";
-    const c = document.getElementById("holo-bubbles");
-    if (c) c.innerHTML = "";
     const statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Готово";
 
@@ -503,12 +520,14 @@ const HolographicQuest = {
         );
       });
     });
+
     if (typeof Tracker !== "undefined") {
       const tv = Tracker.getBehaviorVector();
       ["control", "energy", "focus", "method"].forEach((d) => {
         finalVector[d] = Math.round(finalVector[d] * 0.8 + tv[d] * 0.2);
       });
     }
+
     if (typeof userVector !== "undefined") {
       ["control", "energy", "focus", "method"].forEach((d) => {
         userVector[d] = finalVector[d];
@@ -521,10 +540,20 @@ const HolographicQuest = {
     let primary = null;
     if (typeof getRankings === "function") primary = getRankings().primary;
 
-    // Show rich result
+    // Restore dashboard panels
+    const left = document.getElementById("panel-controllers");
+    const right = document.getElementById("panel-output");
+    if (left && this._savedLeftHTML) left.innerHTML = this._savedLeftHTML;
+    if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
+
+    // Re-init jog dials & presets
+    if (typeof initJogDials === "function") initJogDials();
+    if (typeof initPresets === "function") initPresets();
+    if (typeof updateAll === "function") updateAll();
+
+    // Show result
     if (typeof ArchetypeResult !== "undefined")
       ArchetypeResult.show(primary, finalVector, this._answers);
-    // Also fire pivot
     if (this._onComplete) this._onComplete(finalVector, primary);
     if (typeof Pivot !== "undefined" && primary) Pivot.execute(primary.id);
 
@@ -535,18 +564,9 @@ const HolographicQuest = {
   },
 };
 
-// Global mouse tracking for quest
-document.addEventListener("mousemove", (e) => {
-  if (HolographicQuest._active) {
-    HolographicQuest._mouseX = e.clientX;
-    HolographicQuest._mouseY = e.clientY;
-  }
-});
-
 // Auto-show start screen on load
 document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
-    // Only show if not already in a session
     const already = document.getElementById("quest-start-overlay");
     if (!already) HolographicQuest.showStartScreen();
   }, 1200);
