@@ -82,7 +82,7 @@ function drawField() {
   ctx.clearRect(0, 0, W, H);
 
   // ---- Subtle background grid ----
-  ctx.strokeStyle = "rgba(255,255,255,0.03)";
+  const pc = window.__pivotCanvas; ctx.strokeStyle = pc ? pc.grid : "rgba(255,255,255,0.03)";
   ctx.lineWidth = 1;
   const gridSize = 40;
   for (let x = 0; x < W; x += gridSize) {
