@@ -3,380 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Brand Archetype OS</title>
+    <title></title>Brand Archetype OS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-    <div class="nav-logo">
-        <div class="nav-logo-icon">BA</div>
-        <span class="nav-logo-text">Brand Archetype OS</span>
+<!-- ===== HUD HEADER ===== -->
+<header class="hud-header">
+    <div class="hud-logo">
+        <div class="hud-logo-icon">BA</div>
+        <span class="hud-logo-text">Brand Archetype OS</span>
     </div>
-    <div class="nav-dots">
-        <div class="nav-dot active" data-layer="0"></div>
-        <div class="nav-dot" data-layer="1"></div>
-        <div class="nav-dot" data-layer="2"></div>
+    <div class="hud-status" id="hud-status">
+        <span class="hud-status-dot"></span>
+        <span id="hud-status-text">Готов</span>
     </div>
-    <div class="nav-status" id="nav-status">Определение...</div>
-</nav>
+    <div class="hud-info">
+        <span class="hud-version">v3.0</span>
+    </div>
+</header>
 
-<!-- ===== LANDING ===== -->
-<main id="landing">
+<!-- ===== MAIN WORKSPACE ===== -->
+<main class="workspace">
 
-<!-- HERO -->
-<section class="hero" id="hero">
-    <div class="hero-bg">
-        <div class="hero-blob hero-blob-1"></div>
-        <div class="hero-blob hero-blob-2"></div>
-        <div class="hero-blob hero-blob-3"></div>
-        <div class="hero-grid"></div>
-    </div>
-    <div class="hero-content">
-        <div class="hero-badge">
-            <div class="hero-badge-dot"></div>
-            <span>Интерактивная система анализа</span>
+    <!-- LEFT PANEL: CONTROLLERS -->
+    <aside class="panel-controllers" id="panel-controllers">
+        <div class="controllers-header">ПАРАМЕТРЫ</div>
+
+        <div class="jog-dials">
+            <div class="jog-dial-container" data-dim="control">
+                <div class="jog-dial-track" id="jog-track-control">
+                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
+                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-control"/>
+                    </svg>
+                    <div class="jog-dot" id="jog-dot-control"></div>
+                </div>
+                <div class="jog-label">Control</div>
+                <div class="jog-value" id="jog-val-control">50</div>
+                <div class="jog-label-ru">Контроль</div>
+            </div>
+
+            <div class="jog-dial-container" data-dim="energy">
+                <div class="jog-dial-track" id="jog-track-energy">
+                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
+                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-energy"/>
+                    </svg>
+                    <div class="jog-dot" id="jog-dot-energy"></div>
+                </div>
+                <div class="jog-label">Energy</div>
+                <div class="jog-value" id="jog-val-energy">50</div>
+                <div class="jog-label-ru">Энергия</div>
+            </div>
+
+            <div class="jog-dial-container" data-dim="focus">
+                <div class="jog-dial-track" id="jog-track-focus">
+                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
+                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-focus"/>
+                    </svg>
+                    <div class="jog-dot" id="jog-dot-focus"></div>
+                </div>
+                <div class="jog-label">Focus</div>
+                <div class="jog-value" id="jog-val-focus">50</div>
+                <div class="jog-label-ru">Фокус</div>
+            </div>
+
+            <div class="jog-dial-container" data-dim="method">
+                <div class="jog-dial-track" id="jog-track-method">
+                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
+                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-method"/>
+                    </svg>
+                    <div class="jog-dot" id="jog-dot-method"></div>
+                </div>
+                <div class="jog-label">Method</div>
+                <div class="jog-value" id="jog-val-method">50</div>
+                <div class="jog-label-ru">Метод</div>
+            </div>
         </div>
-        <h1 class="hero-title"><span>Определи архетип</span><br>своего бренда</h1>
-        <p class="hero-subtitle">Интерактивная система, которая превращает восприятие бренда в дизайн-стратегию сайта через 4D-модель</p>
-        <button class="hero-cta" onclick="openSystem()">
-            Начать анализ
-            <svg class="hero-cta-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <div class="hero-preview">
-            <div class="hero-preview-card">
-                <div class="hero-preview-field">
-                    <div class="hero-preview-zones">
-                        <div class="hero-preview-zone" style="top:15%;left:15%;width:80px;height:80px;background:rgba(231,76,60,0.2);animation-delay:0s;"></div>
-                        <div class="hero-preview-zone" style="top:15%;right:15%;width:80px;height:80px;background:rgba(155,89,182,0.2);animation-delay:1s;"></div>
-                        <div class="hero-preview-zone" style="bottom:15%;left:15%;width:80px;height:80px;background:rgba(243,156,18,0.2);animation-delay:2s;"></div>
-                        <div class="hero-preview-zone" style="bottom:15%;right:15%;width:80px;height:80px;background:rgba(39,174,96,0.2);animation-delay:3s;"></div>
-                    </div>
-                    <div class="hero-preview-dot"></div>
+
+        <div class="presets-section">
+            <div class="presets-header">ПРЕСЕТЫ АРХЕТИПОВ</div>
+            <div class="presets-grid" id="presets-grid">
+                <!-- filled by JS -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- CENTER: ARCHETYPE FIELD -->
+    <section class="panel-field" id="panel-field">
+        <canvas id="field-canvas"></canvas>
+        <div class="field-overlay" id="field-overlay">
+            <div class="field-brand-dot" id="brand-dot"></div>
+        </div>
+        <div class="field-legend">
+            <span class="legend-item"><span class="legend-dot legend-primary"></span> Primary</span>
+            <span class="legend-item"><span class="legend-dot legend-secondary"></span> Secondary</span>
+            <span class="legend-item"><span class="legend-dot legend-conflict"></span> Conflict</span>
+            <span class="legend-item"><span class="legend-dot legend-brand"></span> Бренд</span>
+        </div>
+    </section>
+
+    <!-- RIGHT PANEL: OUTPUT -->
+    <aside class="panel-output" id="panel-output">
+        <div class="output-header">РЕЗУЛЬТАТ</div>
+
+        <div class="output-card output-card-primary" id="output-primary">
+            <div class="output-card-glow" id="output-primary-glow"></div>
+            <div class="output-card-header">
+                <div class="output-card-dot" id="output-primary-dot"></div>
+                <div>
+                    <div class="output-card-label">PRIMARY</div>
+                    <div class="output-card-name" id="output-primary-name">—</div>
+                </div>
+            </div>
+            <div class="output-card-behavior" id="output-primary-behavior">—</div>
+        </div>
+
+        <div class="output-card output-card-secondary" id="output-secondary">
+            <div class="output-card-header">
+                <div class="output-card-dot" id="output-secondary-dot"></div>
+                <div>
+                    <div class="output-card-label">SECONDARY</div>
+                    <div class="output-card-name" id="output-secondary-name">—</div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- HOW -->
-<section class="section how-section" id="how">
-    <div class="how-header reveal">
-        <div class="how-label">Как это работает</div>
-        <h2 class="how-title">Три шага от ощущения<br>к архитектуре</h2>
-    </div>
-    <div class="how-cards">
-        <div class="how-card reveal">
-            <div class="how-card-num">01</div>
-            <h3 class="how-card-title">Пространство восприятия</h3>
-            <p class="how-card-desc">Переместите точку в поле, которое отражает ощущение вашего бренда. Интуитивный ввод без форм.</p>
-        </div>
-        <div class="how-card reveal">
-            <div class="how-card-num">02</div>
-            <h3 class="how-card-title">Настройка параметров</h3>
-            <p class="how-card-desc">Точная калибровка четырёх измерений: control, energy, focus, method. Кривые вместо слайдеров.</p>
-        </div>
-        <div class="how-card reveal">
-            <div class="how-card-num">03</div>
-            <h3 class="how-card-title">Архитектура сайта</h3>
-            <p class="how-card-desc">Система строит UI-компоненты, wireframe и дизайн-стратегию под ваш уникальный архетип.</p>
-        </div>
-    </div>
-</section>
-
-<!-- PREVIEW -->
-<section class="section preview-section" id="preview">
-    <div class="preview-bg"></div>
-    <div class="preview-content reveal">
-        <h2 class="preview-title">Система реагирует<br>на ваше восприятие</h2>
-        <p class="preview-subtitle">Перетащите точку по полю и наблюдайте, как система в реальном времени определяет архетип</p>
-        <div class="preview-field-container">
-            <div class="preview-field" id="preview-field">
-                <div class="preview-field-grid"></div>
-                <div class="preview-field-zones" id="preview-zones"></div>
-                <div class="preview-field-dot" id="preview-dot"></div>
-                <div class="preview-field-labels">
-                    <span class="preview-field-label" style="top:12px;left:50%;transform:translateX(-50%);">Энергия ↑</span>
-                    <span class="preview-field-label" style="bottom:12px;left:50%;transform:translateX(-50%);">Контроль ↓</span>
-                    <span class="preview-field-label" style="left:12px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:center;">Фокус ←</span>
-                    <span class="preview-field-label" style="right:12px;top:50%;transform:translateY(-50%) rotate(90deg);transform-origin:center;">Метод →</span>
-                </div>
-                <div class="preview-feedback">
-                    <div class="preview-feedback-row">
-                        <span class="preview-feedback-label">Архетип</span>
-                        <span class="preview-feedback-value" id="preview-archetype">—</span>
-                    </div>
-                    <div class="preview-feedback-bar">
-                        <div class="preview-feedback-fill" id="preview-confidence" style="width:0%"></div>
-                    </div>
+        <div class="output-card output-card-conflict" id="output-conflict">
+            <div class="output-card-header">
+                <div class="output-card-dot" id="output-conflict-dot"></div>
+                <div>
+                    <div class="output-card-label">CONFLICT</div>
+                    <div class="output-card-name" id="output-conflict-name">—</div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- VALUE -->
-<section class="section value-section" id="value">
-    <div class="value-content reveal">
-        <h2 class="value-title">Что вы получите</h2>
-        <div class="value-list">
-            <div class="value-item">
-                <div class="value-item-icon" style="background:rgba(168,213,229,0.2);">🎯</div>
-                <div class="value-item-text"><strong>Ваш архетип бренда</strong> — primary, secondary и conflict с точным векторным расчётом</div>
-            </div>
-            <div class="value-item">
-                <div class="value-item-icon" style="background:rgba(232,221,208,0.3);">🧭</div>
-                <div class="value-item-text"><strong>UX стратегию</strong> — структура взаимодействия и логика поведения пользователя</div>
-            </div>
-            <div class="value-item">
-                <div class="value-item-icon" style="background:rgba(200,230,201,0.3);">🎨</div>
-                <div class="value-item-text"><strong>UI систему сайта</strong> — типографика, spacing, motion и визуальный язык</div>
-            </div>
-            <div class="value-item">
-                <div class="value-item-icon" style="background:rgba(168,213,229,0.2);">📐</div>
-                <div class="value-item-text"><strong>Структуру лендинга</strong> — hero section, content blocks и CTA logic</div>
-            </div>
-            <div class="value-item">
-                <div class="value-item-icon" style="background:rgba(232,221,208,0.3);">💡</div>
-                <div class="value-item-text"><strong>Рекомендации по дизайну</strong> — основанные на архетипе, не на трендах</div>
-            </div>
-            <div class="value-item">
-                <div class="value-item-icon" style="background:rgba(200,230,201,0.3);">⚡</div>
-                <div class="value-item-text"><strong>Готовую дизайн-логику</strong> — для передачи команде или реализации</div>
+        <div class="output-rules">
+            <div class="output-rules-header">UX / UI ПРАВИЛА</div>
+            <div class="output-rules-list" id="output-rules-list">
+                <div class="output-rule"><span class="output-rule-label">Типографика</span><span class="output-rule-value" id="rule-typography">—</span></div>
+                <div class="output-rule"><span class="output-rule-label">Spacing</span><span class="output-rule-value" id="rule-spacing">—</span></div>
+                <div class="output-rule"><span class="output-rule-label">Motion</span><span class="output-rule-value" id="rule-motion">—</span></div>
+                <div class="output-rule"><span class="output-rule-label">Visual</span><span class="output-rule-value" id="rule-visual">—</span></div>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- CTA -->
-<section class="section cta-section" id="cta">
-    <div class="cta-bg">
-        <div class="cta-blob" style="width:400px;height:400px;top:-20%;left:-10%;background:radial-gradient(circle,var(--accent-blue) 0%,transparent 70%);"></div>
-        <div class="cta-blob" style="width:350px;height:350px;bottom:-15%;right:-5%;background:radial-gradient(circle,var(--accent-beige) 0%,transparent 70%);"></div>
-    </div>
-    <div class="cta-content reveal">
-        <h2 class="cta-title">Готовы увидеть<br>архитектуру вашего бренда?</h2>
-        <p class="cta-subtitle">Это не тест. Это дизайн-инструмент уровня Figma для брендов. Интерактивная система, которая превращает восприятие в структуру.</p>
-        <button class="cta-button" onclick="openSystem()">
-            Запустить систему анализа
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <p class="cta-note">Без регистрации · Без форм · Интерактивно</p>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-    <p class="footer-text">Brand Archetype OS — интерактивная система анализа бренда</p>
-</footer>
+        <div class="output-actions">
+            <button class="btn-export" id="btn-export" onclick="generateSite()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 2v8M4 6l4 4 4-4M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Экспорт / Скачать шаблон
+            </button>
+        </div>
+    </aside>
 
 </main>
 
-
-<!-- ===== SYSTEM OVERLAY ===== -->
-<div class="system-overlay" id="system-overlay">
-    <button class="system-close" onclick="closeSystem()">×</button>
-
-    <!-- LAYER 0: FIELD -->
-    <div class="system-layer active" id="layer-field">
-        <div class="system-header">
-            <div class="system-step">Шаг 1 из 3</div>
-            <h2 class="system-title">Почувствуй свой бренд</h2>
+<!-- ===== EXPORT MODAL ===== -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Шаблон сайта</h2>
+            <button class="modal-close" onclick="closeModal()">×</button>
         </div>
-        <div class="field-container">
-            <div class="field-area" id="field-area">
-                <div class="field-grid"></div>
-                <div class="field-zones" id="field-zones"></div>
-                <div class="field-dot" id="field-dot"></div>
-                <div class="field-labels">
-                    <span class="field-label" style="top:12px;left:50%;transform:translateX(-50%);">Энергия ↑</span>
-                    <span class="field-label" style="bottom:12px;left:50%;transform:translateX(-50%);">Контроль ↓</span>
-                    <span class="field-label" style="left:12px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:center;">Фокус ←</span>
-                    <span class="field-label" style="right:12px;top:50%;transform:translateY(-50%) rotate(90deg);transform-origin:center;">Метод →</span>
-                </div>
-            </div>
-            <div class="field-feedback">
-                <div class="field-feedback-row">
-                    <span class="field-feedback-label">Первичный архетип</span>
-                    <span class="field-feedback-value" id="field-primary">—</span>
-                </div>
-                <div class="field-feedback-row">
-                    <span class="field-feedback-label">Конфликт</span>
-                    <span class="field-feedback-value" id="field-conflict" style="font-size:14px;color:var(--text-secondary);">—</span>
-                </div>
-                <div class="field-feedback-bar">
-                    <div class="field-feedback-fill" id="field-confidence" style="width:0%"></div>
-                </div>
-            </div>
-            <div class="field-nav">
-                <button class="btn-primary" onclick="goToLayer(1)">
-                    Перейти к синтезу
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+        <div class="modal-body">
+            <div class="modal-archetype" id="modal-archetype"></div>
+            <div class="modal-code">
+                <pre id="modal-code"></pre>
             </div>
         </div>
-    </div>
-
-    <!-- LAYER 1: SYNTHESIS -->
-    <div class="system-layer" id="layer-synthesis">
-        <div class="system-header">
-            <div class="system-step">Шаг 2 из 3</div>
-            <h2 class="system-title">Синтез архетипа</h2>
-        </div>
-        <div class="synthesis-grid">
-            <div class="synthesis-curves">
-                <div class="synthesis-curve">
-                    <div class="synthesis-curve-header">
-                        <span class="synthesis-curve-label">Control</span>
-                        <span class="synthesis-curve-value" id="val-control">50</span>
-                    </div>
-                    <div class="synthesis-curve-track" data-dim="control">
-                        <div class="synthesis-curve-fill" id="fill-control" style="width:50%"></div>
-                        <div class="synthesis-curve-handle" id="handle-control" style="left:50%"></div>
-                    </div>
-                </div>
-                <div class="synthesis-curve">
-                    <div class="synthesis-curve-header">
-                        <span class="synthesis-curve-label">Energy</span>
-                        <span class="synthesis-curve-value" id="val-energy">50</span>
-                    </div>
-                    <div class="synthesis-curve-track" data-dim="energy">
-                        <div class="synthesis-curve-fill" id="fill-energy" style="width:50%"></div>
-                        <div class="synthesis-curve-handle" id="handle-energy" style="left:50%"></div>
-                    </div>
-                </div>
-                <div class="synthesis-curve">
-                    <div class="synthesis-curve-header">
-                        <span class="synthesis-curve-label">Focus</span>
-                        <span class="synthesis-curve-value" id="val-focus">50</span>
-                    </div>
-                    <div class="synthesis-curve-track" data-dim="focus">
-                        <div class="synthesis-curve-fill" id="fill-focus" style="width:50%"></div>
-                        <div class="synthesis-curve-handle" id="handle-focus" style="left:50%"></div>
-                    </div>
-                </div>
-                <div class="synthesis-curve">
-                    <div class="synthesis-curve-header">
-                        <span class="synthesis-curve-label">Method</span>
-                        <span class="synthesis-curve-value" id="val-method">50</span>
-                    </div>
-                    <div class="synthesis-curve-track" data-dim="method">
-                        <div class="synthesis-curve-fill" id="fill-method" style="width:50%"></div>
-                        <div class="synthesis-curve-handle" id="handle-method" style="left:50%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="synthesis-right">
-                <div class="synthesis-morph">
-                    <div class="synthesis-shape" id="morph-shape"></div>
-                    <div class="synthesis-shape-label" id="morph-label">Нейтральная форма</div>
-                </div>
-                <div class="synthesis-ranking">
-                    <div class="synthesis-ranking-title">Рейтинг архетипов</div>
-                    <div id="ranking-list"></div>
-                </div>
-                <div class="synthesis-vector">
-                    <div class="synthesis-vector-grid">
-                        <div>
-                            <div class="synthesis-vector-val" id="vec-control">50</div>
-                            <div class="synthesis-vector-label">Control</div>
-                        </div>
-                        <div>
-                            <div class="synthesis-vector-val" id="vec-energy">50</div>
-                            <div class="synthesis-vector-label">Energy</div>
-                        </div>
-                        <div>
-                            <div class="synthesis-vector-val" id="vec-focus">50</div>
-                            <div class="synthesis-vector-label">Focus</div>
-                        </div>
-                        <div>
-                            <div class="synthesis-vector-val" id="vec-method">50</div>
-                            <div class="synthesis-vector-label">Method</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="synthesis-nav">
-            <button class="btn-secondary" onclick="goToLayer(0)">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="modal-footer">
+            <button class="btn-export" onclick="downloadTemplate()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 2v8M4 6l4 4 4-4M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Назад
+                Скачать HTML
             </button>
-            <button class="btn-primary" onclick="goToLayer(2)">
-                Перейти к конструкции
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </div>
-    </div>
-
-    <!-- LAYER 2: CONSTRUCTION -->
-    <div class="system-layer" id="layer-construction">
-        <div class="system-header">
-            <div class="system-step">Шаг 3 из 3</div>
-            <h2 class="system-title">Конструкция интерфейса</h2>
-        </div>
-        <div class="construction-grid">
-            <div class="construction-panel">
-                <div class="construction-panel-title">Компоненты</div>
-                <div id="components-list"></div>
-            </div>
-            <div class="construction-preview">
-                <div class="construction-preview-inner" id="live-preview"></div>
-            </div>
-            <div class="construction-rules">
-                <div class="construction-panel-title">Правила архетипа</div>
-                <div id="rules-list"></div>
-            </div>
-        </div>
-        <div class="construction-result" id="construction-result">
-            <div class="construction-result-grid">
-                <div>
-                    <div class="construction-result-title">Архетип результата</div>
-                    <div class="construction-result-badges" id="result-badges"></div>
-                    <div class="construction-result-title">Интерпретация бренда</div>
-                    <div class="construction-result-text" id="result-interpretation"></div>
-                </div>
-                <div>
-                    <div class="construction-result-title">UX & UI Стратегия</div>
-                    <div class="construction-result-text" id="result-strategy"></div>
-                    <div class="construction-result-title" style="margin-top:24px;">Wireframe сайта</div>
-                    <div class="construction-result-wireframe" id="result-wireframe"></div>
-                </div>
-            </div>
-        </div>
-        <div class="construction-nav">
-            <button class="btn-secondary" onclick="goToLayer(1)">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Назад
-            </button>
-            <button class="btn-primary" onclick="generateSite()">
-                Создать сайт на основе архетипа
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
+            <button class="btn-secondary" onclick="closeModal()">Закрыть</button>
         </div>
     </div>
 </div>
 
-
-<script>
-// ==================== ARCHETYPE DATA ===============
 <script src="data.js"></script>
 <script src="engine.js"></script>
 </body>
