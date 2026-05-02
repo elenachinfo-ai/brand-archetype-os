@@ -853,3 +853,151 @@ body {
         min-height: 200px;
     }
 }
+
+/* ==================== LIVE ANALYTICS HUD ==================== */
+.live-analytics {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 240px;
+    background: var(--bg-glass-strong);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    z-index: 100;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+}
+
+.live-analytics-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Manrope", "Inter", sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.live-analytics-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    box-shadow: 0 0 6px var(--accent-green-dim);
+    animation: livePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.live-analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.live-analytics-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.live-analytics-label {
+    font-family: "Manrope", "Inter", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+}
+
+.live-analytics-value {
+    font-family: "Manrope", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.live-analytics-signals {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.live-signal {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.live-signal-label {
+    font-family: "Manrope", "Inter", sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    width: 48px;
+    flex-shrink: 0;
+}
+
+.live-signal-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.live-signal-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent-blue);
+    width: 50%;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.live-signal-val {
+    font-family: "Manrope", monospace;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Signal bar colors per dimension */
+#hud-signal-bar-control {
+    background: #7bbcd4;
+}
+#hud-signal-bar-energy {
+    background: #e74c3c;
+}
+#hud-signal-bar-focus {
+    background: #f39c12;
+}
+#hud-signal-bar-method {
+    background: #9b59b6;
+}
+
+/* Hide on mobile */
+@media (max-width: 860px) {
+    .live-analytics {
+        display: none;
+    }
+}

@@ -1,196 +1,433 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title></title>Brand Archetype OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>Brand Archetype OS</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Manrope:wght@200;300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <!-- ===== HUD HEADER ===== -->
+        <header class="hud-header">
+            <div class="hud-logo">
+                <div class="hud-logo-icon">BA</div>
+                <span class="hud-logo-text">Brand Archetype OS</span>
+            </div>
+            <div class="hud-status" id="hud-status">
+                <span class="hud-status-dot"></span>
+                <span id="hud-status-text">Готов</span>
+            </div>
+            <div class="hud-info">
+                <span class="hud-version">v3.0</span>
+            </div>
+        </header>
 
-<!-- ===== HUD HEADER ===== -->
-<header class="hud-header">
-    <div class="hud-logo">
-        <div class="hud-logo-icon">BA</div>
-        <span class="hud-logo-text">Brand Archetype OS</span>
-    </div>
-    <div class="hud-status" id="hud-status">
-        <span class="hud-status-dot"></span>
-        <span id="hud-status-text">Готов</span>
-    </div>
-    <div class="hud-info">
-        <span class="hud-version">v3.0</span>
-    </div>
-</header>
+        <!-- ===== MAIN WORKSPACE ===== -->
+        <main class="workspace">
+            <!-- LEFT PANEL: CONTROLLERS -->
+            <aside class="panel-controllers" id="panel-controllers">
+                <div class="controllers-header">ПАРАМЕТРЫ</div>
 
-<!-- ===== MAIN WORKSPACE ===== -->
-<main class="workspace">
+                <div class="jog-dials">
+                    <div class="jog-dial-container" data-dim="control">
+                        <div class="jog-dial-track" id="jog-track-control">
+                            <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-bg"
+                                />
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-fill"
+                                    id="jog-ring-fill-control"
+                                />
+                            </svg>
+                            <div class="jog-dot" id="jog-dot-control"></div>
+                        </div>
+                        <div class="jog-label">Control</div>
+                        <div class="jog-value" id="jog-val-control">50</div>
+                        <div class="jog-label-ru">Контроль</div>
+                    </div>
 
-    <!-- LEFT PANEL: CONTROLLERS -->
-    <aside class="panel-controllers" id="panel-controllers">
-        <div class="controllers-header">ПАРАМЕТРЫ</div>
+                    <div class="jog-dial-container" data-dim="energy">
+                        <div class="jog-dial-track" id="jog-track-energy">
+                            <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-bg"
+                                />
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-fill"
+                                    id="jog-ring-fill-energy"
+                                />
+                            </svg>
+                            <div class="jog-dot" id="jog-dot-energy"></div>
+                        </div>
+                        <div class="jog-label">Energy</div>
+                        <div class="jog-value" id="jog-val-energy">50</div>
+                        <div class="jog-label-ru">Энергия</div>
+                    </div>
 
-        <div class="jog-dials">
-            <div class="jog-dial-container" data-dim="control">
-                <div class="jog-dial-track" id="jog-track-control">
-                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
-                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
-                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-control"/>
-                    </svg>
-                    <div class="jog-dot" id="jog-dot-control"></div>
+                    <div class="jog-dial-container" data-dim="focus">
+                        <div class="jog-dial-track" id="jog-track-focus">
+                            <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-bg"
+                                />
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-fill"
+                                    id="jog-ring-fill-focus"
+                                />
+                            </svg>
+                            <div class="jog-dot" id="jog-dot-focus"></div>
+                        </div>
+                        <div class="jog-label">Focus</div>
+                        <div class="jog-value" id="jog-val-focus">50</div>
+                        <div class="jog-label-ru">Фокус</div>
+                    </div>
+
+                    <div class="jog-dial-container" data-dim="method">
+                        <div class="jog-dial-track" id="jog-track-method">
+                            <svg viewBox="0 0 120 120" class="jog-ring-svg">
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-bg"
+                                />
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="jog-ring-fill"
+                                    id="jog-ring-fill-method"
+                                />
+                            </svg>
+                            <div class="jog-dot" id="jog-dot-method"></div>
+                        </div>
+                        <div class="jog-label">Method</div>
+                        <div class="jog-value" id="jog-val-method">50</div>
+                        <div class="jog-label-ru">Метод</div>
+                    </div>
                 </div>
-                <div class="jog-label">Control</div>
-                <div class="jog-value" id="jog-val-control">50</div>
-                <div class="jog-label-ru">Контроль</div>
-            </div>
 
-            <div class="jog-dial-container" data-dim="energy">
-                <div class="jog-dial-track" id="jog-track-energy">
-                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
-                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
-                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-energy"/>
-                    </svg>
-                    <div class="jog-dot" id="jog-dot-energy"></div>
+                <div class="presets-section">
+                    <div class="presets-header">ПРЕСЕТЫ АРХЕТИПОВ</div>
+                    <div class="presets-grid" id="presets-grid">
+                        <!-- filled by JS -->
+                    </div>
                 </div>
-                <div class="jog-label">Energy</div>
-                <div class="jog-value" id="jog-val-energy">50</div>
-                <div class="jog-label-ru">Энергия</div>
-            </div>
+            </aside>
 
-            <div class="jog-dial-container" data-dim="focus">
-                <div class="jog-dial-track" id="jog-track-focus">
-                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
-                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
-                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-focus"/>
-                    </svg>
-                    <div class="jog-dot" id="jog-dot-focus"></div>
+            <!-- CENTER: ARCHETYPE FIELD -->
+            <section class="panel-field" id="panel-field">
+                <canvas id="field-canvas"></canvas>
+                <div class="field-overlay" id="field-overlay">
+                    <div class="field-brand-dot" id="brand-dot"></div>
                 </div>
-                <div class="jog-label">Focus</div>
-                <div class="jog-value" id="jog-val-focus">50</div>
-                <div class="jog-label-ru">Фокус</div>
-            </div>
-
-            <div class="jog-dial-container" data-dim="method">
-                <div class="jog-dial-track" id="jog-track-method">
-                    <svg viewBox="0 0 120 120" class="jog-ring-svg">
-                        <circle cx="60" cy="60" r="48" class="jog-ring-bg"/>
-                        <circle cx="60" cy="60" r="48" class="jog-ring-fill" id="jog-ring-fill-method"/>
-                    </svg>
-                    <div class="jog-dot" id="jog-dot-method"></div>
+                <div class="field-legend">
+                    <span class="legend-item"
+                        ><span class="legend-dot legend-primary"></span>
+                        Primary</span
+                    >
+                    <span class="legend-item"
+                        ><span class="legend-dot legend-secondary"></span>
+                        Secondary</span
+                    >
+                    <span class="legend-item"
+                        ><span class="legend-dot legend-conflict"></span>
+                        Conflict</span
+                    >
+                    <span class="legend-item"
+                        ><span class="legend-dot legend-brand"></span>
+                        Бренд</span
+                    >
                 </div>
-                <div class="jog-label">Method</div>
-                <div class="jog-value" id="jog-val-method">50</div>
-                <div class="jog-label-ru">Метод</div>
+            </section>
+
+            <!-- RIGHT PANEL: OUTPUT -->
+            <aside class="panel-output" id="panel-output">
+                <div class="output-header">РЕЗУЛЬТАТ</div>
+
+                <div
+                    class="output-card output-card-primary"
+                    id="output-primary"
+                >
+                    <div
+                        class="output-card-glow"
+                        id="output-primary-glow"
+                    ></div>
+                    <div class="output-card-header">
+                        <div
+                            class="output-card-dot"
+                            id="output-primary-dot"
+                        ></div>
+                        <div>
+                            <div class="output-card-label">PRIMARY</div>
+                            <div
+                                class="output-card-name"
+                                id="output-primary-name"
+                            >
+                                —
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="output-card-behavior"
+                        id="output-primary-behavior"
+                    >
+                        —
+                    </div>
+                </div>
+
+                <div
+                    class="output-card output-card-secondary"
+                    id="output-secondary"
+                >
+                    <div class="output-card-header">
+                        <div
+                            class="output-card-dot"
+                            id="output-secondary-dot"
+                        ></div>
+                        <div>
+                            <div class="output-card-label">SECONDARY</div>
+                            <div
+                                class="output-card-name"
+                                id="output-secondary-name"
+                            >
+                                —
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="output-card output-card-conflict"
+                    id="output-conflict"
+                >
+                    <div class="output-card-header">
+                        <div
+                            class="output-card-dot"
+                            id="output-conflict-dot"
+                        ></div>
+                        <div>
+                            <div class="output-card-label">CONFLICT</div>
+                            <div
+                                class="output-card-name"
+                                id="output-conflict-name"
+                            >
+                                —
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="output-rules">
+                    <div class="output-rules-header">UX / UI ПРАВИЛА</div>
+                    <div class="output-rules-list" id="output-rules-list">
+                        <div class="output-rule">
+                            <span class="output-rule-label">Типографика</span
+                            ><span
+                                class="output-rule-value"
+                                id="rule-typography"
+                                >—</span
+                            >
+                        </div>
+                        <div class="output-rule">
+                            <span class="output-rule-label">Spacing</span
+                            ><span class="output-rule-value" id="rule-spacing"
+                                >—</span
+                            >
+                        </div>
+                        <div class="output-rule">
+                            <span class="output-rule-label">Motion</span
+                            ><span class="output-rule-value" id="rule-motion"
+                                >—</span
+                            >
+                        </div>
+                        <div class="output-rule">
+                            <span class="output-rule-label">Visual</span
+                            ><span class="output-rule-value" id="rule-visual"
+                                >—</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="output-actions">
+                    <button
+                        class="btn-export"
+                        id="btn-export"
+                        onclick="generateSite()"
+                    >
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                        >
+                            <path
+                                d="M8 2v8M4 6l4 4 4-4M3 12h10"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        Экспорт / Скачать шаблон
+                    </button>
+                </div>
+            </aside>
+        </main>
+
+        <!-- ===== LIVE ANALYTICS HUD ===== -->
+        <div class="live-analytics" id="live-analytics">
+            <div class="live-analytics-header">
+                <span class="live-analytics-dot"></span>
+                LIVE ANALYTICS
             </div>
-        </div>
-
-        <div class="presets-section">
-            <div class="presets-header">ПРЕСЕТЫ АРХЕТИПОВ</div>
-            <div class="presets-grid" id="presets-grid">
-                <!-- filled by JS -->
-            </div>
-        </div>
-    </aside>
-
-    <!-- CENTER: ARCHETYPE FIELD -->
-    <section class="panel-field" id="panel-field">
-        <canvas id="field-canvas"></canvas>
-        <div class="field-overlay" id="field-overlay">
-            <div class="field-brand-dot" id="brand-dot"></div>
-        </div>
-        <div class="field-legend">
-            <span class="legend-item"><span class="legend-dot legend-primary"></span> Primary</span>
-            <span class="legend-item"><span class="legend-dot legend-secondary"></span> Secondary</span>
-            <span class="legend-item"><span class="legend-dot legend-conflict"></span> Conflict</span>
-            <span class="legend-item"><span class="legend-dot legend-brand"></span> Бренд</span>
-        </div>
-    </section>
-
-    <!-- RIGHT PANEL: OUTPUT -->
-    <aside class="panel-output" id="panel-output">
-        <div class="output-header">РЕЗУЛЬТАТ</div>
-
-        <div class="output-card output-card-primary" id="output-primary">
-            <div class="output-card-glow" id="output-primary-glow"></div>
-            <div class="output-card-header">
-                <div class="output-card-dot" id="output-primary-dot"></div>
-                <div>
-                    <div class="output-card-label">PRIMARY</div>
-                    <div class="output-card-name" id="output-primary-name">—</div>
+            <div class="live-analytics-grid">
+                <div class="live-analytics-item">
+                    <span class="live-analytics-label">Скролл</span>
+                    <span class="live-analytics-value" id="hud-scroll-speed"
+                        >—</span
+                    >
+                </div>
+                <div class="live-analytics-item">
+                    <span class="live-analytics-label">Мышь</span>
+                    <span class="live-analytics-value" id="hud-mouse-speed"
+                        >—</span
+                    >
+                </div>
+                <div class="live-analytics-item">
+                    <span class="live-analytics-label">Зона</span>
+                    <span class="live-analytics-value" id="hud-section">—</span>
+                </div>
+                <div class="live-analytics-item">
+                    <span class="live-analytics-label">Confidence</span>
+                    <span class="live-analytics-value" id="hud-confidence"
+                        >—</span
+                    >
                 </div>
             </div>
-            <div class="output-card-behavior" id="output-primary-behavior">—</div>
-        </div>
-
-        <div class="output-card output-card-secondary" id="output-secondary">
-            <div class="output-card-header">
-                <div class="output-card-dot" id="output-secondary-dot"></div>
-                <div>
-                    <div class="output-card-label">SECONDARY</div>
-                    <div class="output-card-name" id="output-secondary-name">—</div>
+            <div class="live-analytics-signals">
+                <div class="live-signal">
+                    <span class="live-signal-label">Control</span>
+                    <div class="live-signal-bar">
+                        <div
+                            class="live-signal-fill"
+                            id="hud-signal-bar-control"
+                        ></div>
+                    </div>
+                    <span class="live-signal-val" id="hud-signal-control"
+                        >0.00</span
+                    >
+                </div>
+                <div class="live-signal">
+                    <span class="live-signal-label">Energy</span>
+                    <div class="live-signal-bar">
+                        <div
+                            class="live-signal-fill"
+                            id="hud-signal-bar-energy"
+                        ></div>
+                    </div>
+                    <span class="live-signal-val" id="hud-signal-energy"
+                        >0.00</span
+                    >
+                </div>
+                <div class="live-signal">
+                    <span class="live-signal-label">Focus</span>
+                    <div class="live-signal-bar">
+                        <div
+                            class="live-signal-fill"
+                            id="hud-signal-bar-focus"
+                        ></div>
+                    </div>
+                    <span class="live-signal-val" id="hud-signal-focus"
+                        >0.00</span
+                    >
+                </div>
+                <div class="live-signal">
+                    <span class="live-signal-label">Method</span>
+                    <div class="live-signal-bar">
+                        <div
+                            class="live-signal-fill"
+                            id="hud-signal-bar-method"
+                        ></div>
+                    </div>
+                    <span class="live-signal-val" id="hud-signal-method"
+                        >0.00</span
+                    >
                 </div>
             </div>
         </div>
 
-        <div class="output-card output-card-conflict" id="output-conflict">
-            <div class="output-card-header">
-                <div class="output-card-dot" id="output-conflict-dot"></div>
-                <div>
-                    <div class="output-card-label">CONFLICT</div>
-                    <div class="output-card-name" id="output-conflict-name">—</div>
+        <!-- ===== EXPORT MODAL ===== -->
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal" id="modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">Шаблон сайта</h2>
+                    <button class="modal-close" onclick="closeModal()">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-archetype" id="modal-archetype"></div>
+                    <div class="modal-code">
+                        <pre id="modal-code"></pre>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-export" onclick="downloadTemplate()">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                        >
+                            <path
+                                d="M8 2v8M4 6l4 4 4-4M3 12h10"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        Скачать HTML
+                    </button>
+                    <button class="btn-secondary" onclick="closeModal()">
+                        Закрыть
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="output-rules">
-            <div class="output-rules-header">UX / UI ПРАВИЛА</div>
-            <div class="output-rules-list" id="output-rules-list">
-                <div class="output-rule"><span class="output-rule-label">Типографика</span><span class="output-rule-value" id="rule-typography">—</span></div>
-                <div class="output-rule"><span class="output-rule-label">Spacing</span><span class="output-rule-value" id="rule-spacing">—</span></div>
-                <div class="output-rule"><span class="output-rule-label">Motion</span><span class="output-rule-value" id="rule-motion">—</span></div>
-                <div class="output-rule"><span class="output-rule-label">Visual</span><span class="output-rule-value" id="rule-visual">—</span></div>
-            </div>
-        </div>
-
-        <div class="output-actions">
-            <button class="btn-export" id="btn-export" onclick="generateSite()">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 2v8M4 6l4 4 4-4M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Экспорт / Скачать шаблон
-            </button>
-        </div>
-    </aside>
-
-</main>
-
-<!-- ===== EXPORT MODAL ===== -->
-<div class="modal-overlay" id="modal-overlay">
-    <div class="modal" id="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">Шаблон сайта</h2>
-            <button class="modal-close" onclick="closeModal()">×</button>
-        </div>
-        <div class="modal-body">
-            <div class="modal-archetype" id="modal-archetype"></div>
-            <div class="modal-code">
-                <pre id="modal-code"></pre>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-export" onclick="downloadTemplate()">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 2v8M4 6l4 4 4-4M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Скачать HTML
-            </button>
-            <button class="btn-secondary" onclick="closeModal()">Закрыть</button>
-        </div>
-    </div>
-</div>
-
-<script src="data.js"></script>
-<script src="engine.js"></script>
-</body>
+        <script src="data.js"></script>
+        <script src="tracker.js"></script>
+        <script src="interpreter.js"></script>
+        <script src="engine.js"></script>
+        <script src="init-tracking.js"></script>
+    </body>
 </html>
