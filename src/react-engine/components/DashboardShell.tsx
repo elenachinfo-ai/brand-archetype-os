@@ -201,10 +201,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
           : "'Inter','Manrope',sans-serif",
       }}
     >
-      <DynamicBackground
-        softness={uiTheme.softness}
-        vibrancy={uiTheme.vibrancy}
-      />
+      <DynamicBackground accentColor={glow} />
 
       {/* ---- Top bar ---- */}
       <div className="relative z-20 flex items-center justify-between px-4 py-3 max-w-[1440px] mx-auto">
