@@ -1,5 +1,63 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, Component } from "react";
 import { DashboardShell } from "./react-engine/components/DashboardShell";
+
+// Error boundary to catch runtime errors
+class ErrorBoundary extends Component<
+  { children: React.ReactNode },
+  { error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#fafbfc",
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 500,
+              padding: 32,
+              textAlign: "center",
+            }}
+          >
+            <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
+            <h2 style={{ fontWeight: 400, color: "#334155", marginBottom: 8 }}>
+              Loading error
+            </h2>
+            <pre
+              style={{
+                fontSize: 11,
+                color: "#94a3b8",
+                textAlign: "left",
+                background: "#f1f5f9",
+                padding: 16,
+                borderRadius: 12,
+                overflow: "auto",
+                maxHeight: 200,
+              }}
+            >
+              {this.state.error.message}
+            </pre>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Lazy-load the 3D core — Three.js is heavy, don't block first paint
 const ArchetypeCore = lazy(() =>
@@ -29,24 +87,26 @@ function CoreFallback() {
 
 export function App() {
   return (
-    <DashboardShell>
-      <Suspense fallback={<CoreFallback />}>
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 45 }}
-          style={{ width: "100%", height: "100%" }}
-          gl={{
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance",
-          }}
-          dpr={[1, 1.5]}
-          performance={{ min: 0.3 }}
-        >
-          <Suspense fallback={null}>
-            <ArchetypeCore />
-          </Suspense>
-        </Canvas>
-      </Suspense>
-    </DashboardShell>
+    <ErrorBoundary>
+      <DashboardShell>
+        <Suspense fallback={<CoreFallback />}>
+          <Canvas
+            camera={{ position: [0, 0, 5], fov: 45 }}
+            style={{ width: "100%", height: "100%" }}
+            gl={{
+              antialias: true,
+              alpha: true,
+              powerPreference: "high-performance",
+            }}
+            dpr={[1, 1.5]}
+            performance={{ min: 0.3 }}
+          >
+            <Suspense fallback={null}>
+              <ArchetypeCore />
+            </Suspense>
+          </Canvas>
+        </Suspense>
+      </DashboardShell>
+    </ErrorBoundary>
   );
 }
