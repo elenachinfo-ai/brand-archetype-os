@@ -208,13 +208,13 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
       <DynamicBackground accentColor={glow} />
 
       {/* ---- Top bar ---- */}
-      <div className="relative z-20 flex items-center justify-between px-4 py-3 max-w-[1440px] mx-auto">
-        <div className="text-sm font-light tracking-[0.2em] text-slate-600 uppercase select-none">
+      <div className="relative z-20 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 max-w-[1440px] mx-auto">
+        <div className="text-xs sm:text-sm font-light tracking-[0.15em] sm:tracking-[0.2em] text-slate-600 uppercase select-none">
           Archetype<span className="text-slate-400">OS</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {stepLabel && (
-            <span className="text-[11px] text-slate-400 font-light hidden sm:inline">
+            <span className="text-[10px] sm:text-[11px] text-slate-400 font-light">
               {stepLabel}
             </span>
           )}
@@ -671,7 +671,7 @@ n                  {/* Q8: Brand Aura */}
         <motion.main
           layout
           transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          className="relative min-h-[350px] md:min-h-[550px] order-2"
+          className="relative min-h-[280px] sm:min-h-[350px] md:min-h-[550px] order-1 md:order-2"
         >
           <GlassPanel
             intensity="light"
@@ -700,7 +700,7 @@ n                  {/* Q8: Brand Aura */}
         <motion.aside
           layout
           transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          className="flex flex-col gap-3 order-3"
+          className="flex flex-col gap-3 order-2 md:order-3"
         >
           <GlassPanel intensity="medium" className="p-4">
             <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2">

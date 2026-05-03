@@ -223,3 +223,18 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.2);
 }
+
+/* ---- Mobile optimizations ---- */
+@media (max-width: 767px) {
+    body {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+    }
+    .magnetic-cursor, .magnetic-cursor-trail { display: none !important; }
+    input[type="range"] { min-height: 44px; }
+    input, select, textarea { font-size: 16px !important; }
+    .glass-interactive { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+}
+
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
