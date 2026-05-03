@@ -52,21 +52,36 @@ void main(){
 }`;
 
 const FRAG = /* glsl */ `
-uniform float uTime,uGlowIntensity,uSoft,uVibrant;
+uniform float uTime,uGlowIntensity,uSoft,uVibrant,uColorTemp;
 uniform vec3 uGlowColor,uCameraPos;
 varying vec3 vNormal,vWorld;varying float vDisp;
+
+// Kelvin → RGB approximation (simplified)
+vec3 kelvinToRGB(float k) {
+  float t=k/1000.0;
+  float r=clamp(t<=6.6?1.0:1.3*t-7.6,0.0,1.0);
+  float g=clamp(t<=6.6?0.4*t-0.8:2.3-0.18*t,0.0,1.0);
+  float b=clamp(t<=3.5?0.0:t<=6.6?0.5*t-1.75:1.0,0.0,1.0);
+  return vec3(r,g,b);
+}
+
 void main(){
   vec3 viewDir=normalize(uCameraPos-vWorld);
   float fresnel=pow(1.0-abs(dot(viewDir,vNormal)),3.0);
   float glowMask=smoothstep(0.0,0.35,abs(vDisp));
   float innerGlow=glowMask*(0.4+uGlowIntensity*0.6);
-  vec3 glowContrib=uGlowColor*(innerGlow+fresnel*0.55*uGlowIntensity);
-  vec3 base=mix(vec3(0.94,0.96,0.98),uGlowColor,uGlowIntensity*0.25+fresnel*0.15);
-  float alpha=0.5+uGlowIntensity*0.25-glowMask*0.12;
-  alpha=clamp(alpha,0.3,0.85);
+  vec3 glowContrib=uGlowColor*(innerGlow+fresnel*0.7*uGlowIntensity);
+  // Stronger color influence: base shifts from white toward glow color by up to 45%
+  float colorInfluence=uGlowIntensity*0.45+fresnel*0.25;
+  vec3 warmShift=kelvinToRGB(uColorTemp);
+  vec3 neutral=vec3(0.88,0.92,0.96);
+  vec3 base=mix(neutral,warmShift,0.3);
+  base=mix(base,uGlowColor,colorInfluence);
+  float alpha=0.45+uGlowIntensity*0.35-glowMask*0.1;
+  alpha=clamp(alpha,0.25,0.88);
   float spec=pow(max(0.0,dot(viewDir,vNormal)),40.0)*0.35;
   vec3 col=base+glowContrib+spec*vec3(1.0);
-  col+=fresnel*uGlowColor*0.18;
+  col+=fresnel*uGlowColor*0.25;
   gl_FragColor=vec4(col,alpha);
 }`;
 
@@ -150,6 +165,7 @@ export const ArchetypeCore: React.FC = () => {
       uPulse: { value: 0 },
       uGlowColor: { value: new THREE.Vector3(0.5, 0.9, 0.85) },
       uGlowIntensity: { value: 0.5 },
+      uColorTemp: { value: 5500.0 },
       uCameraPos: { value: new THREE.Vector3() },
     }),
     [],
@@ -204,7 +220,11 @@ export const ArchetypeCore: React.FC = () => {
     // Subtle ranges: Ruler→freq 0.3/amp 0.02, Outlaw→freq 2.2/amp 0.45
     mat.uniforms.uFreq.value = 0.3 + v * 1.5 + (1.0 - s) * 0.6;
     mat.uniforms.uAmp.value = 0.02 + v * 0.28 + c * 0.15 + (1.0 - s) * 0.12;
-    mat.uniforms.uGlowIntensity.value = 0.2 + v * 0.4;
+    // Glow intensity: 0.35–0.9 (was 0.2–0.6 — too pale)
+    mat.uniforms.uGlowIntensity.value = 0.35 + v * 0.4 + c * 0.15;
+    // Color temperature: 3200K (warm/lover) → 10000K (cool/sage)
+    // Blend based on softness (warm) vs vibrancy (cool)
+    mat.uniforms.uColorTemp.value = 3200.0 + v * 4000.0 + (1.0 - s) * 2800.0;
     mat.uniforms.uPulse.value = pulseRef.current;
     mat.uniforms.uCameraPos.value.copy(state.camera.position);
     if (meshRef.current) {
@@ -218,11 +238,11 @@ export const ArchetypeCore: React.FC = () => {
 
   return (
     <>
-      <Environment preset="studio" environmentIntensity={0.25} />
-      <ambientLight intensity={0.6} color="#fafbfc" />
-      <pointLight position={[4, 2, 5]} intensity={0.8} color={glowColor} />
-      <pointLight position={[-4, -1, -3]} intensity={0.4} color="#d0d8ff" />
-      <pointLight position={[0, -3, 2]} intensity={0.3} color={glowColor} />
+      <Environment preset="studio" environmentIntensity={0.2} />
+      <ambientLight intensity={0.5} color={glowColor} />
+      <pointLight position={[4, 2, 5]} intensity={1.0} color={glowColor} />
+      <pointLight position={[-4, -1, -3]} intensity={0.5} color={glowColor} />
+      <pointLight position={[0, -3, 2]} intensity={0.4} color={glowColor} />
       <mesh ref={meshRef}>
         <icosahedronGeometry args={[2.0, geoDetail]} />
         <shaderMaterial
@@ -240,14 +260,18 @@ export const ArchetypeCore: React.FC = () => {
         <meshBasicMaterial
           color={glowColor}
           transparent
-          opacity={0.12}
+          opacity={0.15 + uiTheme.vibrancy * 0.25}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
       <HaloParticles
         color={glowColor}
-        count={qualityManager.state.tier === "low" ? 150 : 400}
+        count={
+          qualityManager.state.tier === "low"
+            ? 150
+            : 350 + Math.round(uiTheme.vibrancy * 150)
+        }
       />
       <OrbitControls
         enableZoom={true}
