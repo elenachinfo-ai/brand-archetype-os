@@ -22,6 +22,7 @@ import { qualityManager } from "./QualityManager";
 import {
   getCulturalContext,
   getArchetypeMetaphor,
+  getLocaleTypographyOverrides,
   type LocaleCode,
 } from "../cultureLoader";
 
@@ -201,9 +202,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
       dir={direction}
       className="relative min-h-screen w-full overflow-hidden"
       style={{
-        fontFamily: isRTL
-          ? "'IBM Plex Sans Arabic','Tajawal',sans-serif"
-          : "'Inter','Manrope',sans-serif",
+        ...getLocaleTypographyOverrides(loc as LocaleCode),
       }}
     >
       <DynamicBackground accentColor={glow} />
@@ -261,7 +260,8 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   onClick={() => setStep(1)}
                   className="w-full py-3 rounded-xl bg-white/45 backdrop-blur-md border border-white/40
                     text-slate-700 font-medium hover:bg-white/60 transition-all active:scale-[0.98]"
-                  style={{ minHeight: 48 }}
+                  style={{
+        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 48 }}
                 >
                   {btnStart}
                 </button>
@@ -462,7 +462,8 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                     className="flex-1 py-3 rounded-xl bg-white/20 backdrop-blur-md border border-white/20
                       text-sm text-slate-600 font-medium hover:bg-white/30 disabled:opacity-25 disabled:cursor-not-allowed
                       transition-all"
-                    style={{ minHeight: 48 }}
+                    style={{
+        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 48 }}
                   >
                     {btnBack}
                   </button>
@@ -470,7 +471,8 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                     onClick={nextStep}
                     className="flex-1 py-3 rounded-xl bg-white/35 backdrop-blur-md border border-white/30
                       text-sm text-slate-700 font-semibold hover:bg-white/50 transition-all"
-                    style={{ minHeight: 48 }}
+                    style={{
+        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 48 }}
                   >
                     {btnNext}
                   </button>
@@ -503,13 +505,25 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   {dominantArchetype && (
                     <div className="p-3 rounded-lg bg-white/15 border border-white/10 space-y-1">
                       <div className="text-[9px] text-slate-400 uppercase tracking-widest">
-                        {loc === "ru" ? "Культурный код" : loc === "ar" ? "الرمز الثقافي" : "Cultural Code"}
+                        {loc === "ru"
+                          ? "Культурный код"
+                          : loc === "ar"
+                            ? "الرمز الثقافي"
+                            : "Cultural Code"}
                       </div>
                       <p className="text-xs text-slate-600 leading-relaxed italic">
-                        «{getArchetypeMetaphor(dominantArchetype, loc as LocaleCode)?.primary_metaphor ?? ""}»
+                        «
+                        {getArchetypeMetaphor(
+                          dominantArchetype,
+                          loc as LocaleCode,
+                        )?.primary_metaphor ?? ""}
+                        »
                       </p>
                       <p className="text-[10px] text-slate-400 leading-relaxed">
-                        {getArchetypeMetaphor(dominantArchetype, loc as LocaleCode)?.visual ?? ""}
+                        {getArchetypeMetaphor(
+                          dominantArchetype,
+                          loc as LocaleCode,
+                        )?.visual ?? ""}
                       </p>
                     </div>
                   )}
@@ -537,6 +551,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                           <div
                             className="h-1.5 rounded-full transition-all duration-500"
                             style={{
+        ...getLocaleTypographyOverrides(loc as LocaleCode),
                               width: `${uiTheme[key] * 100}%`,
                               backgroundColor: glow,
                             }}
@@ -593,7 +608,8 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   }}
                   className="w-full py-4 rounded-xl font-semibold text-sm bg-amber-200/80 border border-amber-300/50
                     text-amber-800 hover:bg-amber-300/70 transition-all active:scale-[0.98] shadow-[0_4px_20px_rgba(251,191,36,0.2)]"
-                  style={{ minHeight: 52 }}
+                  style={{
+        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 52 }}
                 >
                   {btnOrder}
                 </button>
@@ -601,7 +617,8 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                 <button
                   onClick={resetSession}
                   className="w-full py-2.5 text-xs text-slate-400 font-light bg-transparent hover:text-slate-600 transition-colors"
-                  style={{ minHeight: 44 }}
+                  style={{
+        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 44 }}
                 >
                   {loc === "ru"
                     ? "Новая сессия"
