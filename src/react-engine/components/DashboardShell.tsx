@@ -261,7 +261,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   className="w-full py-3 rounded-xl bg-white/45 backdrop-blur-md border border-white/40
                     text-slate-700 font-medium hover:bg-white/60 transition-all active:scale-[0.98]"
                   style={{
-        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 48 }}
+                    ...getLocaleTypographyOverrides(loc as LocaleCode),
+                    minHeight: 48,
+                  }}
                 >
                   {btnStart}
                 </button>
@@ -463,7 +465,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                       text-sm text-slate-600 font-medium hover:bg-white/30 disabled:opacity-25 disabled:cursor-not-allowed
                       transition-all"
                     style={{
-        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 48 }}
+                      ...getLocaleTypographyOverrides(loc as LocaleCode),
+                      minHeight: 48,
+                    }}
                   >
                     {btnBack}
                   </button>
@@ -472,7 +476,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                     className="flex-1 py-3 rounded-xl bg-white/35 backdrop-blur-md border border-white/30
                       text-sm text-slate-700 font-semibold hover:bg-white/50 transition-all"
                     style={{
-        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 48 }}
+                      ...getLocaleTypographyOverrides(loc as LocaleCode),
+                      minHeight: 48,
+                    }}
                   >
                     {btnNext}
                   </button>
@@ -551,7 +557,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                           <div
                             className="h-1.5 rounded-full transition-all duration-500"
                             style={{
-        ...getLocaleTypographyOverrides(loc as LocaleCode),
+                              ...getLocaleTypographyOverrides(
+                                loc as LocaleCode,
+                              ),
                               width: `${uiTheme[key] * 100}%`,
                               backgroundColor: glow,
                             }}
@@ -609,7 +617,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   className="w-full py-4 rounded-xl font-semibold text-sm bg-amber-200/80 border border-amber-300/50
                     text-amber-800 hover:bg-amber-300/70 transition-all active:scale-[0.98] shadow-[0_4px_20px_rgba(251,191,36,0.2)]"
                   style={{
-        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 52 }}
+                    ...getLocaleTypographyOverrides(loc as LocaleCode),
+                    minHeight: 52,
+                  }}
                 >
                   {btnOrder}
                 </button>
@@ -618,7 +628,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   onClick={resetSession}
                   className="w-full py-2.5 text-xs text-slate-400 font-light bg-transparent hover:text-slate-600 transition-colors"
                   style={{
-        ...getLocaleTypographyOverrides(loc as LocaleCode), minHeight: 44 }}
+                    ...getLocaleTypographyOverrides(loc as LocaleCode),
+                    minHeight: 44,
+                  }}
                 >
                   {loc === "ru"
                     ? "Новая сессия"
@@ -639,9 +651,12 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
         >
           <GlassPanel
             intensity="light"
-            className="w-full h-full p-1 overflow-hidden"
+            className="w-full h-full p-1 overflow-hidden relative"
           >
-            {children ? children : <LivingPlan className="w-full h-full" />}
+            {/* 3D Core — background layer */}
+            <div className="absolute inset-0">{children}</div>
+            {/* LivingPlan — node graph overlay, reactive from Q1 */}
+            <LivingPlan className="absolute inset-0 w-full h-full" />
           </GlassPanel>
           {/* Hint text when idle */}
           {step === 0 && (
