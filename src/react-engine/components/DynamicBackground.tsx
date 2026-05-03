@@ -1,78 +1,136 @@
-// Dark holographic HUD background — fine grid + radial glow
-import React, { useEffect, useRef } from "react";
+// =============================================================================
+// DynamicBackground — Living Mesh Gradient
+// Slow, fluid 4-color mesh that subtly shifts. 60fps via requestAnimationFrame.
+// Palette: Mint (#CFFFE5), Lavender (#E6E6FA), Peach (#FFE4E1), Baby Blue (#F0F8FF).
+// =============================================================================
 
-interface Props {
-  accentColor?: string;
+import React, { useEffect, useRef } from "react";
+import { qualityManager } from "./QualityManager";
+
+interface DynamicBackgroundProps {
+  /** Override softness from UI theme (0..1) — controls blob roundness */
+  softness?: number;
+  /** Override vibrancy (0..1) — controls color saturation */
+  vibrancy?: number;
 }
 
-export const DynamicBackground: React.FC<Props> = ({
-  accentColor = "#7bbcd4",
+const PALETTE = {
+  mint: { r: 207, g: 255, b: 229 },
+  lavender: { r: 230, g: 230, b: 250 },
+  peach: { r: 255, g: 228, b: 225 },
+  babyBlue: { r: 240, g: 248, b: 255 },
+};
+
+export const DynamicBackground: React.FC<DynamicBackgroundProps> = ({
+  softness = 0.5,
+  vibrancy = 0.5,
 }) => {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number>(0);
+  const timeRef = useRef<number>(0);
 
   useEffect(() => {
-    const c = ref.current;
-    if (!c) return;
-    const ctx = c.getContext("2d");
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    let running = true;
-    const resize = () => {
-      const dpr = Math.min(devicePixelRatio || 1, 2);
-      c.width = innerWidth * dpr;
-      c.height = innerHeight * dpr;
-      c.style.width = innerWidth + "px";
-      c.style.height = innerHeight + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    addEventListener("resize", resize);
 
-    const draw = () => {
+    let running = true;
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap for perf
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.scale(dpr, dpr);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const draw = (now: number) => {
       if (!running) return;
-      const W = innerWidth,
-        H = innerHeight;
+      timeRef.current = now * 0.001; // seconds
+      const t = timeRef.current;
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+
+      // Clear
       ctx.clearRect(0, 0, W, H);
 
-      // Fine grid
-      const step = 40;
-      ctx.strokeStyle = "rgba(255,255,255,0.03)";
-      ctx.lineWidth = 0.5;
-      ctx.beginPath();
-      for (let x = 0; x < W; x += step) {
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, H);
-      }
-      for (let y = 0; y < H; y += step) {
-        ctx.moveTo(0, y);
-        ctx.lineTo(W, y);
-      }
-      ctx.stroke();
+      // 4 soft blobs that drift slowly
+      const blobs = [
+        {
+          x: W * 0.25 + Math.sin(t * 0.3) * W * 0.08,
+          y: H * 0.3 + Math.cos(t * 0.4) * H * 0.1,
+          r: Math.max(W, H) * (0.45 + softness * 0.2),
+          color: PALETTE.mint,
+        },
+        {
+          x: W * 0.7 + Math.cos(t * 0.35) * W * 0.1,
+          y: H * 0.25 + Math.sin(t * 0.45) * H * 0.08,
+          r: Math.max(W, H) * (0.4 + softness * 0.2),
+          color: PALETTE.lavender,
+        },
+        {
+          x: W * 0.3 + Math.cos(t * 0.5) * W * 0.12,
+          y: H * 0.7 + Math.sin(t * 0.35) * H * 0.1,
+          r: Math.max(W, H) * (0.42 + softness * 0.18),
+          color: PALETTE.peach,
+        },
+        {
+          x: W * 0.7 + Math.sin(t * 0.4) * W * 0.09,
+          y: H * 0.65 + Math.cos(t * 0.5) * H * 0.12,
+          r: Math.max(W, H) * (0.38 + softness * 0.22),
+          color: PALETTE.babyBlue,
+        },
+      ];
 
-      // Radial glow at center
-      const g = ctx.createRadialGradient(
-        W / 2,
-        H / 2,
-        0,
-        W / 2,
-        H / 2,
-        Math.max(W, H) * 0.6,
-      );
-      g.addColorStop(0, accentColor + "0c");
-      g.addColorStop(0.5, accentColor + "05");
-      g.addColorStop(1, "transparent");
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
+      // Render each blob as a large radial gradient
+      blobs.forEach((blob) => {
+        const { r: cr, g: cg, b: cb } = blob.color;
 
-      requestAnimationFrame(draw);
+        // Desaturate based on vibrancy inversion (vibrancy=0 = pastel, 1 = saturated)
+        const sat = 0.3 + vibrancy * 0.7;
+        const gray = (cr + cg + cb) / 3;
+        const rr = Math.round(gray + (cr - gray) * sat);
+        const gg = Math.round(gray + (cg - gray) * sat);
+        const bb = Math.round(gray + (cb - gray) * sat);
+
+        const gradient = ctx.createRadialGradient(
+          blob.x,
+          blob.y,
+          0,
+          blob.x,
+          blob.y,
+          blob.r,
+        );
+        gradient.addColorStop(0, `rgba(${rr},${gg},${bb},0.55)`);
+        gradient.addColorStop(0.5, `rgba(${rr},${gg},${bb},0.2)`);
+        gradient.addColorStop(1, "rgba(255,255,255,0)");
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, W, H);
+      });
+
+      animRef.current = requestAnimationFrame(draw);
     };
-    requestAnimationFrame(draw);
+
+    animRef.current = requestAnimationFrame(draw);
+
     return () => {
       running = false;
-      removeEventListener("resize", resize);
+      window.removeEventListener("resize", resize);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
     };
-  }, [accentColor]);
+  }, [softness, vibrancy]);
 
   return (
-    <canvas ref={ref} className="fixed inset-0 -z-10" aria-hidden="true" />
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 -z-10"
+      aria-hidden="true"
+    />
   );
 };

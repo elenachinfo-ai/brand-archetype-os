@@ -57,14 +57,14 @@ export const MemoryModule: React.FC<MemoryModuleProps> = ({
               backdrop-blur-md
               ${
                 isActive
-                  ? "bg-white/10 border-white/20"
-                  : "bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12]"
+                  ? "bg-white/50 border-white/50 shadow-lg"
+                  : "bg-white/15 border-white/15 hover:bg-white/25 hover:border-white/30"
               }
             `}
             style={
               isActive
                 ? {
-                    boxShadow: `0 0 24px ${glowColor}33`,
+                    boxShadow: `0 4px 20px rgba(0,0,0,0.04), 0 0 24px ${glowColor}33`,
                     borderColor: `${glowColor}66`,
                   }
                 : { minHeight: 44 }
@@ -78,8 +78,8 @@ export const MemoryModule: React.FC<MemoryModuleProps> = ({
                   text-sm flex-shrink-0 transition-all duration-300
                   ${
                     isActive
-                      ? "bg-white/15"
-                      : "bg-white/[0.04]"
+                      ? "bg-white/80 shadow-sm"
+                      : "bg-white/20"
                   }
                 `}
                 style={
@@ -94,13 +94,13 @@ export const MemoryModule: React.FC<MemoryModuleProps> = ({
               <div className="min-w-0">
                 <div
                   className={`text-sm font-medium transition-colors duration-300 ${
-                    isActive ? "text-white" : "text-slate-400"
-                  }`
+                    isActive ? "text-slate-800" : "text-slate-600"
+                  }`}
                 >
                   {opt.label}
                 </div>
                 {opt.description && (
-                  <div className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                  <div className="text-xs text-slate-400 mt-0.5 leading-relaxed">
                     {opt.description}
                   </div>
                 )}
