@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, type ReactNode } from "react";
 import { useArchetypeEngine } from "../useArchetypeEngine";
 import { LanguageToggle } from "./LanguageToggle";
-import { DynamicBackground } from "./DynamicBackground";
 import { PastelSlider } from "./PastelSlider";
 import { MemoryModule } from "./MemoryModule";
 import { PowerDial } from "./PowerDial";
@@ -51,7 +50,7 @@ export function SimpleShell({ children }: { children?: ReactNode }) {
 
   return (
     <div dir={direction} style={{ minHeight: "100vh", width: "100%", background: "#0a0b10", overflow: "hidden", position: "relative", fontFamily: direction === "rtl" ? "IBM Plex Sans Arabic,Tajawal,sans-serif" : "Inter,Manrope,sans-serif" }}>
-      <DynamicBackground accentColor={accent} />
+      <div style={{position:"fixed",inset:0,zIndex:-10,background:"#0a0b10"}} />
 
       {/* Top bar */}
       <div style={{ position: "relative", zIndex: 30, display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px" }}>
