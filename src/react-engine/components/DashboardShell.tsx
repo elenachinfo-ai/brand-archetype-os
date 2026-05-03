@@ -635,7 +635,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
             <div className="text-[11px] text-slate-500 mt-0.5">
               {dominantArchetype
                 ? t(`archetypes.${dominantArchetype}`)
-                : L.awaiting}
+                : loc === "ru"
+                  ? "Ожидание..."
+                  : "Awaiting..."}
             </div>
           </div>
 
