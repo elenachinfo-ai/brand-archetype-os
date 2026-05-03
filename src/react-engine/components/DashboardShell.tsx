@@ -554,18 +554,23 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   id="cta-order-website"
                   onClick={() => {
                     soundEngine.play("pulse-confirm", 0);
-                    const payload = {
-                      archetype: dominantArchetype,
-                      scores: normalizedScores,
-                      theme: uiTheme,
-                      plan: projectPlan,
-                    };
-                    alert(
-                      loc === "ru"
-                        ? "Заявка сформирована! Лена свяжется с вами."
-                        : loc === "ar"
-                          ? "تم تشكيل الطلب! ستتواصل معك لينا."
-                          : "Request submitted! Lena will contact you.",
+                    const dominantLabel = dominantArchetype
+                      ? t(`archetypes.${dominantArchetype}`)
+                      : "?";
+                    const scoresSummary = dominantArchetype
+                      ? `${dominantLabel} (${Math.round((normalizedScores as any)[dominantArchetype] ?? 0)}%)`
+                      : "?";
+                    const softness = Math.round(uiTheme.softness * 100);
+                    const vibrancy = Math.round(uiTheme.vibrancy * 100);
+                    const complexity = Math.round(uiTheme.complexity * 100);
+                    const themeLine = `Softness ${softness}% · Vibrancy ${vibrancy}% · Complexity ${complexity}%`;
+                    const msg = encodeURIComponent(
+                      `ArchetypeOS — запрос на сайт\nАрхетип: ${scoresSummary}\n${themeLine}`,
+                    );
+                    // Telegram pre-filled message (replace username)
+                    window.open(
+                      `https://t.me/elenachinfo?text=${msg}`,
+                      "_blank",
                     );
                   }}
                   className="w-full py-4 rounded-xl font-semibold text-sm bg-amber-200/80 border border-amber-300/50

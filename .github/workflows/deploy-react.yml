@@ -2,7 +2,7 @@ name: Deploy React Engine to GitHub Pages
 
 on:
   push:
-    branches: [feature/react-engine]
+    branches: [feature/react-engine, feature/culture-analysis]
 
 jobs:
   build-and-deploy:
