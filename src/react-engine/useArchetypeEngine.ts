@@ -61,8 +61,8 @@ export interface PowerDialState {
 /** One node in the dynamic project plan */
 export interface ProjectPlanNode {
   id: string;
-  labelKey: string;        // translations key
-  baseImportance: number;  // 0..1
+  labelKey: string; // translations key
+  baseImportance: number; // 0..1
   currentImportance: number; // 0..1 — scaled by dominant archetype
   archetypeAffinity: Partial<Record<ArchetypeId, number>>; // multiplier per archetype
 }
@@ -114,19 +114,19 @@ export interface EngineState {
 // =============================================================================
 
 const DEFAULT_SLIDERS: Record<string, SliderState> = {
-  q1_density:    { id: "q1_density",    value: 50 },
-  q2_geometry:   { id: "q2_geometry",   value: 50 },
-  q3_temperature:{ id: "q3_temperature",value: 50 },
+  q1_density: { id: "q1_density", value: 50 },
+  q2_geometry: { id: "q2_geometry", value: 50 },
+  q3_temperature: { id: "q3_temperature", value: 50 },
 };
 
 const DEFAULT_MEMORY_MODULES: Record<string, MemoryModuleState> = {
-  q4_space:  { id: "q4_space",  selectedKey: null },
-  q5_entry:  { id: "q5_entry",  selectedKey: null },
+  q4_space: { id: "q4_space", selectedKey: null },
+  q5_entry: { id: "q5_entry", selectedKey: null },
 };
 
 const DEFAULT_POWER_DIALS: Record<string, PowerDialState> = {
-  q6_scroll:  { id: "q6_scroll",  value: 50 },
-  q7_risk:    { id: "q7_risk",    value: 50 },
+  q6_scroll: { id: "q6_scroll", value: 50 },
+  q7_risk: { id: "q7_risk", value: 50 },
 };
 
 // =============================================================================
@@ -167,14 +167,24 @@ const DEFAULT_PROJECT_PLAN: ProjectPlanNode[] = [
     labelKey: "project_plan.interactive_section",
     baseImportance: 0.5,
     currentImportance: 0.5,
-    archetypeAffinity: { explorer: 1.6, magician: 1.4, creator: 1.2, jester: 1.2 },
+    archetypeAffinity: {
+      explorer: 1.6,
+      magician: 1.4,
+      creator: 1.2,
+      jester: 1.2,
+    },
   },
   {
     id: "testimonials_section",
     labelKey: "project_plan.testimonials_section",
     baseImportance: 0.6,
     currentImportance: 0.6,
-    archetypeAffinity: { caregiver: 1.4, everyman: 1.3, lover: 1.2, innocent: 1.1 },
+    archetypeAffinity: {
+      caregiver: 1.4,
+      everyman: 1.3,
+      lover: 1.2,
+      innocent: 1.1,
+    },
   },
   {
     id: "cta_section",
@@ -237,7 +247,12 @@ function loadSession(): PersistedSession | null {
     if (!raw) return null;
     const data = JSON.parse(raw) as PersistedSession;
     // Validate structure
-    if (!data.sessionId || !data.sliders || !data.memoryModules || !data.powerDials) {
+    if (
+      !data.sessionId ||
+      !data.sliders ||
+      !data.memoryModules ||
+      !data.powerDials
+    ) {
       return null;
     }
     return data;
@@ -404,7 +419,10 @@ export const useArchetypeStore = create<EngineState>((set, get) => ({
 
   setPowerDial: (id, value) => {
     set((s) => ({
-      powerDials: { ...s.powerDials, [id]: { id, value: clamp(value, 0, 100) } },
+      powerDials: {
+        ...s.powerDials,
+        [id]: { id, value: clamp(value, 0, 100) },
+      },
     }));
     get().recalculate();
   },
@@ -491,7 +509,9 @@ export const useArchetypeStore = create<EngineState>((set, get) => ({
     // Clear persisted session
     try {
       localStorage.removeItem(STORAGE_KEY);
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
 
     set({
       sliders: { ...DEFAULT_SLIDERS },
@@ -581,18 +601,17 @@ export const useArchetypeStore = create<EngineState>((set, get) => ({
       if (node && typeof node === "object" && part in node) {
         node = node[part];
       } else {
-        // Fallback: try ru
-        let fallback: any = translations;
-        for (const p of parts) {
-          if (fallback && typeof fallback === "object" && p in fallback) {
-            fallback = fallback[p];
-          } else {
-            return key; // raw key as last resort
-          }
-        }
-        node = fallback;
-        break;
+        return key; // raw key as last resort
       }
+    }
+
+    // Extract locale-specific string if node is a locale object
+    if (node && typeof node === "object" && node[locale]) {
+      node = node[locale];
+    }
+    // Fallback: try ru
+    if (node && typeof node === "object" && node["ru"]) {
+      node = node["ru"];
     }
 
     let text = typeof node === "string" ? node : key;
