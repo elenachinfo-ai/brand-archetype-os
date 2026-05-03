@@ -155,14 +155,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
     };
   }, []);
 
-  // ---- Ambient drone ----
-  useEffect(() => {
-    if (dominantArchetype && isComplete) {
-      soundEngine.startDrone(DRONE_FREQ[dominantArchetype] ?? 220);
-    } else {
-      soundEngine.stopDrone();
-    }
-  }, [dominantArchetype, isComplete]);
+  // Sound: only on interactions (sliders, clicks) — no ambient drone
 
   const glow = dominantArchetype
     ? (GLOW[dominantArchetype] ?? "#CFFFE5")
