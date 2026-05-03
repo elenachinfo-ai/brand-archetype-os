@@ -7,6 +7,7 @@
 import React, { useEffect, useRef, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useArchetypeEngine } from "../useArchetypeEngine";
+import { GlassPanel } from "./GlassPanel";
 import { LanguageToggle } from "./LanguageToggle";
 import { DynamicBackground } from "./DynamicBackground";
 import { PastelSlider } from "./PastelSlider";
@@ -234,38 +235,41 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
           >
             {/* ---- STEP 0: Onboarding ---- */}
             {step === 0 && (
-              <div className="p-6 space-y-5">
-                <div>
-                  <div className="text-[10px] text-slate-600 uppercase tracking-[0.3em] mb-3">
-                    Brand Archetype Diagnostic
-                  </div>
-                  <h1 className="text-3xl font-light text-white tracking-wide mb-2">
-                    ArchetypeOS
-                  </h1>
-                  <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
-                    {loc === "ru"
-                      ? "Определите ДНК вашего бренда за 7 шагов."
-                      : "Determine your brand's DNA in 7 steps."}
-                  </p>
+              <GlassPanel
+                intensity="medium"
+                className="p-6 text-center space-y-4"
+              >
+                <div className="text-3xl font-light text-slate-400">
+                  ArchetypeOS
                 </div>
+                <h1 className="text-lg font-light text-slate-700 tracking-wide">
+                  ArchetypeOS
+                </h1>
+                <p className="text-sm text-slate-500 leading-relaxed">
+                  {loc === "ru"
+                    ? "Диагностический инструмент для определения ДНК вашего бренда. 7 вопросов — и вы узнаете свой архетип, получите палитру, шрифты и структуру сайта."
+                    : loc === "ar"
+                      ? "أداة تشخيصية لتحديد الحمض النووي لعلامتك التجارية. ٧ أسئلة — وستعرف نمطك الأصلي ولوحة الألوان والخطوط وهيكل الموقع."
+                      : "A diagnostic tool to determine your brand's DNA. 7 questions — and you'll know your archetype, color palette, fonts, and site structure."}
+                </p>
                 <button
                   onClick={() => setStep(1)}
-                  className="px-8 py-3 bg-white/5 border border-white/10 rounded-full text-sm font-medium
-                    text-white/80 hover:bg-white/10 hover:border-white/20 transition-all"
+                  className="w-full py-3 rounded-xl bg-white/45 backdrop-blur-md border border-white/40
+                    text-slate-700 font-medium hover:bg-white/60 transition-all active:scale-[0.98]"
                   style={{ minHeight: 48 }}
                 >
                   {btnStart}
                 </button>
-              </div>
+              </GlassPanel>
             )}
 
             {/* ---- STEPS 1-7: Diagnostic ---- */}
             {step >= 1 && step <= 7 && (
               <>
-                <div className="space-y-5">
+                <GlassPanel intensity="medium" className="p-4 space-y-4">
                   {/* Block header */}
                   {currentBlock && (
-                    <div className="text-[11px] text-slate-500 uppercase tracking-[0.2em]">
+                    <div className="text-xs text-slate-400 uppercase tracking-widest">
                       {BLOCK_TITLES[loc]?.[currentBlock]}
                     </div>
                   )}
@@ -443,7 +447,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                       ariaLabel="Risk Appetite"
                     />
                   )}
-                </div>
+                </GlassPanel>
 
                 {/* Nav buttons */}
                 <div className="flex gap-2">
@@ -476,7 +480,11 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col gap-3"
               >
-                <div className="p-5 space-y-4 bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/[0.06]">
+                <GlassPanel
+                  intensity="heavy"
+                  className="p-5 space-y-4"
+                  glowColor={glow}
+                >
                   <div className="text-[10px] text-slate-400 uppercase tracking-widest">
                     Brand Archetype
                   </div>
@@ -537,7 +545,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                       </span>
                     </div>
                   </div>
-                </div>
+                </GlassPanel>
 
                 <AIAdvisor />
                 <ExportSequence />
@@ -589,9 +597,12 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
           transition={{ type: "spring", stiffness: 200, damping: 25 }}
           className="relative min-h-[350px] md:min-h-[550px] order-2"
         >
-          <div className="w-full h-full">
+          <GlassPanel
+            intensity="light"
+            className="w-full h-full p-1 overflow-hidden"
+          >
             {children ? children : <LivingPlan className="w-full h-full" />}
-          </div>
+          </GlassPanel>
           {/* Hint text when idle */}
           {step === 0 && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -612,54 +623,69 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
           transition={{ type: "spring", stiffness: 200, damping: 25 }}
           className="flex flex-col gap-3 order-3"
         >
-          <div className="p-4 bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/[0.04]">
-            <div className="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-2">
-              {loc === "ru" ? "Радар" : "Radar"}
+          <GlassPanel intensity="medium" className="p-4">
+            <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-2">
+              {loc === "ru" ? "Радар архетипов" : "Archetype Radar"}
             </div>
             <RadarChart
               scores={normalizedScores as any}
               brandPosition={radarPosition}
               dominantId={dominantArchetype}
             />
-          </div>
+          </GlassPanel>
 
-          <div className="p-4 bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/[0.04]">
-            <div className="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-1">
+          <GlassPanel intensity="light" className="p-4">
+            <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">
               {loc === "ru" ? "Гармония" : "Harmony"}
             </div>
-            <div className="text-2xl font-light text-white tabular-nums">
+            <div className="text-2xl font-light text-slate-700 tabular-nums">
               {dominantArchetype
                 ? `${Math.round((normalizedScores as any)[dominantArchetype] ?? 0)}%`
                 : "--"}
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
+            <div className="text-[11px] text-slate-400 mt-0.5">
               {dominantArchetype
                 ? t(`archetypes.${dominantArchetype}`)
                 : loc === "ru"
-                  ? "Ожидание..."
-                  : "Awaiting..."}
+                  ? "Ожидание ввода..."
+                  : "Awaiting input..."}
             </div>
-          </div>
+          </GlassPanel>
 
-          <div className="p-4 bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/[0.04] text-[10px] text-slate-500 space-y-1.5">
-            <div className="text-[10px] text-slate-500 uppercase tracking-[0.2em] mb-1">
-              System
+          <GlassPanel
+            intensity="light"
+            className="p-4 space-y-2 text-[11px] text-slate-500"
+          >
+            <div className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">
+              {loc === "ru" ? "Система" : "System"}
             </div>
             <div className="flex items-center gap-2">
               <div
-                className={`w-1 h-1 rounded-full ${isHydrated ? "bg-emerald-500" : "bg-amber-500"}`}
+                className={`w-1.5 h-1.5 rounded-full ${isHydrated ? "bg-emerald-400" : "bg-amber-400"}`}
               />
-              {isHydrated ? "Active" : "Loading..."}
+              {isHydrated
+                ? loc === "ru"
+                  ? "Сессия активна"
+                  : "Session active"
+                : loc === "ru"
+                  ? "Загрузка..."
+                  : "Loading..."}
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-sky-500" />
+              <div className="w-1.5 h-1.5 rounded-full bg-sky-400" />
               GPU: {qualityManager.state.tier}
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-violet-500" />
-              Sound: {soundEngine.enabled ? "on" : "off"}
+              <div className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+              {soundEngine.enabled
+                ? loc === "ru"
+                  ? "Звук: вкл"
+                  : "Sound: on"
+                : loc === "ru"
+                  ? "Звук: выкл"
+                  : "Sound: off"}
             </div>
-          </div>
+          </GlassPanel>
         </motion.aside>
       </div>
     </div>
