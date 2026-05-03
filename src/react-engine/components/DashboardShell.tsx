@@ -19,6 +19,11 @@ import { AIAdvisor } from "./AIAdvisor";
 import { ExportSequence } from "./ExportSequence";
 import { soundEngine } from "./SoundEngine";
 import { qualityManager } from "./QualityManager";
+import {
+  getCulturalContext,
+  getArchetypeMetaphor,
+  type LocaleCode,
+} from "../cultureLoader";
 
 // ---- Archetype glow colors ----
 const GLOW: Record<string, string> = {
@@ -495,6 +500,19 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                     {t(`archetypes.${dominantArchetype}_desc`)}
                   </p>
 
+                  {dominantArchetype && (
+                    <div className="p-3 rounded-lg bg-white/15 border border-white/10 space-y-1">
+                      <div className="text-[9px] text-slate-400 uppercase tracking-widest">
+                        {loc === "ru" ? "Культурный код" : loc === "ar" ? "الرمز الثقافي" : "Cultural Code"}
+                      </div>
+                      <p className="text-xs text-slate-600 leading-relaxed italic">
+                        «{getArchetypeMetaphor(dominantArchetype, loc as LocaleCode)?.primary_metaphor ?? ""}»
+                      </p>
+                      <p className="text-[10px] text-slate-400 leading-relaxed">
+                        {getArchetypeMetaphor(dominantArchetype, loc as LocaleCode)?.visual ?? ""}
+                      </p>
+                    </div>
+                  )}
                   <div className="space-y-2 pt-2 border-t border-white/20">
                     {[
                       {
