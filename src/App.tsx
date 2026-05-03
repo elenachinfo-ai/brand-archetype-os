@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, Component } from "react";
-import { DashboardShell } from "./react-engine/components/DashboardShell";
+import { HolographicShell } from "./react-engine/components/HolographicShell";
 
 // Error boundary to catch runtime errors
 class ErrorBoundary extends Component<
@@ -22,8 +22,9 @@ class ErrorBoundary extends Component<
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "#fafbfc",
+            background: "#0a0b10",
             fontFamily: "Inter, sans-serif",
+            color: "#94a3b8",
           }}
         >
           <div
@@ -33,16 +34,15 @@ class ErrorBoundary extends Component<
               textAlign: "center",
             }}
           >
-            <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
-            <h2 style={{ fontWeight: 400, color: "#334155", marginBottom: 8 }}>
+            <h2 style={{ fontWeight: 300, color: "#e2e8f0", marginBottom: 8 }}>
               Loading error
             </h2>
             <pre
               style={{
                 fontSize: 11,
-                color: "#94a3b8",
+                color: "#64748b",
                 textAlign: "left",
-                background: "#f1f5f9",
+                background: "#1e293b",
                 padding: 16,
                 borderRadius: 12,
                 overflow: "auto",
@@ -88,7 +88,7 @@ function CoreFallback() {
 export function App() {
   return (
     <ErrorBoundary>
-      <DashboardShell>
+      <HolographicShell>
         <Suspense fallback={<CoreFallback />}>
           <Canvas
             camera={{ position: [0, 0, 5], fov: 45 }}
@@ -106,7 +106,7 @@ export function App() {
             </Suspense>
           </Canvas>
         </Suspense>
-      </DashboardShell>
+      </HolographicShell>
     </ErrorBoundary>
   );
 }
