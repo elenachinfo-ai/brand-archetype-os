@@ -1,0 +1,1120 @@
+{
+  "version": "2.0",
+  "description": "Расширенная 8-вопросная диагностика ArchetypeOS. Каждый ответ — это одновременно: (1) сдвиг 4D-вектора бренда, (2) CSS-команда для мгновенного изменения интерфейса, (3) Three.js-команда для трансформации 3D-ядра.",
+  "design_references": {
+    "fabfilter": "Точность аудио-плагинов: тактильные 2D/3D элементы, визуализация сложных процессов через чистые формы",
+    "hud_minority_report": "Периферийное распределение данных, центр свободен для главного объекта",
+    "generative_tools": "Сложность ИИ спрятана под простыми ползунками — 'In one click'"
+  },
+  "css_variable_registry": {
+    "--radius-sm": {
+      "description": "Скругление мелких элементов: от острых углов Героя (6px) до мягких кругов Опекуна (16px)",
+      "range": [2, 16],
+      "unit": "px",
+      "archetype_spectrum": "rebel(2) → hero(6) → ruler(4) → sage(4) → everyman(8) → creator(8) → explorer(10) → jester(12) → magician(12) → innocent(16) → caregiver(14) → lover(16)"
+    },
+    "--radius-md": {
+      "description": "Скругление панелей и карточек",
+      "range": [4, 28],
+      "unit": "px",
+      "archetype_spectrum": "rebel(4) → ruler(8) → sage(8) → hero(10) → everyman(14) → creator(16) → explorer(18) → jester(20) → magician(22) → innocent(26) → caregiver(24) → lover(28)"
+    },
+    "--radius-lg": {
+      "description": "Скругление крупных контейнеров и модальных окон",
+      "range": [8, 44],
+      "unit": "px",
+      "archetype_spectrum": "rebel(8) → ruler(12) → sage(14) → hero(16) → everyman(20) → creator(26) → explorer(28) → jester(30) → magician(36) → caregiver(38) → innocent(40) → lover(44)"
+    },
+    "--backdrop-blur": {
+      "description": "Глубина матового стекла (backdrop-filter blur). 0 = прозрачность, 40 = глубокая заморозка",
+      "range": [0, 40],
+      "unit": "px",
+      "archetype_spectrum": "rebel(2) → everyman(6) → hero(8) → ruler(12) → sage(16) → explorer(18) → jester(14) → creator(20) → lover(24) → caregiver(22) → innocent(20) → magician(30)"
+    },
+    "--backdrop-saturate": {
+      "description": "Насыщенность матового стекла. <100% = desaturated, >100% = vibrant bleed",
+      "range": [50, 200],
+      "unit": "%",
+      "archetype_spectrum": "sage(60) → everyman(80) → ruler(100) → hero(110) → rebel(90) → explorer(130) → caregiver(140) → innocent(150) → creator(160) → lover(170) → jester(180) → magician(190)"
+    },
+    "--glass-opacity": {
+      "description": "Базовая прозрачность стеклянных панелей (bg-glass alpha)",
+      "range": [0.4, 0.95],
+      "unit": "alpha",
+      "archetype_spectrum": "rebel(0.6) → jester(0.55) → explorer(0.6) → hero(0.65) → everyman(0.65) → innocent(0.6) → caregiver(0.65) → magician(0.6) → creator(0.6) → lover(0.6) → sage(0.7) → ruler(0.7)"
+    },
+    "--color-interpolation": {
+      "description": "Метод интерполяции цветов в градиентах (CSS color-interpolation)",
+      "values": ["linearRGB", "srgb", "oklch"],
+      "archetype_spectrum": "rebel(srgb) → hero(linearRGB) → ruler(srgb) → everyman(srgb) → explorer(oklch) → jester(oklch) → lover(oklch) → caregiver(oklch) → creator(oklch) → magician(oklch) → sage(srgb) → innocent(oklch)"
+    },
+    "--transition-easing": {
+      "description": "Кривая easing для всех переходов интерфейса",
+      "values": {
+        "arrow": "cubic-bezier(0.7, 0, 1, 0.5) — линейная, быстрая, решительная (Rebel, Hero)",
+        "pulse": "cubic-bezier(0.4, 0, 0.2, 1) — уверенная, контролируемая (Ruler, Sage)",
+        "wave": "cubic-bezier(0.3, 0, 0.7, 1) — текучая, непрерывная (Explorer, Creator)",
+        "cloud": "cubic-bezier(0.2, 0, 0, 1) — мягкая, инерционная с затуханием (Caregiver, Innocent, Lover)",
+        "bounce": "cubic-bezier(0.2, 1.2, 0.6, 1) — упругая, игривая (Jester, Magician)"
+      }
+    },
+    "--transition-duration-fast": {
+      "description": "Длительность быстрых микро-анимаций",
+      "range": [0.1, 0.4],
+      "unit": "s",
+      "archetype_spectrum": "rebel(0.15) → hero(0.22) → jester(0.2) → everyman(0.25) → creator(0.25) → explorer(0.28) → ruler(0.3) → magician(0.3) → lover(0.3) → innocent(0.35) → caregiver(0.35) → sage(0.35)"
+    },
+    "--transition-duration-normal": {
+      "description": "Длительность полных переходов между состояниями",
+      "range": [0.25, 0.8],
+      "unit": "s",
+      "archetype_spectrum": "rebel(0.3) → hero(0.45) → jester(0.4) → everyman(0.5) → creator(0.5) → explorer(0.55) → ruler(0.6) → magician(0.6) → lover(0.6) → innocent(0.7) → caregiver(0.7) → sage(0.7)"
+    },
+    "--glow-intensity": {
+      "description": "Интенсивность свечения акцентных элементов",
+      "range": [0.3, 0.9],
+      "unit": "alpha multiplier",
+      "archetype_spectrum": "everyman(0.35) → sage(0.4) → innocent(0.4) → caregiver(0.4) → explorer(0.45) → ruler(0.55) → hero(0.5) → jester(0.5) → magician(0.5) → creator(0.5) → lover(0.5) → rebel(0.6)"
+    },
+    "--grid-opacity": {
+      "description": "Видимость сетки на canvas: 0 (невидимая) → 1 (технический HUD)",
+      "range": [0, 1],
+      "archetype_spectrum": "innocent(0.02) → lover(0.03) → caregiver(0.03) → everyman(0.03) → jester(0.04) → explorer(0.03) → magician(0.04) → creator(0.04) → sage(0.03) → hero(0.04) → ruler(0.04) → rebel(0.05)"
+    },
+    "--particle-density": {
+      "description": "Множитель плотности фоновых частиц",
+      "range": [0.2, 3.0],
+      "archetype_spectrum": "everyman(0.5) → innocent(0.8) → caregiver(0.8) → sage(0.6) → ruler(0.7) → hero(1.0) → explorer(1.2) → rebel(1.5) → lover(1.2) → creator(1.8) → jester(2.0) → magician(2.5)"
+    },
+    "--color-temperature": {
+      "description": "Температурный сдвиг палитры: 3200K (тёплый) → 10000K (холодный)",
+      "range": [3200, 10000],
+      "unit": "K",
+      "archetype_spectrum": "lover(3500) → caregiver(3800) → jester(4000) → everyman(4500) → hero(5000) → ruler(5500) → innocent(5000) → rebel(6000) → creator(6000) → explorer(7000) → magician(7500) → sage(8000)"
+    }
+  },
+  "threejs_targets": {
+    "coreMesh": "Центральное 3D-ядро бренда (икосаэдр/метабол/кристалл)",
+    "particleField": "Фоновое поле частиц (плотность, скорость, цвет)",
+    "gridPlane": "Опорная сетка плоскости (прозрачность, шаг)",
+    "lightRig": "3-точечное освещение (направление, цвет, интенсивность)",
+    "wireframe": "Каркасная оболочка ядра (толщина линий, прозрачность)"
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "contrast_scale",
+      "title_ru": "Что для вас важнее: безупречная структура или живой хаос?",
+      "title_en": "What matters more: flawless structure or living chaos?",
+      "title_ar": "ما الأهم بالنسبة لك: هيكل لا تشوبه شائبة أم فوضى حية؟",
+      "metaphor": "Этот вопрос определяет уровень контроля (control) и отношение к порядку.",
+      "css_variable_targets": [
+        "--radius-sm",
+        "--radius-md",
+        "--radius-lg",
+        "--grid-opacity"
+      ],
+      "threejs_targets": ["coreMesh", "wireframe"],
+      "answers": [
+        {
+          "icon": "🔷",
+          "label_ru": "Безупречная структура",
+          "label_en": "Flawless structure",
+          "label_ar": "هيكل لا تشوبه شائبة",
+          "text_ru": "Всё на своих местах. Сетка perfect pixel. Каждый элемент выверен.",
+          "text_en": "Everything in its place. Pixel-perfect grid. Every element is deliberate.",
+          "text_ar": "كل شيء في مكانه. شبكة مثالية. كل عنصر مدروس.",
+          "delta": { "control": 12, "energy": -5, "focus": 8, "method": 10 },
+          "css_command": {
+            "variables": {
+              "--radius-sm": "4px",
+              "--radius-md": "8px",
+              "--radius-lg": "12px",
+              "--grid-opacity": "0.06"
+            },
+            "animate": "pulse",
+            "duration_ms": 600
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "icosahedron",
+              "detail": 3,
+              "morphTarget": "crystalline"
+            },
+            "wireframe": { "opacity": 0.6, "lineWidth": 1.2 }
+          }
+        },
+        {
+          "icon": "🌀",
+          "label_ru": "Живой хаос",
+          "label_en": "Living chaos",
+          "label_ar": "فوضى حية",
+          "text_ru": "В непредсказуемости рождается красота. Форма дышит и течёт.",
+          "text_en": "Beauty is born in unpredictability. Form breathes and flows.",
+          "text_ar": "يولد الجمال في عدم القدرة على التنبؤ. الشكل يتنفس ويتدفق.",
+          "delta": { "control": -10, "energy": 12, "focus": -8, "method": -5 },
+          "css_command": {
+            "variables": {
+              "--radius-sm": "16px",
+              "--radius-md": "28px",
+              "--radius-lg": "44px",
+              "--grid-opacity": "0.02"
+            },
+            "animate": "cloud",
+            "duration_ms": 800
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "metaball",
+              "blobCount": 6,
+              "morphTarget": "fluid"
+            },
+            "wireframe": { "opacity": 0.15, "lineWidth": 0.4 }
+          }
+        },
+        {
+          "icon": "⚖️",
+          "label_ru": "Баланс порядка и гибкости",
+          "label_en": "Balance of order and flexibility",
+          "label_ar": "توازن النظام والمرونة",
+          "text_ru": "Правила нужны, но они не должны душить творчество.",
+          "text_en": "Rules are necessary, but they shouldn't stifle creativity.",
+          "text_ar": "القواعد ضرورية لكن لا ينبغي أن تخنق الإبداع.",
+          "delta": { "control": 4, "energy": 4, "focus": 4, "method": 4 },
+          "css_command": {
+            "variables": {
+              "--radius-sm": "8px",
+              "--radius-md": "14px",
+              "--radius-lg": "22px",
+              "--grid-opacity": "0.04"
+            },
+            "animate": "wave",
+            "duration_ms": 500
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "roundedCube",
+              "detail": 2,
+              "morphTarget": "balanced"
+            },
+            "wireframe": { "opacity": 0.35, "lineWidth": 0.8 }
+          }
+        },
+        {
+          "icon": "⚡",
+          "label_ru": "Структура как трамплин для прорыва",
+          "label_en": "Structure as a springboard for breakthrough",
+          "label_ar": "الهيكل كنقطة انطلاق للاختراق",
+          "text_ru": "Каркас держит, но энергия внутри готова взорваться.",
+          "text_en": "The frame holds, but the energy inside is ready to explode.",
+          "text_ar": "الإطار متماسك لكن الطاقة داخله جاهزة للانفجار.",
+          "delta": { "control": 6, "energy": 10, "focus": 3, "method": -2 },
+          "css_command": {
+            "variables": {
+              "--radius-sm": "6px",
+              "--radius-md": "10px",
+              "--radius-lg": "18px",
+              "--grid-opacity": "0.05"
+            },
+            "animate": "arrow",
+            "duration_ms": 350
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "torusKnot",
+              "detail": 2,
+              "morphTarget": "dynamic"
+            },
+            "wireframe": { "opacity": 0.5, "lineWidth": 1.0 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "texture_light",
+      "title_ru": "Ваш бренд — это матовый бетон или полированное стекло?",
+      "title_en": "Is your brand matte concrete or polished glass?",
+      "title_ar": "هل علامتك التجارية خرسانة غير لامعة أم زجاج مصقول؟",
+      "metaphor": "Метафора открытости: стекло = прозрачность и преломление, бетон = монолитность и надёжность.",
+      "css_variable_targets": [
+        "--backdrop-blur",
+        "--backdrop-saturate",
+        "--glass-opacity",
+        "--glow-intensity"
+      ],
+      "threejs_targets": ["lightRig", "coreMesh"],
+      "answers": [
+        {
+          "icon": "🪨",
+          "label_ru": "Матовый бетон",
+          "label_en": "Matte concrete",
+          "label_ar": "خرسانة غير لامعة",
+          "text_ru": "Монолит. Никакой прозрачности. Клиент видит только результат.",
+          "text_en": "Monolith. No transparency. The client sees only the result.",
+          "text_ar": "كتلة واحدة. لا شفافية. العميل يرى النتيجة فقط.",
+          "delta": { "control": 8, "energy": -6, "focus": 6, "method": 5 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "4px",
+              "--backdrop-saturate": "80%",
+              "--glass-opacity": "0.85",
+              "--glow-intensity": "0.35"
+            },
+            "animate": "pulse",
+            "duration_ms": 500
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "material": "matte",
+              "roughness": 0.9,
+              "metalness": 0.05
+            },
+            "lightRig": { "intensity": 0.7, "type": "soft", "shadows": "crisp" }
+          }
+        },
+        {
+          "icon": "🔮",
+          "label_ru": "Полированное стекло",
+          "label_en": "Polished glass",
+          "label_ar": "زجاج مصقول",
+          "text_ru": "Прозрачность на всех уровнях. Свет преломляется, создавая глубину.",
+          "text_en": "Transparency at all levels. Light refracts, creating depth.",
+          "text_ar": "شفافية على جميع المستويات. الضوء ينكسر ليخلق عمقاً.",
+          "delta": { "control": -4, "energy": 6, "focus": -3, "method": 8 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "24px",
+              "--backdrop-saturate": "170%",
+              "--glass-opacity": "0.6",
+              "--glow-intensity": "0.65"
+            },
+            "animate": "wave",
+            "duration_ms": 700
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "material": "glass",
+              "roughness": 0.05,
+              "metalness": 0.3,
+              "transmission": 0.85
+            },
+            "lightRig": {
+              "intensity": 1.4,
+              "type": "caustic",
+              "shadows": "soft"
+            }
+          }
+        },
+        {
+          "icon": "🪵",
+          "label_ru": "Тёплое дерево",
+          "label_en": "Warm wood",
+          "label_ar": "خشب دافئ",
+          "text_ru": "Ни холод бетона, ни блеск стекла. Тактильное тепло природного материала.",
+          "text_en": "Neither cold concrete nor gleaming glass. The tactile warmth of a natural material.",
+          "text_ar": "لا برد الخرسانة ولا بريق الزجاج. دفء ملموس لمادة طبيعية.",
+          "delta": { "control": 2, "energy": 0, "focus": -2, "method": 3 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "10px",
+              "--backdrop-saturate": "120%",
+              "--glass-opacity": "0.7",
+              "--glow-intensity": "0.4"
+            },
+            "animate": "cloud",
+            "duration_ms": 600
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "material": "standard",
+              "roughness": 0.55,
+              "metalness": 0.1
+            },
+            "lightRig": {
+              "intensity": 0.9,
+              "type": "warm",
+              "shadows": "medium"
+            }
+          }
+        },
+        {
+          "icon": "🌫️",
+          "label_ru": "Дымчатый кварц",
+          "label_en": "Smoky quartz",
+          "label_ar": "كوارتز دخاني",
+          "text_ru": "Полупрозрачная глубина. Тайна за матовой дымкой. Видно не всё — и это притягивает.",
+          "text_en": "Translucent depth. Mystery behind a matte haze. Not everything is visible — and that draws you in.",
+          "text_ar": "عمق شبه شفاف. غموض خلف ضباب غير لامع. ليس كل شيء مرئياً — وهذا ما يجذبك.",
+          "delta": { "control": 0, "energy": 8, "focus": 2, "method": 4 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "18px",
+              "--backdrop-saturate": "140%",
+              "--glass-opacity": "0.65",
+              "--glow-intensity": "0.55"
+            },
+            "animate": "wave",
+            "duration_ms": 650
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "material": "translucent",
+              "roughness": 0.3,
+              "metalness": 0.15,
+              "transmission": 0.5
+            },
+            "lightRig": {
+              "intensity": 1.1,
+              "type": "volumetric",
+              "shadows": "soft"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "animation_dynamics",
+      "title_ru": "Как движется ваша идея: как стрела или как облако?",
+      "title_en": "How does your idea move: like an arrow or like a cloud?",
+      "title_ar": "كيف تتحرك فكرتك: كالسهم أم كالغيمة؟",
+      "metaphor": "Ритмический тест: определяет easing-кривые всех анимаций интерфейса.",
+      "css_variable_targets": [
+        "--transition-easing",
+        "--transition-duration-fast",
+        "--transition-duration-normal"
+      ],
+      "threejs_targets": ["particleField", "coreMesh"],
+      "answers": [
+        {
+          "icon": "🏹",
+          "label_ru": "Как стрела",
+          "label_en": "Like an arrow",
+          "label_ar": "كالسهم",
+          "text_ru": "Прямо, быстро, в цель. Без колебаний. Линейная траектория.",
+          "text_en": "Straight, fast, to the target. No hesitation. Linear trajectory.",
+          "text_ar": "مباشر، سريع، نحو الهدف. دون تردد. مسار خطي.",
+          "delta": { "control": 8, "energy": 10, "focus": 7, "method": -4 },
+          "css_command": {
+            "variables": {
+              "--transition-easing": "cubic-bezier(0.7, 0, 1, 0.5)",
+              "--transition-duration-fast": "0.15s",
+              "--transition-duration-normal": "0.3s"
+            },
+            "animate": "arrow",
+            "duration_ms": 300
+          },
+          "threejs_command": {
+            "particleField": {
+              "speed": 2.5,
+              "direction": "linear",
+              "turbulence": 0.1
+            },
+            "coreMesh": { "rotationSpeed": 3.0, "damping": 0.2 }
+          }
+        },
+        {
+          "icon": "☁️",
+          "label_ru": "Как облако",
+          "label_en": "Like a cloud",
+          "label_ar": "كالغيمة",
+          "text_ru": "Мягко, инерционно, с затуханием. Движение дышит, а не мчится.",
+          "text_en": "Soft, inertial, with decay. Movement breathes rather than rushes.",
+          "text_ar": "ناعم، قصوري، مع تلاشي. الحركة تتنفس بدلاً من الاندفاع.",
+          "delta": { "control": -8, "energy": -3, "focus": -6, "method": 6 },
+          "css_command": {
+            "variables": {
+              "--transition-easing": "cubic-bezier(0.2, 0, 0, 1)",
+              "--transition-duration-fast": "0.35s",
+              "--transition-duration-normal": "0.7s"
+            },
+            "animate": "cloud",
+            "duration_ms": 800
+          },
+          "threejs_command": {
+            "particleField": {
+              "speed": 0.4,
+              "direction": "brownian",
+              "turbulence": 1.2
+            },
+            "coreMesh": { "rotationSpeed": 0.3, "damping": 0.9 }
+          }
+        },
+        {
+          "icon": "💫",
+          "label_ru": "Как пульсар",
+          "label_en": "Like a pulsar",
+          "label_ar": "كالنجم النابض",
+          "text_ru": "Ритмично, возвратно, с акцентами. Движение — это дыхание бренда.",
+          "text_en": "Rhythmic, recurrent, with accents. Movement is the brand's breathing.",
+          "text_ar": "إيقاعي، متكرر، بنبضات. الحركة هي تنفس العلامة التجارية.",
+          "delta": { "control": 2, "energy": 6, "focus": 4, "method": 2 },
+          "css_command": {
+            "variables": {
+              "--transition-easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+              "--transition-duration-fast": "0.25s",
+              "--transition-duration-normal": "0.5s"
+            },
+            "animate": "pulse",
+            "duration_ms": 500
+          },
+          "threejs_command": {
+            "particleField": {
+              "speed": 1.0,
+              "direction": "orbital",
+              "turbulence": 0.5
+            },
+            "coreMesh": { "rotationSpeed": 1.2, "damping": 0.5 }
+          }
+        },
+        {
+          "icon": "🎢",
+          "label_ru": "Как американские горки",
+          "label_en": "Like a rollercoaster",
+          "label_ar": "كالأفعوانية",
+          "text_ru": "Ускорение, замирание, снова бросок. Непредсказуемая динамика держит в напряжении.",
+          "text_en": "Acceleration, suspension, then another surge. Unpredictable dynamics keep the tension.",
+          "text_ar": "تسارع، توقف، ثم اندفاع آخر. ديناميكية لا يمكن التنبؤ بها تبقي التوتر.",
+          "delta": { "control": -4, "energy": 14, "focus": -8, "method": -6 },
+          "css_command": {
+            "variables": {
+              "--transition-easing": "cubic-bezier(0.2, 1.2, 0.6, 1)",
+              "--transition-duration-fast": "0.18s",
+              "--transition-duration-normal": "0.4s"
+            },
+            "animate": "bounce",
+            "duration_ms": 400
+          },
+          "threejs_command": {
+            "particleField": {
+              "speed": 3.0,
+              "direction": "chaotic",
+              "turbulence": 2.0
+            },
+            "coreMesh": { "rotationSpeed": 4.5, "damping": 0.1 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "structure_chaos",
+      "title_ru": "Как выглядит ваш рабочий стол: минималистичный или живой коллаж?",
+      "title_en": "What does your workspace look like: minimalist or a living collage?",
+      "title_ar": "كيف يبدو سطح مكتبك: بسيط أم ملصق حي؟",
+      "metaphor": "Определяет плотность информации и пространственное дыхание интерфейса.",
+      "css_variable_targets": [
+        "--particle-density",
+        "--grid-opacity",
+        "--backdrop-saturate"
+      ],
+      "threejs_targets": ["particleField", "gridPlane"],
+      "answers": [
+        {
+          "icon": "⬜",
+          "label_ru": "Чистый стол. Ничего лишнего.",
+          "label_en": "Clean desk. Nothing extra.",
+          "label_ar": "طاولة نظيفة. لا شيء زائد.",
+          "text_ru": "Один инструмент — одна задача. Воздух — главный элемент дизайна.",
+          "text_en": "One tool — one task. Air is the main design element.",
+          "text_ar": "أداة واحدة — مهمة واحدة. الهواء هو العنصر التصميمي الأساسي.",
+          "delta": { "control": 10, "energy": -8, "focus": 10, "method": 8 },
+          "css_command": {
+            "variables": {
+              "--particle-density": "0.3",
+              "--grid-opacity": "0.02",
+              "--backdrop-saturate": "70%"
+            },
+            "animate": "pulse",
+            "duration_ms": 500
+          },
+          "threejs_command": {
+            "particleField": { "density": 0.3, "spread": 1.8 },
+            "gridPlane": { "opacity": 0.02, "cellSize": 80 }
+          }
+        },
+        {
+          "icon": "🎨",
+          "label_ru": "Творческий коллаж",
+          "label_en": "Creative collage",
+          "label_ar": "ملصق إبداعي",
+          "text_ru": "Вдохновение повсюду. Реферерсы, скетчи, идеи накладываются слоями.",
+          "text_en": "Inspiration everywhere. References, sketches, ideas layered upon each other.",
+          "text_ar": "إلهام في كل مكان. مراجع، رسومات، أفكار متراكبة.",
+          "delta": { "control": -8, "energy": 10, "focus": -6, "method": 6 },
+          "css_command": {
+            "variables": {
+              "--particle-density": "2.2",
+              "--grid-opacity": "0.06",
+              "--backdrop-saturate": "180%"
+            },
+            "animate": "wave",
+            "duration_ms": 700
+          },
+          "threejs_command": {
+            "particleField": { "density": 2.2, "spread": 1.2 },
+            "gridPlane": { "opacity": 0.06, "cellSize": 40 }
+          }
+        },
+        {
+          "icon": "📐",
+          "label_ru": "Организованная система",
+          "label_en": "Organized system",
+          "label_ar": "نظام منظم",
+          "text_ru": "Всё по папкам. Сетка. Ничего не теряется, всё на своих местах.",
+          "text_en": "Everything in folders. Grid. Nothing gets lost, everything has its place.",
+          "text_ar": "كل شيء في مجلدات. شبكة. لا شيء يضيع، كل شيء في مكانه.",
+          "delta": { "control": 8, "energy": -2, "focus": 8, "method": 10 },
+          "css_command": {
+            "variables": {
+              "--particle-density": "0.7",
+              "--grid-opacity": "0.05",
+              "--backdrop-saturate": "100%"
+            },
+            "animate": "pulse",
+            "duration_ms": 450
+          },
+          "threejs_command": {
+            "particleField": { "density": 0.7, "spread": 1.6 },
+            "gridPlane": { "opacity": 0.05, "cellSize": 60 }
+          }
+        },
+        {
+          "icon": "🌌",
+          "label_ru": "Космос возможностей",
+          "label_en": "Space of possibilities",
+          "label_ar": "فضاء من الإمكانيات",
+          "text_ru": "Бесконечное поле, где идеи вспыхивают как звёзды и гаснут, уступая новым.",
+          "text_en": "An infinite field where ideas flare like stars and fade, making way for new ones.",
+          "text_ar": "حقل لا نهائي حيث تشتعل الأفكار كالنجوم وتخبو لتفسح المجال لأفكار جديدة.",
+          "delta": { "control": -4, "energy": 8, "focus": -2, "method": -2 },
+          "css_command": {
+            "variables": {
+              "--particle-density": "1.6",
+              "--grid-opacity": "0.035",
+              "--backdrop-saturate": "150%"
+            },
+            "animate": "cloud",
+            "duration_ms": 650
+          },
+          "threejs_command": {
+            "particleField": { "density": 1.6, "spread": 2.0 },
+            "gridPlane": { "opacity": 0.035, "cellSize": 100 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "color_temperature",
+      "title_ru": "В каком свете ваш бренд выглядит лучше всего: на рассвете или в сумерках?",
+      "title_en": "In which light does your brand look best: at dawn or at dusk?",
+      "title_ar": "في أي ضوء تبدو علامتك التجارية أفضل: عند الفجر أم عند الغسق؟",
+      "metaphor": "Определяет цветовую температуру интерфейса и метод интерполяции градиентов.",
+      "css_variable_targets": [
+        "--color-temperature",
+        "--color-interpolation",
+        "--glow-intensity"
+      ],
+      "threejs_targets": ["lightRig"],
+      "answers": [
+        {
+          "icon": "🌅",
+          "label_ru": "На рассвете",
+          "label_en": "At dawn",
+          "label_ar": "عند الفجر",
+          "text_ru": "Тёплые лучи. Обещание нового дня. Мягкий золотистый свет.",
+          "text_en": "Warm rays. The promise of a new day. Soft golden light.",
+          "text_ar": "أشعة دافئة. وعد يوم جديد. ضوء ذهبي ناعم.",
+          "delta": { "control": -2, "energy": 5, "focus": -3, "method": 0 },
+          "css_command": {
+            "variables": {
+              "--color-temperature": "3800",
+              "--color-interpolation": "oklch",
+              "--glow-intensity": "0.55"
+            },
+            "animate": "cloud",
+            "duration_ms": 600
+          },
+          "threejs_command": {
+            "lightRig": {
+              "kelvin": 3800,
+              "intensity": 1.1,
+              "angle": 15,
+              "shadowSoftness": 0.7
+            }
+          }
+        },
+        {
+          "icon": "🌆",
+          "label_ru": "В сумерках",
+          "label_en": "At dusk",
+          "label_ar": "عند الغسق",
+          "text_ru": "Холодная синева. Точность и ясность. Контуры становятся чёткими.",
+          "text_en": "Cool blue. Precision and clarity. Contours become sharp.",
+          "text_ar": "زرقة باردة. دقة ووضوح. تصبح الخطوط حادة.",
+          "delta": { "control": 10, "energy": -6, "focus": 10, "method": 6 },
+          "css_command": {
+            "variables": {
+              "--color-temperature": "8000",
+              "--color-interpolation": "srgb",
+              "--glow-intensity": "0.4"
+            },
+            "animate": "pulse",
+            "duration_ms": 500
+          },
+          "threejs_command": {
+            "lightRig": {
+              "kelvin": 8000,
+              "intensity": 0.85,
+              "angle": 80,
+              "shadowSoftness": 0.2
+            }
+          }
+        },
+        {
+          "icon": "☀️",
+          "label_ru": "В полдень",
+          "label_en": "At noon",
+          "label_ar": "عند الظهيرة",
+          "text_ru": "Яркий, честный, прямой свет. Никаких теней — только суть.",
+          "text_en": "Bright, honest, direct light. No shadows — just essence.",
+          "text_ar": "ضوء ساطع، صادق، مباشر. لا ظلال — فقط الجوهر.",
+          "delta": { "control": 6, "energy": 8, "focus": 4, "method": -2 },
+          "css_command": {
+            "variables": {
+              "--color-temperature": "5500",
+              "--color-interpolation": "linearRGB",
+              "--glow-intensity": "0.55"
+            },
+            "animate": "arrow",
+            "duration_ms": 400
+          },
+          "threejs_command": {
+            "lightRig": {
+              "kelvin": 5500,
+              "intensity": 1.4,
+              "angle": 45,
+              "shadowSoftness": 0.5
+            }
+          }
+        },
+        {
+          "icon": "🌙",
+          "label_ru": "При луне",
+          "label_en": "Under the moon",
+          "label_ar": "تحت القمر",
+          "text_ru": "Таинственное серебрение. Свет раскрывает не всё — оставляет место воображению.",
+          "text_en": "Mysterious silvering. Light doesn't reveal everything — it leaves room for imagination.",
+          "text_ar": "تلميع فضي غامض. الضوء لا يكشف كل شيء — يترك مجالاً للخيال.",
+          "delta": { "control": -4, "energy": 4, "focus": 2, "method": 8 },
+          "css_command": {
+            "variables": {
+              "--color-temperature": "5500",
+              "--color-interpolation": "oklch",
+              "--glow-intensity": "0.7"
+            },
+            "animate": "wave",
+            "duration_ms": 700
+          },
+          "threejs_command": {
+            "lightRig": {
+              "kelvin": 5500,
+              "intensity": 0.6,
+              "angle": 120,
+              "shadowSoftness": 0.9
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "space_density",
+      "title_ru": "Как вы предпочитаете подавать информацию: слоями или сразу всё?",
+      "title_en": "How do you prefer to present information: in layers or all at once?",
+      "title_ar": "كيف تفضل تقديم المعلومات: على طبقات أم دفعة واحدة؟",
+      "metaphor": "Определяет архитектуру интерфейса: progressive disclosure против информационной плотности.",
+      "css_variable_targets": [
+        "--backdrop-blur",
+        "--glass-opacity",
+        "--particle-density"
+      ],
+      "threejs_targets": ["coreMesh", "wireframe"],
+      "answers": [
+        {
+          "icon": "🥪",
+          "label_ru": "Слоями",
+          "label_en": "In layers",
+          "label_ar": "على طبقات",
+          "text_ru": "Каждый уровень открывается по мере погружения. Интерфейс дышит и ведёт.",
+          "text_en": "Each level reveals itself as you dive deeper. The interface breathes and guides.",
+          "text_ar": "كل مستوى ينكشف كلما تعمقت. الواجهة تتنفس وتوجه.",
+          "delta": { "control": 0, "energy": -2, "focus": 4, "method": 8 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "22px",
+              "--glass-opacity": "0.6",
+              "--particle-density": "1.0"
+            },
+            "animate": "wave",
+            "duration_ms": 650
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "nestedSpheres",
+              "layers": 4,
+              "morphTarget": "onion"
+            },
+            "wireframe": { "opacity": 0.25, "lineWidth": 0.6 }
+          }
+        },
+        {
+          "icon": "📊",
+          "label_ru": "Всё сразу",
+          "label_en": "All at once",
+          "label_ar": "كل شيء دفعة واحدة",
+          "text_ru": "Дашборд с полной картиной. Никаких секретов — данные говорят сами за себя.",
+          "text_en": "Dashboard with the full picture. No secrets — data speaks for itself.",
+          "text_ar": "لوحة معلومات بالصورة الكاملة. لا أسرار — البيانات تتحدث عن نفسها.",
+          "delta": { "control": 10, "energy": 4, "focus": 6, "method": -4 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "6px",
+              "--glass-opacity": "0.8",
+              "--particle-density": "0.6"
+            },
+            "animate": "arrow",
+            "duration_ms": 350
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "openIcosahedron",
+              "detail": 4,
+              "morphTarget": "exploded"
+            },
+            "wireframe": { "opacity": 0.7, "lineWidth": 1.4 }
+          }
+        },
+        {
+          "icon": "🎭",
+          "label_ru": "Контекстно",
+          "label_en": "Contextually",
+          "label_ar": "حسب السياق",
+          "text_ru": "Интерфейс адаптируется: то, что нужно сейчас — на первом плане. Остальное ждёт.",
+          "text_en": "The interface adapts: what's needed now is in the foreground. The rest waits.",
+          "text_ar": "الواجهة تتكيف: ما هو مطلوب الآن في المقدمة. الباقي ينتظر.",
+          "delta": { "control": 4, "energy": 2, "focus": 6, "method": 4 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "14px",
+              "--glass-opacity": "0.68",
+              "--particle-density": "0.9"
+            },
+            "animate": "pulse",
+            "duration_ms": 500
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "adaptiveTorus",
+              "detail": 3,
+              "morphTarget": "contextual"
+            },
+            "wireframe": { "opacity": 0.45, "lineWidth": 0.9 }
+          }
+        },
+        {
+          "icon": "🧩",
+          "label_ru": "Мозаикой",
+          "label_en": "As a mosaic",
+          "label_ar": "كفسيفساء",
+          "text_ru": "Фрагменты складываются в целое по мере взаимодействия. Каждый кусочек — открытие.",
+          "text_en": "Fragments assemble into a whole through interaction. Each piece is a discovery.",
+          "text_ar": "تتجمع الأجزاء في كلٍ عبر التفاعل. كل قطعة هي اكتشاف.",
+          "delta": { "control": -2, "energy": 5, "focus": -2, "method": 2 },
+          "css_command": {
+            "variables": {
+              "--backdrop-blur": "16px",
+              "--glass-opacity": "0.62",
+              "--particle-density": "1.4"
+            },
+            "animate": "bounce",
+            "duration_ms": 550
+          },
+          "threejs_command": {
+            "coreMesh": {
+              "geometry": "voronoiSphere",
+              "cells": 20,
+              "morphTarget": "mosaic"
+            },
+            "wireframe": { "opacity": 0.35, "lineWidth": 0.7 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "time_perception",
+      "title_ru": "Время вашего бренда: вечность или здесь-и-сейчас?",
+      "title_en": "Your brand's time: eternity or here-and-now?",
+      "title_ar": "زمن علامتك التجارية: الخلود أم هنا والآن؟",
+      "metaphor": "Определяет темп взаимодействия: медитативный (медленные анимации, глубокая навигация) против мгновенного (быстрые реакции, сиюминутность).",
+      "css_variable_targets": [
+        "--transition-duration-fast",
+        "--transition-duration-normal",
+        "--transition-easing"
+      ],
+      "threejs_targets": ["particleField", "coreMesh"],
+      "answers": [
+        {
+          "icon": "🏛️",
+          "label_ru": "Вечность",
+          "label_en": "Eternity",
+          "label_ar": "الخلود",
+          "text_ru": "Вневременная классика. Наследие. Медленное, обстоятельное присутствие.",
+          "text_en": "Timeless classic. Legacy. Slow, deliberate presence.",
+          "text_ar": "كلاسيكي خالد. إرث. حضور بطيء ومدروس.",
+          "delta": { "control": 10, "energy": -10, "focus": 10, "method": 10 },
+          "css_command": {
+            "variables": {
+              "--transition-duration-fast": "0.35s",
+              "--transition-duration-normal": "0.7s",
+              "--transition-easing": "cubic-bezier(0.5, 0, 0.3, 1)"
+            },
+            "animate": "pulse",
+            "duration_ms": 800
+          },
+          "threejs_command": {
+            "particleField": { "speed": 0.2, "lifespan": 10 },
+            "coreMesh": { "rotationSpeed": 0.15, "morphSpeed": 0.3 }
+          }
+        },
+        {
+          "icon": "⚡",
+          "label_ru": "Здесь и сейчас",
+          "label_en": "Here and now",
+          "label_ar": "هنا والآن",
+          "text_ru": "Мгновенная реакция. Поп-ап культура. Быстро, ярко, запомнилось — поехали дальше.",
+          "text_en": "Instant reaction. Pop culture. Fast, bright, memorable — moving on.",
+          "text_ar": "رد فعل فوري. ثقافة البوب. سريع، مشرق، لا يُنسى — إلى الأمام.",
+          "delta": { "control": -6, "energy": 14, "focus": -8, "method": -6 },
+          "css_command": {
+            "variables": {
+              "--transition-duration-fast": "0.12s",
+              "--transition-duration-normal": "0.25s",
+              "--transition-easing": "cubic-bezier(0.7, 0, 1, 0.5)"
+            },
+            "animate": "arrow",
+            "duration_ms": 250
+          },
+          "threejs_command": {
+            "particleField": { "speed": 4.0, "lifespan": 2 },
+            "coreMesh": { "rotationSpeed": 5.0, "morphSpeed": 8.0 }
+          }
+        },
+        {
+          "icon": "🌊",
+          "label_ru": "Циклично",
+          "label_en": "Cyclically",
+          "label_ar": "بشكل دوري",
+          "text_ru": "Приливы и отливы. Сезоны. Возвращение к истокам на новом витке.",
+          "text_en": "Ebb and flow. Seasons. Returning to origins on a new spiral.",
+          "text_ar": "مد وجزر. مواسم. عودة إلى الأصول في لولب جديد.",
+          "delta": { "control": 2, "energy": 4, "focus": 4, "method": 4 },
+          "css_command": {
+            "variables": {
+              "--transition-duration-fast": "0.28s",
+              "--transition-duration-normal": "0.55s",
+              "--transition-easing": "cubic-bezier(0.3, 0, 0.7, 1)"
+            },
+            "animate": "wave",
+            "duration_ms": 600
+          },
+          "threejs_command": {
+            "particleField": { "speed": 0.8, "lifespan": 6 },
+            "coreMesh": { "rotationSpeed": 0.8, "morphSpeed": 1.5 }
+          }
+        },
+        {
+          "icon": "🎯",
+          "label_ru": "Импульсами",
+          "label_en": "In pulses",
+          "label_ar": "على شكل نبضات",
+          "text_ru": "Долгая пауза — резкий рывок. Медитация сменяется спринтом.",
+          "text_en": "Long pause — sharp leap. Meditation switches to sprint.",
+          "text_ar": "توقف طويل — قفزة حادة. التأمل يتحول إلى عدو.",
+          "delta": { "control": 4, "energy": 10, "focus": 4, "method": -2 },
+          "css_command": {
+            "variables": {
+              "--transition-duration-fast": "0.18s",
+              "--transition-duration-normal": "0.5s",
+              "--transition-easing": "cubic-bezier(0.2, 1.2, 0.6, 1)"
+            },
+            "animate": "bounce",
+            "duration_ms": 450
+          },
+          "threejs_command": {
+            "particleField": { "speed": 2.0, "lifespan": 3 },
+            "coreMesh": { "rotationSpeed": 2.5, "morphSpeed": 5.0 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "emotional_tone",
+      "title_ru": "Какую эмоцию ваш бренд должен вызывать с первого взгляда?",
+      "title_en": "What emotion should your brand evoke at first glance?",
+      "title_ar": "ما الشعور الذي يجب أن تثيره علامتك التجارية من النظرة الأولى؟",
+      "metaphor": "Финальный синтезирующий вопрос. Определяет эмоциональный тон всех визуальных решений.",
+      "css_variable_targets": [
+        "--glow-intensity",
+        "--backdrop-saturate",
+        "--color-interpolation",
+        "--particle-density"
+      ],
+      "threejs_targets": ["lightRig", "particleField", "coreMesh"],
+      "answers": [
+        {
+          "icon": "🛡️",
+          "label_ru": "Уверенность и сила",
+          "label_en": "Confidence and strength",
+          "label_ar": "ثقة وقوة",
+          "text_ru": "Бренд как защитник. Мощь, на которую можно положиться.",
+          "text_en": "Brand as protector. Power you can rely on.",
+          "text_ar": "العلامة التجارية كحامٍ. قوة يمكن الاعتماد عليها.",
+          "delta": { "control": 12, "energy": 10, "focus": 8, "method": 2 },
+          "css_command": {
+            "variables": {
+              "--glow-intensity": "0.65",
+              "--backdrop-saturate": "110%",
+              "--color-interpolation": "linearRGB",
+              "--particle-density": "0.8"
+            },
+            "animate": "arrow",
+            "duration_ms": 450
+          },
+          "threejs_command": {
+            "lightRig": { "intensity": 1.3, "contrast": 1.4 },
+            "particleField": { "formation": "shield", "density": 0.8 },
+            "coreMesh": { "morphTarget": "fortress" }
+          }
+        },
+        {
+          "icon": "💖",
+          "label_ru": "Тепло и забота",
+          "label_en": "Warmth and care",
+          "label_ar": "دفء وعناية",
+          "text_ru": "Бренд как дом. Мягкость и принятие с первого касания.",
+          "text_en": "Brand as home. Softness and acceptance from the first touch.",
+          "text_ar": "العلامة التجارية كمنزل. نعومة وقبول من أول لمسة.",
+          "delta": { "control": -4, "energy": -2, "focus": 2, "method": 8 },
+          "css_command": {
+            "variables": {
+              "--glow-intensity": "0.45",
+              "--backdrop-saturate": "130%",
+              "--color-interpolation": "oklch",
+              "--particle-density": "1.2"
+            },
+            "animate": "cloud",
+            "duration_ms": 750
+          },
+          "threejs_command": {
+            "lightRig": { "intensity": 0.85, "contrast": 0.7 },
+            "particleField": { "formation": "nest", "density": 1.2 },
+            "coreMesh": { "morphTarget": "cocoon" }
+          }
+        },
+        {
+          "icon": "💡",
+          "label_ru": "Вдохновение и инсайт",
+          "label_en": "Inspiration and insight",
+          "label_ar": "إلهام وتبصر",
+          "text_ru": "Бренд как прозрение. Момент 'Ага!' при каждом взаимодействии.",
+          "text_en": "Brand as revelation. An 'Aha!' moment with every interaction.",
+          "text_ar": "العلامة التجارية كإلهام. لحظة 'آها!' مع كل تفاعل.",
+          "delta": { "control": 0, "energy": 6, "focus": 14, "method": 6 },
+          "css_command": {
+            "variables": {
+              "--glow-intensity": "0.6",
+              "--backdrop-saturate": "120%",
+              "--color-interpolation": "oklch",
+              "--particle-density": "1.0"
+            },
+            "animate": "pulse",
+            "duration_ms": 550
+          },
+          "threejs_command": {
+            "lightRig": { "intensity": 1.0, "contrast": 1.1 },
+            "particleField": { "formation": "constellation", "density": 1.0 },
+            "coreMesh": { "morphTarget": "illuminated" }
+          }
+        },
+        {
+          "icon": "🎉",
+          "label_ru": "Радость и удивление",
+          "label_en": "Joy and surprise",
+          "label_ar": "فرح ومفاجأة",
+          "text_ru": "Бренд как праздник. Каждое касание вызывает улыбку.",
+          "text_en": "Brand as celebration. Every touch brings a smile.",
+          "text_ar": "العلامة التجارية كاحتفال. كل لمسة تجلب ابتسامة.",
+          "delta": { "control": -10, "energy": 14, "focus": -10, "method": -4 },
+          "css_command": {
+            "variables": {
+              "--glow-intensity": "0.75",
+              "--backdrop-saturate": "180%",
+              "--color-interpolation": "oklch",
+              "--particle-density": "2.5"
+            },
+            "animate": "bounce",
+            "duration_ms": 400
+          },
+          "threejs_command": {
+            "lightRig": { "intensity": 1.6, "contrast": 1.5 },
+            "particleField": { "formation": "fireworks", "density": 2.5 },
+            "coreMesh": { "morphTarget": "confetti" }
+          }
+        }
+      ]
+    }
+  ],
+  "scoring_math": {
+    "description": "Математика подсчёта итогового вектора и архетипа",
+    "weights": {
+      "diagnostic_answers": 0.8,
+      "behavior_tracker": 0.2
+    },
+    "final_vector_formula": "userVector[d] = Σ(q_i.delta[d]) / numQuestions + EMA(behaviorSignals[d]) × 0.20",
+    "archetype_matching": "Манхэттенское расстояние (L1) до каждого из 12 эталонных векторов. Ближайший = primary archetype.",
+    "confidence_threshold": 75,
+    "lock_streak_required": 3
+  },
+  "css_animation_presets": {
+    "arrow": {
+      "description": "Линейные, быстрые, решительные переходы. Rebel, Hero.",
+      "easing": "cubic-bezier(0.7, 0, 1, 0.5)",
+      "character": "decisive"
+    },
+    "pulse": {
+      "description": "Уверенная, контролируемая пульсация. Ruler, Sage.",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "character": "authoritative"
+    },
+    "wave": {
+      "description": "Текучая, непрерывная, органическая. Explorer, Creator, Magician.",
+      "easing": "cubic-bezier(0.3, 0, 0.7, 1)",
+      "character": "fluid"
+    },
+    "cloud": {
+      "description": "Мягкая, инерционная с затуханием. Caregiver, Innocent, Lover.",
+      "easing": "cubic-bezier(0.2, 0, 0, 1)",
+      "character": "gentle"
+    },
+    "bounce": {
+      "description": "Упругая, игривая с овершутом. Jester, Magician.",
+      "easing": "cubic-bezier(0.2, 1.2, 0.6, 1)",
+      "character": "playful"
+    }
+  }
+}

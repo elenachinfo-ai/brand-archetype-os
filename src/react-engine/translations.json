@@ -1,0 +1,450 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "description": "ArchetypeOS — Multilingual dictionary for RU / EN / AR. Premium design terminology.",
+    "supported_locales": ["ru", "en", "ar"],
+    "rtl_locales": ["ar"],
+    "last_updated": "2026-01-01"
+  },
+
+  "locale_meta": {
+    "ru": { "name": "Русский", "direction": "ltr", "font": "'Manrope', 'Inter', sans-serif" },
+    "en": { "name": "English", "direction": "ltr", "font": "'Manrope', 'Inter', sans-serif" },
+    "ar": { "name": "العربية", "direction": "rtl", "font": "'Tajawal', 'Noto Naskh Arabic', 'Scheherazade New', serif" }
+  },
+
+  "app": {
+    "title": {
+      "ru": "ArchetypeOS — ДНК вашего бренда",
+      "en": "ArchetypeOS — Your Brand's DNA",
+      "ar": "ArchetypeOS — الحمض النووي لعلامتك التجارية"
+    },
+    "subtitle": {
+      "ru": "Диагностический инструмент для веб-дизайнеров и стратегов",
+      "en": "Diagnostic tool for web designers and brand strategists",
+      "ar": "أداة تشخيصية لمصممي الويب واستراتيجيي العلامات التجارية"
+    },
+    "start_button": {
+      "ru": "Начать диагностику",
+      "en": "Begin Diagnosis",
+      "ar": "ابدأ التشخيص"
+    },
+    "order_cta": {
+      "ru": "Заказать сайт по архетипу",
+      "en": "Order Website by Archetype",
+      "ar": "اطلب موقعاً حسب النمط الأصلي"
+    },
+    "download_guide": {
+      "ru": "Скачать руководство",
+      "en": "Download Guide",
+      "ar": "تحميل الدليل"
+    }
+  },
+
+  "archetypes": {
+    "ruler": {
+      "ru": "Правитель",
+      "en": "Ruler",
+      "ar": "الحاكم",
+      "ru_desc": "Структура, контроль и превосходство. Бренд-империя.",
+      "en_desc": "Structure, control and excellence. An empire brand.",
+      "ar_desc": "الهيكل والتحكم والتميز. علامة تجارية إمبراطورية."
+    },
+    "creator": {
+      "ru": "Творец",
+      "en": "Creator",
+      "ar": "المبدع",
+      "ru_desc": "Самовыражение и инновации. Бренд-мастерская.",
+      "en_desc": "Self-expression and innovation. An atelier brand.",
+      "ar_desc": "التعبير عن الذات والابتكار. علامة تجارية مشغل إبداعي."
+    },
+    "sage": {
+      "ru": "Мудрец",
+      "en": "Sage",
+      "ar": "الحكيم",
+      "ru_desc": "Знание, ясность и истина. Бренд-эксперт.",
+      "en_desc": "Knowledge, clarity and truth. An expert brand.",
+      "ar_desc": "المعرفة والوضوح والحقيقة. علامة تجارية خبيرة."
+    },
+    "innocent": {
+      "ru": "Невинный",
+      "en": "Innocent",
+      "ar": "البريء",
+      "ru_desc": "Чистота, надежда и простота. Бренд-свет.",
+      "en_desc": "Purity, hope and simplicity. A light brand.",
+      "ar_desc": "النقاء والأمل والبساطة. علامة تجارية نور."
+    },
+    "explorer": {
+      "ru": "Исследователь",
+      "en": "Explorer",
+      "ar": "المستكشف",
+      "ru_desc": "Свобода, открытия и аутентичность. Бренд-компас.",
+      "en_desc": "Freedom, discovery and authenticity. A compass brand.",
+      "ar_desc": "الحرية والاكتشاف والأصالة. علامة تجارية بوصلة."
+    },
+    "hero": {
+      "ru": "Герой",
+      "en": "Hero",
+      "ar": "البطل",
+      "ru_desc": "Действие, победа и преодоление. Бренд-катализатор.",
+      "en_desc": "Action, victory and overcoming. A catalyst brand.",
+      "ar_desc": "الفعل والنصر والتغلب. علامة تجارية محفز."
+    },
+    "magician": {
+      "ru": "Маг",
+      "en": "Magician",
+      "ar": "الساحر",
+      "ru_desc": "Трансформация, чудо и возможности. Бренд-проводник.",
+      "en_desc": "Transformation, wonder and possibility. A guide brand.",
+      "ar_desc": "التحول والعجب والإمكانيات. علامة تجارية مرشد."
+    },
+    "outlaw": {
+      "ru": "Бунтарь",
+      "en": "Outlaw",
+      "ar": "المتمرد",
+      "ru_desc": "Разрушение, свобода и революция. Бренд-вызов.",
+      "en_desc": "Disruption, freedom and revolution. A challenge brand.",
+      "ar_desc": "التعطيل والحرية والثورة. علامة تجارية تحدي."
+    },
+    "jester": {
+      "ru": "Шут",
+      "en": "Jester",
+      "ar": "المهرج",
+      "ru_desc": "Радость, игра и неожиданность. Бренд-праздник.",
+      "en_desc": "Joy, play and surprise. A celebration brand.",
+      "ar_desc": "الفرح واللعب والمفاجأة. علامة تجارية احتفال."
+    },
+    "lover": {
+      "ru": "Любовник",
+      "en": "Lover",
+      "ar": "العاشق",
+      "ru_desc": "Страсть, близость и красота. Бренд-чувство.",
+      "en_desc": "Passion, intimacy and beauty. A sensation brand.",
+      "ar_desc": "الشغف والحميمية والجمال. علامة تجارية إحساس."
+    },
+    "caregiver": {
+      "ru": "Заботливый",
+      "en": "Caregiver",
+      "ar": "الراعي",
+      "ru_desc": "Забота, безопасность и поддержка. Бренд-опора.",
+      "en_desc": "Care, safety and support. A pillar brand.",
+      "ar_desc": "العناية والأمان والدعم. علامة تجارية عمود."
+    },
+    "everyman": {
+      "ru": "Свой человек",
+      "en": "Everyman",
+      "ar": "الإنسان العادي",
+      "ru_desc": "Принадлежность, честность и равенство. Бренд-сосед.",
+      "en_desc": "Belonging, honesty and equality. A neighbour brand.",
+      "ar_desc": "الانتماء والصدق والمساواة. علامة تجارية جار."
+    }
+  },
+
+  "questions": {
+    "q1_density": {
+      "title": {
+        "ru": "Плотность материи",
+        "en": "Density of Matter",
+        "ar": "كثافة المادة"
+      },
+      "subtitle": {
+        "ru": "Что ближе вашему бренду?",
+        "en": "What is closer to your brand?",
+        "ar": "ما الأقرب لعلامتك التجارية؟"
+      },
+      "left_label": {
+        "ru": "Воздух и минимализм",
+        "en": "Air & Minimalism",
+        "ar": "هواء وبساطة"
+      },
+      "right_label": {
+        "ru": "Плотность и деталь",
+        "en": "Density & Detail",
+        "ar": "كثافة وتفصيل"
+      }
+    },
+    "q2_geometry": {
+      "title": {
+        "ru": "Геометрия характера",
+        "en": "Geometry of Character",
+        "ar": "هندسة الشخصية"
+      },
+      "subtitle": {
+        "ru": "Какая форма выражает суть бренда?",
+        "en": "Which shape expresses the brand's essence?",
+        "ar": "أي شكل يعبر عن جوهر العلامة التجارية؟"
+      },
+      "left_label": {
+        "ru": "Органика и мягкость",
+        "en": "Organic & Soft",
+        "ar": "عضوي وناعم"
+      },
+      "right_label": {
+        "ru": "Архитектура и острота",
+        "en": "Architectural & Sharp",
+        "ar": "هندسي وحاد"
+      }
+    },
+    "q3_temperature": {
+      "title": {
+        "ru": "Световая температура",
+        "en": "Luminous Temperature",
+        "ar": "درجة حرارة الضوء"
+      },
+      "subtitle": {
+        "ru": "В каком свете ваш бренд раскрывается?",
+        "en": "In which light does your brand reveal itself?",
+        "ar": "في أي ضوء تنكشف علامتك التجارية؟"
+      },
+      "left_label": {
+        "ru": "Тихая роскошь",
+        "en": "Quiet Luxury",
+        "ar": "فخامة هادئة"
+      },
+      "right_label": {
+        "ru": "Цифровая энергия",
+        "en": "Digital Energy",
+        "ar": "طاقة رقمية"
+      }
+    },
+    "q4_space": {
+      "title": {
+        "ru": "Смысловое ядро пространства",
+        "en": "Spatial Resonance",
+        "ar": "الصدى المكاني"
+      },
+      "subtitle": {
+        "ru": "Если бы бренд был местом, где мы находимся?",
+        "en": "If the brand were a physical space, where are we?",
+        "ar": "لو كانت العلامة التجارية مكاناً مادياً، أين نحن؟"
+      },
+      "option_a": {
+        "ru": "Скандинавская библиотека — свет, порядок, тишина.",
+        "en": "Scandinavian Library — Light, Order, Silence.",
+        "ar": "مكتبة إسكندنافية — ضوء، نظام، صمت."
+      },
+      "option_b": {
+        "ru": "Арт-мастерская — хаос, творчество, энергия.",
+        "en": "Artistic Workshop — Chaos, Creativity, Energy.",
+        "ar": "ورشة فنية — فوضى، إبداع، طاقة."
+      },
+      "option_c": {
+        "ru": "Бескрайнее поле на рассвете — горизонт, свобода, свежесть.",
+        "en": "Infinite Sunrise Field — Horizon, Freedom, Freshness.",
+        "ar": "واحة لا نهائية عند الفجر — أفق، حرية، نضارة."
+      }
+    },
+    "q5_entry": {
+      "title": {
+        "ru": "Эстетический отклик",
+        "en": "Entry Protocol",
+        "ar": "بروتوكول الدخول"
+      },
+      "subtitle": {
+        "ru": "Как бренд входит в пространство?",
+        "en": "How does the brand enter a room?",
+        "ar": "كيف تدخل العلامة التجارية إلى الغرفة؟"
+      },
+      "option_a": {
+        "ru": "Тихий шёпот — незаметно, но незабываемо.",
+        "en": "A Quiet Whisper — Subtle but unforgettable.",
+        "ar": "همسة هادئة — خفية لكن لا تُنسى."
+      },
+      "option_b": {
+        "ru": "Уверенное рукопожатие — прямо, сильно, ведущее.",
+        "en": "A Confident Handshake — Direct, strong, leading.",
+        "ar": "مصافحة واثقة — مباشرة، قوية، قائدة."
+      },
+      "option_c": {
+        "ru": "Заразительный смех — мгновенный центр внимания.",
+        "en": "An Infectious Laugh — Instant center of attention.",
+        "ar": "ضحكة معدية — مركز الاهتمام الفوري."
+      }
+    },
+    "q6_scroll": {
+      "title": {
+        "ru": "Живой план скролла",
+        "en": "Scrolling Rhythm",
+        "ar": "إيقاع التمرير"
+      },
+      "subtitle": {
+        "ru": "Как пользователь движется по странице?",
+        "en": "How does the user move through the page?",
+        "ar": "كيف يتحرك المستخدم عبر الصفحة؟"
+      },
+      "left_label": {
+        "ru": "Текучий / жидкий",
+        "en": "Fluid / Liquid",
+        "ar": "سلس / سائل"
+      },
+      "right_label": {
+        "ru": "Структурный / пошаговый",
+        "en": "Structured / Step-by-step",
+        "ar": "منظم / خطوة بخطوة"
+      }
+    },
+    "q7_risk": {
+      "title": {
+        "ru": "Аппетит к риску",
+        "en": "Risk Appetite",
+        "ar": "الشهية للمخاطرة"
+      },
+      "subtitle": {
+        "ru": "Насколько смелым должен быть дизайн?",
+        "en": "How bold should the design be?",
+        "ar": "ما مدى جرأة التصميم؟"
+      },
+      "left_label": {
+        "ru": "Проверенная классика",
+        "en": "Proven Classics",
+        "ar": "كلاسيكيات مجربة"
+      },
+      "right_label": {
+        "ru": "Авангард и эксперимент",
+        "en": "Avant-garde & Experiment",
+        "ar": "طليعة وتجريب"
+      }
+    }
+n    "q8_aura": {
+      "title": {
+        "ru": "Аура бренда",
+        "en": "Brand Aura",
+        "ar": "هالة العلامة"
+      },
+      "subtitle": {
+        "ru": "Какое свечение излучает бренд?",
+        "en": "What kind of glow does the brand emit?",
+        "ar": "ما نوع التوهج الذي تبثه العلامة؟"
+      },
+      "left_label": {
+        "ru": "Тёплое свечение",
+        "en": "Warm Glow",
+        "ar": "توهج دافئ"
+      },
+      "right_label": {
+        "ru": "Холодная чистота",
+        "en": "Cold Clarity",
+        "ar": "صفاء بارد"
+      }
+    },
+  },
+
+  "results": {
+    "your_archetype": {
+      "ru": "Ваш архетип бренда",
+      "en": "Your Brand Archetype",
+      "ar": "نمط علامتك التجارية الأصلي"
+    },
+    "design_recommendations": {
+      "ru": "Дизайн-рекомендации",
+      "en": "Design Recommendations",
+      "ar": "توصيات التصميم"
+    },
+    "typography": {
+      "ru": "Типографика",
+      "en": "Typography",
+      "ar": "الطباعة"
+    },
+    "color_palette": {
+      "ru": "Цветовая палитра",
+      "en": "Color Palette",
+      "ar": "لوحة الألوان"
+    },
+    "grid_system": {
+      "ru": "Система сетки",
+      "en": "Grid System",
+      "ar": "نظام الشبكة"
+    },
+    "motion_style": {
+      "ru": "Стиль движения",
+      "en": "Motion Style",
+      "ar": "نمط الحركة"
+    },
+    "style_tokens": {
+      "ru": "Стиль-токены",
+      "en": "Style Tokens",
+      "ar": "رموز النمط"
+    },
+    "secondary_influence": {
+      "ru": "Вторичное влияние",
+      "en": "Secondary Influence",
+      "ar": "تأثير ثانوي"
+    }
+  },
+
+  "project_plan": {
+    "hero_section": {
+      "ru": "Главный экран",
+      "en": "Hero Section",
+      "ar": "القسم الرئيسي"
+    },
+    "about_section": {
+      "ru": "О бренде",
+      "en": "About",
+      "ar": "عن العلامة التجارية"
+    },
+    "services_section": {
+      "ru": "Услуги",
+      "en": "Services",
+      "ar": "الخدمات"
+    },
+    "portfolio_section": {
+      "ru": "Портфолио",
+      "en": "Portfolio",
+      "ar": "الأعمال"
+    },
+    "interactive_section": {
+      "ru": "Интерактивная карта",
+      "en": "Interactive Map",
+      "ar": "خريطة تفاعلية"
+    },
+    "testimonials_section": {
+      "ru": "Отзывы",
+      "en": "Testimonials",
+      "ar": "الشهادات"
+    },
+    "cta_section": {
+      "ru": "Призыв к действию",
+      "en": "Call to Action",
+      "ar": "دعوة إلى الإجراء"
+    },
+    "contact_section": {
+      "ru": "Контакты",
+      "en": "Contact",
+      "ar": "اتصل بنا"
+    }
+  },
+
+  "ui": {
+    "loading": {
+      "ru": "Пробуждение интерфейса…",
+      "en": "Interface awakening…",
+      "ar": "استيقاظ الواجهة…"
+    },
+    "session_restored": {
+      "ru": "Сессия восстановлена",
+      "en": "Session restored",
+      "ar": "تم استعادة الجلسة"
+    },
+    "step_counter": {
+      "ru": "Шаг {current} из {total}",
+      "en": "Step {current} of {total}",
+      "ar": "الخطوة {current} من {total}"
+    },
+    "back": {
+      "ru": "Назад",
+      "en": "Back",
+      "ar": "رجوع"
+    },
+    "next": {
+      "ru": "Далее",
+      "en": "Next",
+      "ar": "التالي"
+    },
+    "finish": {
+      "ru": "Завершить",
+      "en": "Finish",
+      "ar": "إنهاء"
+    }
+  }
+}

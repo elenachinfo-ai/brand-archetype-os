@@ -1,0 +1,946 @@
+{
+  "version": "1.0",
+  "description": "Cross-cultural adaptation layer for Brand Archetype OS — Jungian 12-archetype diagnostic with 4D vector model (control, energy, focus, method). Covers Russian (RU), English (EN), and Arabic (AR) locales with culturally-appropriate metaphor substitutions, RTL visual rules, and per-locale visual benchmarks.",
+  "last_modified": "2025-02-20",
+
+  "locales": {
+    "ru": {
+      "code": "ru",
+      "name": "Русский",
+      "name_en": "Russian",
+      "direction": "ltr",
+      "script": "Cyrillic",
+      "font_families": ["'Manrope'", "'Inter'", "system-ui", "sans-serif"],
+      "font_scale": 1.0,
+      "cultural_anchor": "Slavic/European — direct, emotionally expressive, high-contrast visual tradition"
+    },
+    "en": {
+      "code": "en",
+      "name": "English",
+      "name_en": "English",
+      "direction": "ltr",
+      "script": "Latin",
+      "font_families": ["'Manrope'", "'Inter'", "system-ui", "sans-serif"],
+      "font_scale": 1.0,
+      "cultural_anchor": "Anglo-American — pragmatic, achievement-oriented, minimalist-modernist visual tradition"
+    },
+    "ar": {
+      "code": "ar",
+      "name": "العربية",
+      "name_en": "Arabic",
+      "direction": "rtl",
+      "script": "Arabic",
+      "font_families": ["'Tajawal'", "'Noto Naskh Arabic'", "'Scheherazade New'", "'IBM Plex Sans Arabic'", "'Manrope'", "system-ui", "sans-serif"],
+      "font_scale": 1.08,
+      "cultural_anchor": "Arab-Islamic — ornamental, geometric, calligraphic visual tradition; negative space as canvas for pattern; poetry and garden imagery"
+    }
+  },
+
+  "metaphor_mappings": {
+    "description": "Cross-cultural metaphor substitutions — Western-origin metaphors mapped to culturally-resonant equivalents per locale.",
+
+    "hero": {
+      "ru": {
+        "primary_metaphor": "Витязь в сияющих доспехах",
+        "visual": "Sharp angles, high contrast, red banners, forward momentum"
+      },
+      "en": {
+        "primary_metaphor": "Knight in shining armor",
+        "visual": "Sharp angles, high contrast, red banners, forward momentum"
+      },
+      "ar": {
+        "primary_metaphor": "صقر يحلّق فوق الكثبان",
+        "primary_metaphor_en": "Falcon soaring over dunes",
+        "visual": "Soaring diagonal lines, desert-gold against deep indigo, falcon-wing motifs, upward-right momentum (RTL heroism flows rightward)"
+      }
+    },
+
+    "caregiver": {
+      "ru": {
+        "primary_metaphor": "Тёплая кухня, где пахнет свежим хлебом",
+        "visual": "Organic shapes, warm greens, soft textures, nurturing embrace"
+      },
+      "en": {
+        "primary_metaphor": "Warm kitchen, fresh-baked bread",
+        "visual": "Organic shapes, warm greens, soft textures, nurturing embrace"
+      },
+      "ar": {
+        "primary_metaphor": "فناء حديقة بنافورة متدفّقة",
+        "primary_metaphor_en": "Courtyard garden with flowing fountain",
+        "visual": "Arched niches, water-ripple patterns, jade-and-terracotta palette, eight-pointed star lattice, enveloping symmetry"
+      }
+    },
+
+    "explorer": {
+      "ru": {
+        "primary_metaphor": "Скандинавский лес, бескрайняя тайга",
+        "visual": "Natural tones, maps, expansive imagery, wandering paths"
+      },
+      "en": {
+        "primary_metaphor": "Scandinavian forest, endless wilderness",
+        "visual": "Natural tones, maps, expansive imagery, wandering paths"
+      },
+      "ar": {
+        "primary_metaphor": "واحة لا نهائية تحت سماء صحراوية مرصّعة بالنجوم",
+        "primary_metaphor_en": "Endless oasis beneath a desert starry sky",
+        "visual": "Deep indigo-to-teal gradients, star-field particles, dune-contour lines, palm-frond silhouettes, caravan-trail wayfinding"
+      }
+    },
+
+    "ruler": {
+      "ru": {
+        "primary_metaphor": "Золотой трон, строгая симметрия власти",
+        "visual": "Gold accents, symmetry, premium materials, classical proportions"
+      },
+      "en": {
+        "primary_metaphor": "Golden throne, commanding symmetry of power",
+        "visual": "Gold accents, symmetry, premium materials, classical proportions"
+      },
+      "ar": {
+        "primary_metaphor": "هندسة معقّدة، خط الثلث، أنماط متشابكة متقنة",
+        "primary_metaphor_en": "Intricate geometry, thuluth calligraphy, elaborate interwoven patterns",
+        "visual": "NOT minimal gold lines — complex geometric tessellation (zellige), thuluth-style flowing calligraphic anchors, eight/sixteen-pointed star motifs, arabesque interlace, brass-and-lapis palette"
+      }
+    },
+
+    "lover": {
+      "ru": {
+        "primary_metaphor": "Бархатная ночь, близость двух душ",
+        "visual": "Rich colors, curves, luxurious textures, intimate closeness"
+      },
+      "en": {
+        "primary_metaphor": "Velvet night, intimacy of two souls",
+        "visual": "Rich colors, curves, luxurious textures, intimate closeness"
+      },
+      "ar": {
+        "primary_metaphor": "شعر موزون، حديقة الجنة الإسلامية، إيقاع العشق",
+        "primary_metaphor_en": "Metered poetry, the Islamic Paradise garden, rhythm of devotion",
+        "visual": "NOT Western curves-and-intimacy — poetic meter as visual cadence (repeating motifs in rhythmic spacing), garden-of-paradise imagery (cypress, rose, nightingale), muqarnas-inspired layered transitions, ruby-and-rosewater palette, flowing nastaliq-inspired curves"
+      }
+    },
+
+    "magician": {
+      "ru": {
+        "primary_metaphor": "Алхимик в лаборатории чудес",
+        "visual": "Gradients, particles, ethereal effects, transformation"
+      },
+      "en": {
+        "primary_metaphor": "Alchemist in a laboratory of wonders",
+        "visual": "Gradients, particles, ethereal effects, transformation"
+      },
+      "ar": {
+        "primary_metaphor": "كيميائي في مختبر العجائب، سرّ التحويل",
+        "primary_metaphor_en": "Alchemist in a laboratory of wonders, secret of transmutation",
+        "visual": "Morphic gradients (lapis-to-amethyst), geometric star polygons that tessellate and dissolve, Jābir ibn Ḥayyān-inspired transmutation motifs, light-beams through mashrabiya lattices"
+      }
+    },
+
+    "sage": {
+      "ru": {
+        "primary_metaphor": "Библиотека вечности, тишина познания",
+        "visual": "Muted tones, clean data, academic feel, calm deliberation"
+      },
+      "en": {
+        "primary_metaphor": "Library of eternity, silence of knowledge",
+        "visual": "Muted tones, clean data, academic feel, calm deliberation"
+      },
+      "ar": {
+        "primary_metaphor": "بيت الحكمة، صمت المعرفة الأبدية",
+        "primary_metaphor_en": "Bayt al-Hikma (House of Wisdom), silence of eternal knowledge",
+        "visual": "Manuscript-page textures, geometric proof diagrams (Islamic golden-age mathematics), cool slate-and-parchment palette, systematic grid reminiscent of historical scientific manuscripts"
+      }
+    },
+
+    "jester": {
+      "ru": {
+        "primary_metaphor": "Балаган, ярмарочный смех, игра без правил",
+        "visual": "Bright colors, irregular shapes, fun patterns, bouncy motion"
+      },
+      "en": {
+        "primary_metaphor": "Carnival, fairground laughter, play without rules",
+        "visual": "Bright colors, irregular shapes, fun patterns, bouncy motion"
+      },
+      "ar": {
+        "primary_metaphor": "حكواتي في سوق، بهلوان الظلّ، ضحك بلا قواعد",
+        "primary_metaphor_en": "Hakawati storyteller in the souq, shadow acrobat, laughter without rules",
+        "visual": "Souq-stall vibrancy, shadow-puppet playfulness, irregular mosaic color-pop, darbuka-rhythm bounce patterns, unexpected tile-flip transitions"
+      }
+    },
+
+    "everyman": {
+      "ru": {
+        "primary_metaphor": "Соседский двор, скамейка у подъезда",
+        "visual": "Neutral tones, familiar patterns, honest materials, balanced"
+      },
+      "en": {
+        "primary_metaphor": "Neighbor's porch, bench by the fence",
+        "visual": "Neutral tones, familiar patterns, honest materials, balanced"
+      },
+      "ar": {
+        "primary_metaphor": "ديوان مفتوح، مجلس الجيران، خبز وملح",
+        "primary_metaphor_en": "Open diwan, neighbors' majlis, bread and salt",
+        "visual": "Warm sandstone neutrals, woven-textile textures (sadu), communal gathering-circle motifs, unpretentious majlis-style openness"
+      }
+    },
+
+    "creator": {
+      "ru": {
+        "primary_metaphor": "Мастерская художника, холст и вдохновение",
+        "visual": "Vibrant palettes, artistic layouts, creative tools, expressive"
+      },
+      "en": {
+        "primary_metaphor": "Artist's studio, canvas and inspiration",
+        "visual": "Vibrant palettes, artistic layouts, creative tools, expressive"
+      },
+      "ar": {
+        "primary_metaphor": "ورشة خطّاط، قصيدة تتشكّل، خلق من نور",
+        "primary_metaphor_en": "Calligrapher's workshop, a poem taking shape, creation from light",
+        "visual": "Calligraphic stroke-as-creation metaphor, ink-and-gold expressive palettes, modular geometric composition tools, the act of writing as visual art"
+      }
+    },
+
+    "rebel": {
+      "ru": {
+        "primary_metaphor": "Баррикады, рок-сцена, разрыв шаблона",
+        "visual": "High contrast, broken grids, disruptive elements, aggressive"
+      },
+      "en": {
+        "primary_metaphor": "Barricades, rock stage, shattering the template",
+        "visual": "High contrast, broken grids, disruptive elements, aggressive"
+      },
+      "ar": {
+        "primary_metaphor": "صوت العود المتمرّد، قصيدة تتحرّر من الوزن",
+        "primary_metaphor_en": "Voice of the rebel oud, a poem breaking free from meter",
+        "visual": "Deconstructed arabesque fragments, shattered-tile mosaic, oud-string tension lines, traditional pattern interrupted by bold contemporary rupture"
+      }
+    },
+
+    "innocent": {
+      "ru": {
+        "primary_metaphor": "Первое утро лета, чистое небо",
+        "visual": "Pastels, simple shapes, clear skies, gentle hope"
+      },
+      "en": {
+        "primary_metaphor": "First morning of summer, clear sky",
+        "visual": "Pastels, simple shapes, clear skies, gentle hope"
+      },
+      "ar": {
+        "primary_metaphor": "أوّل الفجر بعد ليلة القدر، سماء صافية",
+        "primary_metaphor_en": "First dawn after Laylat al-Qadr, clear sky",
+        "visual": "Dawn-gradient pastels (fajr palette), simple unadorned geometry, purity-through-light, ninety-nine-names-of-God-inspired subtle repetition suggesting infinite simplicity"
+      }
+    }
+  },
+
+  "typography_rules": {
+    "description": "Per-locale typography, RTL, and layout rules that override the base LTR system.",
+
+    "rtl": {
+      "enabled_locales": ["ar"],
+      "css_overrides": {
+        "direction": "rtl",
+        "text_align": {
+          "default": "right",
+          "headings": "right",
+          "body": "right",
+          "ui_labels": "right"
+        },
+        "flex_direction": {
+          "row": "row-reverse",
+          "row_reverse": "row"
+        },
+        "grid": {
+          "auto_flow": "dense",
+          "column_placement": "right-to-left"
+        },
+        "border_radius": {
+          "description": "In RTL, the visual origin is top-right. Corner rounding hierarchy starts from top-right clockwise. border-radius shorthand adjusts: top-left ↔ top-right swap in visual intent.",
+          "shorthand_remapping": {
+            "all_four": "top-right top-left bottom-left bottom-right (visual origin shift)",
+            "note": "When --radius-sm/--radius-md/--radius-lg are asymmetrical, the larger radius should lead from top-right in RTL."
+          }
+        },
+        "box_shadow": {
+          "description": "Horizontal offset must flip sign for RTL. Light source assumed from top-left in LTR becomes top-right in RTL.",
+          "transform": "box-shadow-h-offset * -1"
+        },
+        "animations": {
+          "enter_direction": {
+            "ltr_default": "from-left",
+            "rtl_override": "from-right"
+          },
+          "examples": {
+            "slide_in": "@keyframes slide-in { from { transform: translateX(100%); } to { transform: translateX(0); } }",
+            "fade_in": "transform-origin defaults to top right instead of top left",
+            "scan_line": "Scan sweeps from right to left instead of left to right"
+          }
+        },
+        "transform_origin": {
+          "default_ltr": "left center",
+          "rtl_override": "right center"
+        },
+        "padding_margin": {
+          "description": "Logical properties preferred over physical. Use padding-inline-start/end instead of padding-left/right.",
+          "physical_to_logical": {
+            "padding-left": "padding-inline-start",
+            "padding-right": "padding-inline-end",
+            "margin-left": "margin-inline-start",
+            "margin-right": "margin-inline-end",
+            "border-left": "border-inline-start",
+            "border-right": "border-inline-end"
+          }
+        }
+      }
+    },
+
+    "arabic_specific": {
+      "font_stack": "'Tajawal', 'Noto Naskh Arabic', 'Scheherazade New', 'IBM Plex Sans Arabic', system-ui, sans-serif",
+      "font_scale_factor": 1.08,
+      "line_height_factor": 1.15,
+      "letter_spacing": "normal — Arabic is cursive; do not add letter-spacing",
+      "word_spacing_factor": 1.05,
+      "calligraphic_considerations": {
+        "headings": "Thuluth or Diwani-inspired weight for ornamental headings",
+        "body": "Naskh-style clarity for body text",
+        "geometric": "Kufic-inspired for purely geometric/decorative contexts"
+      },
+      "number_rendering": {
+        "preference": "Arabic-Indic digits (٠١٢٣٤٥٦٧٨٩) for fully localized AR; Western Arabic (0123456789) for mixed technical contexts",
+        "default": "Western Arabic numerals for technical consistency"
+      }
+    },
+
+    "russian_specific": {
+      "font_stack": "'Manrope', 'Inter', system-ui, -apple-system, sans-serif",
+      "font_scale_factor": 1.0,
+      "line_height_factor": 1.08,
+      "letter_spacing": "0.02em — slight expansion for Cyrillic readability",
+      "word_spacing_factor": 1.0,
+      "considerations": {
+        "cyrillic_italics": "Cyrillic italics differ significantly from upright forms; ensure font supports Cyrillic italic glyphs",
+        "capitalization": "Russian typography uses less ALL-CAPS than English; prefer bold weight over uppercase for emphasis",
+        "quotes": "Use «ёлочки» (guillemets) as primary quotation marks"
+      }
+    },
+
+    "english_specific": {
+      "font_stack": "'Manrope', 'Inter', system-ui, -apple-system, sans-serif",
+      "font_scale_factor": 1.0,
+      "line_height_factor": 1.0,
+      "letter_spacing": "-0.01em — slight tightening for Latin",
+      "word_spacing_factor": 1.0,
+      "considerations": {
+        "headings": "Title case or ALL-CAPS acceptable for headings",
+        "quotes": "Use “curly quotes” as primary, 'single quotes' for nested"
+      }
+    }
+  },
+
+  "question_adaptations": {
+    "description": "Full diagnostic question translations with culturally-appropriate metaphors. Delta vectors are mathematically identical across all locales.",
+
+    "questions": [
+      {
+        "id": "motive",
+        "ru": {
+          "title": "Что движет брендом?",
+          "answers": [
+            { "icon": "⚔️", "label": "Победа", "text": "Достигать, быть первыми", "delta": { "control": 8, "energy": 10, "focus": 4, "method": 0 } },
+            { "icon": "✨", "label": "Магия", "text": "Трансформировать, вдохновлять", "delta": { "control": 0, "energy": 8, "focus": 2, "method": 8 } },
+            { "icon": "👑", "label": "Порядок", "text": "Управлять, строить системы", "delta": { "control": 10, "energy": -2, "focus": 8, "method": 6 } },
+            { "icon": "🤲", "label": "Забота", "text": "Поддерживать, делать жизнь лучше", "delta": { "control": -4, "energy": -6, "focus": 2, "method": 4 } }
+          ]
+        },
+        "en": {
+          "title": "What drives the brand?",
+          "answers": [
+            { "icon": "⚔️", "label": "Victory", "text": "Achieve, be the first", "delta": { "control": 8, "energy": 10, "focus": 4, "method": 0 } },
+            { "icon": "✨", "label": "Magic", "text": "Transform, inspire", "delta": { "control": 0, "energy": 8, "focus": 2, "method": 8 } },
+            { "icon": "👑", "label": "Order", "text": "Govern, build systems", "delta": { "control": 10, "energy": -2, "focus": 8, "method": 6 } },
+            { "icon": "🤲", "label": "Care", "text": "Support, make life better", "delta": { "control": -4, "energy": -6, "focus": 2, "method": 4 } }
+          ]
+        },
+        "ar": {
+          "title": "ما الذي يحرّك العلامة؟",
+          "answers": [
+            { "icon": "🦅", "label": "النصر", "text": "الإنجاز، أن نكون الأوائل", "delta": { "control": 8, "energy": 10, "focus": 4, "method": 0 } },
+            { "icon": "✨", "label": "السحر", "text": "التحويل، الإلهام", "delta": { "control": 0, "energy": 8, "focus": 2, "method": 8 } },
+            { "icon": "🕌", "label": "النظام", "text": "الحكم، بناء الأنظمة", "delta": { "control": 10, "energy": -2, "focus": 8, "method": 6 } },
+            { "icon": "🌿", "label": "العناية", "text": "الدعم، جعل الحياة أفضل", "delta": { "control": -4, "energy": -6, "focus": 2, "method": 4 } }
+          ]
+        }
+      },
+      {
+        "id": "emotion",
+        "ru": {
+          "title": "Какие эмоции вызывает бренд?",
+          "answers": [
+            { "icon": "🎉", "label": "Восторг", "text": "Радость, удивление, лёгкость", "delta": { "control": -4, "energy": 10, "focus": -6, "method": -2 } },
+            { "icon": "🏠", "label": "Доверие", "text": "Спокойствие, «как дома»", "delta": { "control": 2, "energy": -4, "focus": 0, "method": 0 } },
+            { "icon": "💋", "label": "Страсть", "text": "Желание, эстетическое наслаждение", "delta": { "control": -2, "energy": 6, "focus": -2, "method": 4 } },
+            { "icon": "📚", "label": "Уважение", "text": "Ясность, уверенность в экспертизе", "delta": { "control": 6, "energy": -6, "focus": 8, "method": 6 } }
+          ]
+        },
+        "en": {
+          "title": "What emotions does the brand evoke?",
+          "answers": [
+            { "icon": "🎉", "label": "Delight", "text": "Joy, surprise, lightness", "delta": { "control": -4, "energy": 10, "focus": -6, "method": -2 } },
+            { "icon": "🏠", "label": "Trust", "text": "Calm, feeling at home", "delta": { "control": 2, "energy": -4, "focus": 0, "method": 0 } },
+            { "icon": "💋", "label": "Passion", "text": "Desire, aesthetic pleasure", "delta": { "control": -2, "energy": 6, "focus": -2, "method": 4 } },
+            { "icon": "📚", "label": "Respect", "text": "Clarity, confidence in expertise", "delta": { "control": 6, "energy": -6, "focus": 8, "method": 6 } }
+          ]
+        },
+        "ar": {
+          "title": "ما المشاعر التي تثيرها العلامة؟",
+          "answers": [
+            { "icon": "🎉", "label": "البهجة", "text": "الفرح، المفاجأة، الخفّة", "delta": { "control": -4, "energy": 10, "focus": -6, "method": -2 } },
+            { "icon": "🕌", "label": "الطمأنينة", "text": "السكينة، دفء الفناء", "delta": { "control": 2, "energy": -4, "focus": 0, "method": 0 } },
+            { "icon": "🌹", "label": "العشق", "text": "الرغبة، المتعة الجمالية، إيقاع الشعر", "delta": { "control": -2, "energy": 6, "focus": -2, "method": 4 } },
+            { "icon": "📚", "label": "الاحترام", "text": "الوضوح، الثقة في الحكمة", "delta": { "control": 6, "energy": -6, "focus": 8, "method": 6 } }
+          ]
+        }
+      },
+      {
+        "id": "voice",
+        "ru": {
+          "title": "Как бренд общается?",
+          "answers": [
+            { "icon": "🔥", "label": "Вызов", "text": "Прямо, смело, без фильтров", "delta": { "control": -6, "energy": 8, "focus": -4, "method": -6 } },
+            { "icon": "🎨", "label": "Творчество", "text": "Вдохновляюще, с воображением", "delta": { "control": 0, "energy": 4, "focus": 4, "method": 6 } },
+            { "icon": "🤝", "label": "Честность", "text": "Просто, без прикрас и пафоса", "delta": { "control": 0, "energy": -2, "focus": -2, "method": 0 } },
+            { "icon": "🥂", "label": "Престиж", "text": "Элегантно, с чувством превосходства", "delta": { "control": 8, "energy": 0, "focus": 2, "method": 4 } }
+          ]
+        },
+        "en": {
+          "title": "How does the brand communicate?",
+          "answers": [
+            { "icon": "🔥", "label": "Challenge", "text": "Direct, bold, unfiltered", "delta": { "control": -6, "energy": 8, "focus": -4, "method": -6 } },
+            { "icon": "🎨", "label": "Creativity", "text": "Inspiring, imaginative", "delta": { "control": 0, "energy": 4, "focus": 4, "method": 6 } },
+            { "icon": "🤝", "label": "Honesty", "text": "Simple, unembellished, real", "delta": { "control": 0, "energy": -2, "focus": -2, "method": 0 } },
+            { "icon": "🥂", "label": "Prestige", "text": "Elegant, with a sense of excellence", "delta": { "control": 8, "energy": 0, "focus": 2, "method": 4 } }
+          ]
+        },
+        "ar": {
+          "title": "كيف تتواصل العلامة؟",
+          "answers": [
+            { "icon": "🔥", "label": "التحدّي", "text": "مباشر، جريء، بلا مرشّحات", "delta": { "control": -6, "energy": 8, "focus": -4, "method": -6 } },
+            { "icon": "🖋️", "label": "الإبداع", "text": "مُلهم، بخيال واسع", "delta": { "control": 0, "energy": 4, "focus": 4, "method": 6 } },
+            { "icon": "🤝", "label": "الصدق", "text": "بسيط، بلا زخرفة ولا تكبّر", "delta": { "control": 0, "energy": -2, "focus": -2, "method": 0 } },
+            { "icon": "🥂", "label": "الهيبة", "text": "أنيق، بإحساس الرفعة", "delta": { "control": 8, "energy": 0, "focus": 2, "method": 4 } }
+          ]
+        }
+      },
+      {
+        "id": "need",
+        "ru": {
+          "title": "Что ищет ваш клиент?",
+          "answers": [
+            { "icon": "🧭", "label": "Свободу", "text": "Приключения, новые горизонты", "delta": { "control": -4, "energy": 6, "focus": -6, "method": 0 } },
+            { "icon": "🔍", "label": "Истину", "text": "Знания, понимание, мудрость", "delta": { "control": 4, "energy": -8, "focus": 10, "method": 6 } },
+            { "icon": "🛡️", "label": "Безопасность", "text": "Заботу, тепло и защиту", "delta": { "control": 2, "energy": -6, "focus": 0, "method": 4 } },
+            { "icon": "🏆", "label": "Признание", "text": "Статус, уважение, достижения", "delta": { "control": 8, "energy": 6, "focus": 4, "method": 0 } }
+          ]
+        },
+        "en": {
+          "title": "What is your client seeking?",
+          "answers": [
+            { "icon": "🧭", "label": "Freedom", "text": "Adventure, new horizons", "delta": { "control": -4, "energy": 6, "focus": -6, "method": 0 } },
+            { "icon": "🔍", "label": "Truth", "text": "Knowledge, understanding, wisdom", "delta": { "control": 4, "energy": -8, "focus": 10, "method": 6 } },
+            { "icon": "🛡️", "label": "Safety", "text": "Care, warmth, and protection", "delta": { "control": 2, "energy": -6, "focus": 0, "method": 4 } },
+            { "icon": "🏆", "label": "Recognition", "text": "Status, respect, achievement", "delta": { "control": 8, "energy": 6, "focus": 4, "method": 0 } }
+          ]
+        },
+        "ar": {
+          "title": "ما الذي يبحث عنه عميلك؟",
+          "answers": [
+            { "icon": "🌟", "label": "الحريّة", "text": "المغامرة، آفاق جديدة تحت سماء الصحراء", "delta": { "control": -4, "energy": 6, "focus": -6, "method": 0 } },
+            { "icon": "🔍", "label": "الحقيقة", "text": "المعرفة، الفهم، الحكمة", "delta": { "control": 4, "energy": -8, "focus": 10, "method": 6 } },
+            { "icon": "🛡️", "label": "الأمان", "text": "العناية، الدفء، والحماية في فناء البيت", "delta": { "control": 2, "energy": -6, "focus": 0, "method": 4 } },
+            { "icon": "🏆", "label": "التقدير", "text": "المكانة، الاحترام، الإنجاز", "delta": { "control": 8, "energy": 6, "focus": 4, "method": 0 } }
+          ]
+        }
+      },
+      {
+        "id": "product",
+        "ru": {
+          "title": "Характер вашего продукта?",
+          "answers": [
+            { "icon": "🔮", "label": "Инновация", "text": "Магический — преображает реальность", "delta": { "control": 0, "energy": 6, "focus": 4, "method": 8 } },
+            { "icon": "⚙️", "label": "Надёжность", "text": "Качественный, проверенный временем", "delta": { "control": 4, "energy": -4, "focus": 0, "method": 2 } },
+            { "icon": "💥", "label": "Дерзость", "text": "Ломает правила и стандарты", "delta": { "control": -8, "energy": 10, "focus": -4, "method": -4 } },
+            { "icon": "💎", "label": "Красота", "text": "Чувственный — им хочется обладать", "delta": { "control": 2, "energy": 4, "focus": -2, "method": 6 } }
+          ]
+        },
+        "en": {
+          "title": "What is your product's character?",
+          "answers": [
+            { "icon": "🔮", "label": "Innovation", "text": "Magical — transforms reality", "delta": { "control": 0, "energy": 6, "focus": 4, "method": 8 } },
+            { "icon": "⚙️", "label": "Reliability", "text": "Quality, time-tested", "delta": { "control": 4, "energy": -4, "focus": 0, "method": 2 } },
+            { "icon": "💥", "label": "Audacity", "text": "Breaks rules and standards", "delta": { "control": -8, "energy": 10, "focus": -4, "method": -4 } },
+            { "icon": "💎", "label": "Beauty", "text": "Sensual — you desire to possess it", "delta": { "control": 2, "energy": 4, "focus": -2, "method": 6 } }
+          ]
+        },
+        "ar": {
+          "title": "ما طبيعة منتجك؟",
+          "answers": [
+            { "icon": "🔮", "label": "الابتكار", "text": "سحري — يغيّر الواقع", "delta": { "control": 0, "energy": 6, "focus": 4, "method": 8 } },
+            { "icon": "⚙️", "label": "الموثوقية", "text": "متين، مختبر عبر الزمن", "delta": { "control": 4, "energy": -4, "focus": 0, "method": 2 } },
+            { "icon": "💥", "label": "الجرأة", "text": "يكسر القواعد والمعايير", "delta": { "control": -8, "energy": 10, "focus": -4, "method": -4 } },
+            { "icon": "💎", "label": "الجمال", "text": "حسّي — ترغب في امتلاكه", "delta": { "control": 2, "energy": 4, "focus": -2, "method": 6 } }
+          ]
+        }
+      }
+    ],
+
+    "sound_waves": {
+      "description": "Audio metaphor diagnostic — maps sonic archetypes to 4D vector shifts. Identical deltas across locales.",
+      "ru": [
+        { "id": "deep", "icon": "🅵", "label": "Глубокий ритм", "desc": "Низкие частоты — уверенность", "delta": { "control": 6, "energy": -2, "focus": 4, "method": 4 } },
+        { "id": "dynamic", "icon": "🅼", "label": "Динамичный пульс", "desc": "Быстрый темп — энергия, драйв", "delta": { "control": -2, "energy": 10, "focus": -2, "method": 0 } },
+        { "id": "harmonic", "icon": "🅻", "label": "Гармоничный поток", "desc": "Плавные волны — забота, комфорт", "delta": { "control": 2, "energy": -6, "focus": 0, "method": 2 } },
+        { "id": "crystal", "icon": "🅷", "label": "Кристальный звон", "desc": "Высокие тона — инновации, магия", "delta": { "control": 0, "energy": 4, "focus": 6, "method": 8 } }
+      ],
+      "en": [
+        { "id": "deep", "icon": "🅵", "label": "Deep Rhythm", "desc": "Low frequencies — confidence", "delta": { "control": 6, "energy": -2, "focus": 4, "method": 4 } },
+        { "id": "dynamic", "icon": "🅼", "label": "Dynamic Pulse", "desc": "Fast tempo — energy, drive", "delta": { "control": -2, "energy": 10, "focus": -2, "method": 0 } },
+        { "id": "harmonic", "icon": "🅻", "label": "Harmonic Flow", "desc": "Smooth waves — care, comfort", "delta": { "control": 2, "energy": -6, "focus": 0, "method": 2 } },
+        { "id": "crystal", "icon": "🅷", "label": "Crystal Chime", "desc": "High tones — innovation, magic", "delta": { "control": 0, "energy": 4, "focus": 6, "method": 8 } }
+      ],
+      "ar": [
+        { "id": "deep", "icon": "🅵", "label": "إيقاع عميق", "desc": "تردّدات منخفضة — ثقة", "delta": { "control": 6, "energy": -2, "focus": 4, "method": 4 } },
+        { "id": "dynamic", "icon": "🅼", "label": "نبض ديناميكي", "desc": "إيقاع سريع — طاقة، اندفاع", "delta": { "control": -2, "energy": 10, "focus": -2, "method": 0 } },
+        { "id": "harmonic", "icon": "🅻", "label": "تدفّق متناغم", "desc": "موجات ناعمة — عناية، راحة", "delta": { "control": 2, "energy": -6, "focus": 0, "method": 2 } },
+        { "id": "crystal", "icon": "🅷", "label": "رنين بلّوري", "desc": "نغمات عالية — ابتكار، سحر", "delta": { "control": 0, "energy": 4, "focus": 6, "method": 8 } }
+      ]
+    }
+  },
+
+  "visual_benchmarks_per_locale": {
+    "description": "How each of the 12 archetypes' visual expression differs across RU, EN, and AR cultures. These benchmarks guide the Pivot engine's CSS variable overrides per locale.",
+
+    "hero": {
+      "ru": {
+        "color_shift": "Deeper crimson (#c62828 anchor), gold-star highlights",
+        "typography": "Bold condensed Cyrillic, upward-right diagonal axis",
+        "spatial": "Monumental scale, vertical dominance",
+        "motion": "Soviet-constructivist forward thrust, decisive cuts",
+        "key_difference": "Collective-hero narrative vs Western individual-hero"
+      },
+      "en": {
+        "color_shift": "Action red (#e74c3c), high-contrast white on red",
+        "typography": "Bold uppercase sans-serif, italic-forward",
+        "spatial": "Dynamic diagonals, power angles",
+        "motion": "Fast cuts, impactful entrances, comic-book timing",
+        "key_difference": "Individual-triumph narrative"
+      },
+      "ar": {
+        "color_shift": "Desert-gold (#d4a017) on deep indigo (#1a1a40), falcon-brown accent",
+        "typography": "Bold geometric Kufic-inspired display, upward-right soaring axis",
+        "spatial": "Falcon-wing diagonals, ascent-from-dunes composition",
+        "motion": "Soaring arcs, thermal-updraft easing, rightward-heroic sweep",
+        "key_difference": "Falcon metaphor replaces knight; heroism as soaring mastery, not armored confrontation"
+      }
+    },
+
+    "ruler": {
+      "ru": {
+        "color_shift": "Imperial gold (#d4a017), deep burgundy accents",
+        "typography": "Classical serif Cyrillic, centered symmetry",
+        "spatial": "Palace-hall proportions, strict bilateral symmetry",
+        "motion": "Slow, deliberate, throne-room gravity",
+        "key_difference": "Tsarist/imperial grandeur; gold as opulence"
+      },
+      "en": {
+        "color_shift": "Regal gold (#f39c12), navy authority",
+        "typography": "Classical serif, centered, stately",
+        "spatial": "Commanding symmetry, hierarchical grids",
+        "motion": "Slow dissolves, commanding presence",
+        "key_difference": "Corporate-sovereign; gold as premium minimalism"
+      },
+      "ar": {
+        "color_shift": "Brass (#b5a642) and lapis (#274e80), NOT minimal gold — complex palette",
+        "typography": "Thuluth-inspired calligraphic anchors, intricate geometric framing",
+        "spatial": "Arabesque interlace grids, eight-pointed star mandalas, zellige-tessellation order",
+        "motion": "Geometric unfold, pattern-reveal transitions, fractal-like expansion",
+        "key_difference": "Ruler = intricate geometry, NOT minimal lines. Order through ornamental complexity."
+      }
+    },
+
+    "lover": {
+      "ru": {
+        "color_shift": "Deep rose (#c2185b), velvet black, gold trim",
+        "typography": "Elegant italic Cyrillic, flowing serif",
+        "spatial": "Intimate closeness, boudoir warmth",
+        "motion": "Lingering fades, seductive reveals",
+        "key_difference": "Passion as intimate fire; Tolstoy-esque emotional depth"
+      },
+      "en": {
+        "color_shift": "Romantic pink (#e91e63), cream, deep plum",
+        "typography": "Sensual flowing serif, tight kerning",
+        "spatial": "Close, personal, warm embrace",
+        "motion": "Slow curves, caressing transitions",
+        "key_difference": "Intimacy and curves; Western romantic love"
+      },
+      "ar": {
+        "color_shift": "Ruby (#9b1b30) and rosewater (#f7d1cd), garden-green (#2d5a27)",
+        "typography": "Nastaliq-inspired flowing curves, poetic-rhythm letter spacing",
+        "spatial": "Paradise-garden quadrant layout, cypress-tree verticals, fountain-center radial",
+        "motion": "Metered rhythm — repeating motif pulse at poetic-beat intervals, muqarnas-layer reveal",
+        "key_difference": "NOT curves-and-intimacy. Lover = poetry, metered rhythm, Paradise garden imagery (cypress, rose, nightingale, flowing water)."
+      }
+    },
+
+    "caregiver": {
+      "ru": {
+        "color_shift": "Forest green (#2e7d32), warm bread-brown, cream",
+        "typography": "Rounded friendly Cyrillic, open counters",
+        "spatial": "Kitchen-table warmth, circular embrace layouts",
+        "motion": "Gentle, rocking, lullaby-easing",
+        "key_difference": "Babushka's kitchen — warmth through sustenance"
+      },
+      "en": {
+        "color_shift": "Healing green (#27ae60), soft cream, warm beige",
+        "typography": "Warm rounded sans-serif, generous x-height",
+        "spatial": "Comfortable breathing room, organic clusters",
+        "motion": "Soft, reassuring, gentle",
+        "key_difference": "Warm kitchen — comfort through nurturing service"
+      },
+      "ar": {
+        "color_shift": "Courtyard jade (#1b7a3d), fountain-blue (#5dade2), terracotta (#c67b4b)",
+        "typography": "Rounded Naskh-style, open generous counters, warm approachable weight",
+        "spatial": "Courtyard-garden layout — central fountain radial, arched alcoves, shaded colonnade rhythm",
+        "motion": "Water-ripple propagation, fountain-flow easing, shade-dapple soft transitions",
+        "key_difference": "Caregiver = courtyard garden with fountain (not kitchen). Care as hospitality, water as life-giver."
+      }
+    },
+
+    "explorer": {
+      "ru": {
+        "color_shift": "Taiga-green (#00695c), birch-white, sky-blue",
+        "typography": "Wide, open Cyrillic, map-label clarity",
+        "spatial": "Expansive, boundless, forest-depth layering",
+        "motion": "Flowing, wandering, compass-needle sweeps",
+        "key_difference": "Scandinavian forest / Siberian taiga — the North as wilderness"
+      },
+      "en": {
+        "color_shift": "Adventure teal (#00bcd4), earth tones, map-paper",
+        "typography": "Wide adventurous sans-serif, open tracking",
+        "spatial": "Expansive, liberating, horizon-line compositions",
+        "motion": "Flowing, discovering, topographic reveals",
+        "key_difference": "Scandinavian forest / Pacific Northwest — wilderness discovery"
+      },
+      "ar": {
+        "color_shift": "Oasis-teal (#00838f), desert-sand (#d4a574), starry-indigo (#1a237e)",
+        "typography": "Wide open Naskh/Persian-inspired, dune-contour letterforms",
+        "spatial": "Endless horizon composition, dune-ridge layering, star-field depth, caravan-path wayfinding lines",
+        "motion": "Star-trail rotations, dune-drift parallax, oasis-mirage reveal transitions",
+        "key_difference": "Explorer = endless oasis / desert starry sky (not Scandinavian forest). Discovery as desert crossing, navigation by stars."
+      }
+    },
+
+    "sage": {
+      "ru": {
+        "color_shift": "Slate-blue (#455a64), parchment, ink-black",
+        "typography": "Scholarly serif Cyrillic, precise, measured",
+        "spatial": "Library-stack order, methodical grid, quiet density",
+        "motion": "Slow page-turns, deliberate reveals",
+        "key_difference": "Academic-institutional wisdom; Dostoevsky-depth"
+      },
+      "en": {
+        "color_shift": "Muted blue-grey (#607d8b), ivory, charcoal",
+        "typography": "Clear scholarly serif, methodical spacing",
+        "spatial": "Organized, spacious, academic calm",
+        "motion": "Calm, deliberate, thoughtful",
+        "key_difference": "Ivy-league / Oxbridge wisdom tradition"
+      },
+      "ar": {
+        "color_shift": "Manuscript-slate (#4a6b7c), parchment-cream (#f5f0e1), ink-black (#1a1a1a)",
+        "typography": "Naskh scholarly script, systematic geometry-grid underlay, precise measured spacing",
+        "spatial": "Bayt al-Hikma layout — manuscript-page grid, geometric-proof inset panels, marginal commentary zones",
+        "motion": "Page-unveil transitions, geometric-diagram step-reveal, contemplative slow-dissolve",
+        "key_difference": "Sage = Bayt al-Hikma (House of Wisdom), Islamic golden-age scholarly tradition. Knowledge as illuminated manuscript."
+      }
+    },
+
+    "magician": {
+      "ru": {
+        "color_shift": "Deep purple (#7b1fa2), ethereal silver, midnight",
+        "typography": "Mysterious elegant Cyrillic, thin weights",
+        "spatial": "Dramatic, theatrical, transformation zones",
+        "motion": "Morphing, particle-transforms, alchemical",
+        "key_difference": "Fairy-tale magic; Baba Yaga to Firebird transformation"
+      },
+      "en": {
+        "color_shift": "Mystical purple (#9b59b6), ethereal blue, silver",
+        "typography": "Elegant mysterious serif, flowing",
+        "spatial": "Dramatic, theatrical, wonder-spaces",
+        "motion": "Morphing, transforming, magical reveals",
+        "key_difference": "Merlin/Gandalf archetype; wonder through transformation"
+      },
+      "ar": {
+        "color_shift": "Lapis-lazuli (#3f51b5), amethyst (#9c27b0), alchemical-gold (#ffc107)",
+        "typography": "Flowing Diwani-inspired mystical curves, transmutation-gradient lettering",
+        "spatial": "Alchemical-laboratory layout — transmutation circles, geometric-star tessellations that morph, light-through-mashrabiya dapple",
+        "motion": "Geometric-star morphing (square→octagon→star), tessellation-dissolve, Jābir ibn Ḥayyān transmutation sequences",
+        "key_difference": "Magician rooted in Islamic alchemical tradition (Jābir ibn Ḥayyān) — geometry as transformative secret."
+      }
+    },
+
+    "jester": {
+      "ru": {
+        "color_shift": "Bright orange (#ff9800), carnival red, fairground blue",
+        "typography": "Irregular bouncy Cyrillic, skomorokh-playful",
+        "spatial": "Unexpected, dynamic, fairground chaos",
+        "motion": "Bouncy, elastic, surprising",
+        "key_difference": "Skomorokh (миннезингер) tradition — folk laughter, buffoonery"
+      },
+      "en": {
+        "color_shift": "Playful orange (#ff9800), confetti colors, pop-art brights",
+        "typography": "Quirky irregular sans-serif, bouncy baseline",
+        "spatial": "Dynamic, unexpected, carnival-layout",
+        "motion": "Bouncy, elastic, surprising entrances",
+        "key_difference": "Court jester / circus clown — licensed irreverence"
+      },
+      "ar": {
+        "color_shift": "Souq-spice orange (#e65100), turquoise (#00bcd4), brass-market yellow (#ffc107)",
+        "typography": "Irregular playful Naskh, hakawati-storyteller bounce, shadow-puppet letter-forms",
+        "spatial": "Souq-stall collage, shadow-theater depth planes, unexpected tile-flip zones",
+        "motion": "Hakawati story-beat reveals, shadow-puppet dart, darbuka-rhythm bounce, tile-flip transitions",
+        "key_difference": "Jester = Hakawati (حكواتي) storyteller + shadow puppeteer. Laughter as oral tradition, not circus."
+      }
+    },
+
+    "everyman": {
+      "ru": {
+        "color_shift": "Warm brown (#795548), honest grey, bread-crust beige",
+        "typography": "Clean readable Cyrillic, unpretentious",
+        "spatial": "Dvor (двор) communal layout, bench-by-entrance simplicity",
+        "motion": "Steady, reliable, no flourish",
+        "key_difference": "Dvorovyi (дворовый) — the neighborhood, the communal yard"
+      },
+      "en": {
+        "color_shift": "Honest brown (#795548), denim blue, wheat",
+        "typography": "Clean, straightforward, highly readable",
+        "spatial": "Balanced, familiar, porch-and-fence",
+        "motion": "Steady, reliable, unpretentious",
+        "key_difference": "The guy next door — middle-American everyman"
+      },
+      "ar": {
+        "color_shift": "Sandstone (#a0866b), woven-sadu red (#b7410e), majlis-cream (#f5f0e1)",
+        "typography": "Clean readable Naskh, unpretentious weight, open counters",
+        "spatial": "Diwan/majlis layout — communal seating circle, open central space, no hierarchy",
+        "motion": "Steady gathering rhythm, bread-and-salt simplicity, communal settle-in easing",
+        "key_difference": "Everyman = the open diwan, neighbor's majlis, bread and salt. Belonging through communal gathering."
+      }
+    },
+
+    "creator": {
+      "ru": {
+        "color_shift": "Violet (#673ab7), avant-garde red, canvas-white",
+        "typography": "Artistic expressive Cyrillic, constructivist angles",
+        "spatial": "Studio-loft openness, canvas-as-layout",
+        "motion": "Generative, brushstroke-reveal, artistic",
+        "key_difference": "Russian avant-garde — Malevich, Kandinsky — creation as radical vision"
+      },
+      "en": {
+        "color_shift": "Creative violet (#673ab7), palette-pop, canvas-white",
+        "typography": "Artistic, expressive, unique",
+        "spatial": "Inspired, varied, creative studio",
+        "motion": "Organic, generative, brushstroke reveals",
+        "key_difference": "Maker/artist — Silicon Valley creator culture"
+      },
+      "ar": {
+        "color_shift": "Ink-black (#1a1a1a), illumination-gold (#d4a017), manuscript-cream (#f5f0e1)",
+        "typography": "Calligraphic stroke as creation — expressive Naskh/Nastaliq, ink-flow letterforms",
+        "spatial": "Calligrapher's workshop — inkwell-center, stroke-practice margins, illumination-panel insets",
+        "motion": "Ink-flow reveals, calligraphic stroke animation (pen-to-page), illumination-gilding glow",
+        "key_difference": "Creator = calligrapher. The act of writing as visual art. Creation through the pen (القلم)."
+      }
+    },
+
+    "rebel": {
+      "ru": {
+        "color_shift": "Fiery orange (#ff5722), asphalt-black, constructivist red",
+        "typography": "Aggressive bold Cyrillic, broken-grid placement",
+        "spatial": "Barricade tension, broken symmetry, punk-density",
+        "motion": "Jarring cuts, stutter-edits, disruptive entrances",
+        "key_difference": "Revolutionary — 1917/1991 legacy; rebellion as systemic rupture"
+      },
+      "en": {
+        "color_shift": "Rebel orange (#ff5722), black, safety-pin silver",
+        "typography": "Aggressive disruptive sans-serif, broken baseline",
+        "spatial": "Broken grids, confrontational tightness",
+        "motion": "Jarring, sudden, rebellious entrances",
+        "key_difference": "Punk/grunge — rebellion as individual defiance"
+      },
+      "ar": {
+        "color_shift": "Rebel-ember (#d84315), shattered-tile black (#1a1a1a), oud-wood brown (#5d4037)",
+        "typography": "Deconstructed Naskh — traditional letterforms fractured, oud-string tension lines",
+        "spatial": "Broken arabesque grids, shattered-zellige mosaic, traditional-pattern-interrupted layouts",
+        "motion": "Oud-string snap, tile-shatter reveals, pattern-deconstruction sequences",
+        "key_difference": "Rebel = voice of the rebel oud, poem breaking free from meter. Rebellion as liberation from formal constraint."
+      }
+    },
+
+    "innocent": {
+      "ru": {
+        "color_shift": "Spring green (#8bc34a), sky-blue, dandelion-yellow",
+        "typography": "Simple pure Cyrillic, rounded, childlike clarity",
+        "spatial": "Airy, light, meadow-open",
+        "motion": "Gentle floating, hopeful dawn-reveals",
+        "key_difference": "First morning of summer (letniy rassvet) — nostalgia for pure childhood"
+      },
+      "en": {
+        "color_shift": "Fresh green (#8bc34a), pastel sky, buttercream",
+        "typography": "Simple, pure, optimistic rounded sans-serif",
+        "spatial": "Airy, light, uncomplicated",
+        "motion": "Gentle, innocent, hopeful fades",
+        "key_difference": "Garden of Eden / simple paradise — return to purity"
+      },
+      "ar": {
+        "color_shift": "Fajr-dawn peach (#ffccbc), sky-clear blue (#81d4fa), purity-white (#ffffff)",
+        "typography": "Simple pure Naskh, unadorned, ninety-nine-names subtlety",
+        "spatial": "Dawn-light composition, clear-horizon simplicity, unadorned geometry",
+        "motion": "Fajr light-creep, gentle dawn-gradient transitions, dew-drop clarity",
+        "key_difference": "Innocent = first dawn after Laylat al-Qadr. Purity through divine light, not childishness."
+      }
+    }
+  },
+
+  "negative_space_cultural_logic": {
+    "description": "The core insight about how 'air' / negative space functions differently across visual cultures, directly affecting spacing, ornamentation density, and layout strategy.",
+
+    "european_ltr": {
+      "principle": "Negative space = breathing room. Emptiness is functional, allowing content to be parsed. Minimalism = removal.",
+      "applies_to": ["ru", "en"],
+      "spacing_strategy": "Generous whitespace, content isolation, clear separation",
+      "ornamentation": "Minimal — ornament is 'decoration' added sparingly",
+      "density": "Low-to-medium content density; each element deserves its own space"
+    },
+
+    "arabic_rtl": {
+      "principle": "Negative space = canvas for geometric ornament. Emptiness is not 'breathing room' — it is a surface awaiting arabesque, pattern, or calligraphic elaboration. The void is a field of potential beauty.",
+      "applies_to": ["ar"],
+      "spacing_strategy": "Space serves pattern. Gaps between elements may carry geometric fill (arabesque lines, star-polygon tessellations, vine-scroll motifs). What a European designer would leave empty, an Arab visual tradition fills with intricate geometry.",
+      "ornamentation": "Integral — ornament IS the structure, not decoration added atop it. The pattern and the object are one.",
+      "density": "Higher acceptable ornamental density — but balanced by geometric order (not chaos). Complexity through tessellation, not clutter.",
+      "design_implication": "When localizing for AR, DO NOT simply flip direction and keep European minimalism. The Ruler archetype in AR demands intricate geometry where EN/RU Ruler would use a single gold line. The 'air' must be reconsidered as ornamental surface."
+    }
+  },
+
+  "archetype_rtl_visual_rules": {
+    "description": "Specific RTL visual transformation rules per archetype for the Pivot engine. These override the default ArchetypeThemes CSS variables when locale=ar.",
+
+    "general_rtl_overrides": {
+      "box_shadow_h_flip": true,
+      "animation_enter_from": "right",
+      "transform_origin": "right center",
+      "border_radius_origin": "top-right",
+      "flex_row": "row-reverse",
+      "text_align_default": "right"
+    },
+
+    "per_archetype": {
+      "hero": {
+        "accent_direction": "soaring-right-upward diagonal",
+        "grid_orientation": "dune-ascent rightward"
+      },
+      "ruler": {
+        "ornamentation_density": "high — geometric tessellation replaces minimal gold lines",
+        "pattern_type": "zellige, eight-pointed-star, thuluth calligraphic frame"
+      },
+      "lover": {
+        "visual_language": "poetic meter rhythm, garden quadrant, NOT curves-and-intimacy",
+        "pattern_type": "cypress-rose-nightingale motifs, muqarnas layering"
+      },
+      "caregiver": {
+        "spatial_concept": "courtyard garden with fountain — radial from water source",
+        "pattern_type": "arched alcoves, water-ripple concentric, shade-colonnade rhythm"
+      },
+      "explorer": {
+        "spatial_concept": "endless oasis, starry desert sky — horizontal expanse",
+        "pattern_type": "dune-contour lines, star-field particles, caravan-path wayfinding"
+      },
+      "sage": {
+        "spatial_concept": "Bayt al-Hikma manuscript grid",
+        "pattern_type": "geometric-proof diagrams, marginal commentary zones, illuminated-page layout"
+      },
+      "magician": {
+        "spatial_concept": "alchemical laboratory — geometry as transformative secret",
+        "pattern_type": "star-polygon morphing tessellations, light-through-mashrabiya"
+      },
+      "jester": {
+        "spatial_concept": "hakawati storyteller + shadow theatre",
+        "pattern_type": "souq-stall collage, shadow-puppet depth planes, darbuka-rhythm bounce"
+      },
+      "everyman": {
+        "spatial_concept": "open diwan / majlis communal circle",
+        "pattern_type": "woven-sadu textures, gathering-circle motifs, unpretentious sandstone"
+      },
+      "creator": {
+        "spatial_concept": "calligrapher's workshop — pen as creator",
+        "pattern_type": "ink-flow strokes, illumination-gilding, pen-to-page animation"
+      },
+      "rebel": {
+        "spatial_concept": "rebel oud voice — tradition deconstructed",
+        "pattern_type": "shattered-zellige mosaic, oud-string tension lines, pattern-interruption"
+      },
+      "innocent": {
+        "spatial_concept": "first fajr dawn — purity through divine light",
+        "pattern_type": "dawn-gradient, clear-horizon simplicity, unadorned geometry"
+      }
+    }
+  },
+
+  "implementation_notes": {
+    "description": "Guidance for engineers implementing this cross-cultural layer in the Brand Archetype OS codebase.",
+
+    "locale_detection": {
+      "method": "navigator.language first, then user preference override",
+      "fallback_chain": ["user_override", "navigator.language", "html[lang] attribute", "en"],
+      "mapping": {
+        "ru": "ru",
+        "ru-RU": "ru",
+        "en": "en",
+        "en-US": "en",
+        "en-GB": "en",
+        "ar": "ar",
+        "ar-SA": "ar",
+        "ar-AE": "ar",
+        "ar-EG": "ar",
+        "*": "en"
+      }
+    },
+
+    "vector_math": {
+      "note": "All delta vectors in question_adaptations are mathematically identical across locales. The cultural adaptation changes only the text and metaphor, never the diagnostic math.",
+      "immutable_fields": ["delta.control", "delta.energy", "delta.focus", "delta.method"]
+    },
+
+    "pivot_integration": {
+      "note": "When Pivot.execute() runs, it should consult this file's visual_benchmarks_per_locale for the active locale and apply locale-specific CSS overrides on top of ArchetypeThemes.",
+      "override_priority": [
+        "1. ArchetypeThemes base vars",
+        "2. culture_logic.visual_benchmarks_per_locale.{archetype}.{locale}",
+        "3. culture_logic.typography_rules.rtl.css_overrides (if RTL)"
+      ]
+    },
+
+    "css_generation": {
+      "note": "For RTL (ar), generate an additional CSS block with [dir='rtl'] or html[lang='ar'] selector overrides. Use CSS logical properties (margin-inline-start, padding-inline-end, etc.) throughout the codebase to minimize RTL-specific overrides.",
+      "critical_overrides": [
+        "html[lang='ar'] { direction: rtl; }",
+        "html[lang='ar'] .hud-header { flex-direction: row-reverse; }",
+        "html[lang='ar'] .result-modal { text-align: right; }",
+        "html[lang='ar'] @keyframes slide-in { from { transform: translateX(100%); } }",
+        "html[lang='ar'] { --box-shadow-h-offset-multiplier: -1; }"
+      ]
+    },
+
+    "font_loading": {
+      "arabic": "Load Tajawal (Google Fonts) as primary AR sans-serif. Load Noto Naskh Arabic as serif fallback. Preload both for performance.",
+      "russian": "Ensure Manrope and Inter include Cyrillic subsets. Add 'cyrillic' to Google Fonts load URL.",
+      "english": "Standard Manrope + Inter stack — no special subset needed."
+    }
+  }
+}
