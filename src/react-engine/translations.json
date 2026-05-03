@@ -305,6 +305,28 @@
         "ar": "طليعة وتجريب"
       }
     }
+n    "q8_aura": {
+      "title": {
+        "ru": "Аура бренда",
+        "en": "Brand Aura",
+        "ar": "هالة العلامة"
+      },
+      "subtitle": {
+        "ru": "Какое свечение излучает бренд?",
+        "en": "What kind of glow does the brand emit?",
+        "ar": "ما نوع التوهج الذي تبثه العلامة؟"
+      },
+      "left_label": {
+        "ru": "Тёплое свечение",
+        "en": "Warm Glow",
+        "ar": "توهج دافئ"
+      },
+      "right_label": {
+        "ru": "Холодная чистота",
+        "en": "Cold Clarity",
+        "ar": "صفاء بارد"
+      }
+    },
   },
 
   "results": {

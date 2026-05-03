@@ -127,6 +127,7 @@ const DEFAULT_MEMORY_MODULES: Record<string, MemoryModuleState> = {
 const DEFAULT_POWER_DIALS: Record<string, PowerDialState> = {
   q6_scroll: { id: "q6_scroll", value: 50 },
   q7_risk: { id: "q7_risk", value: 50 },
+  q8_aura: { id: "q8_aura", value: 50 },
 };
 
 // =============================================================================
@@ -349,6 +350,23 @@ function computeRawScores(
   }
   if (riskFactor >= 0) {
     apply(DIAL_RISK_APPETITE.experimental, riskFactor);
+n  // Q8: Brand Aura [warm/glow ↔ cold/clarity]
+  const auraVal = powerDials.q8_aura?.value ?? 50;
+  const auraFactor = (auraVal - 50) / 50;
+  if (auraFactor <= 0) {
+    // Warm side: push toward lover, caregiver, jester
+    scores.lover = (scores.lover ?? 0) + Math.abs(auraFactor) * 5;
+    scores.caregiver = (scores.caregiver ?? 0) + Math.abs(auraFactor) * 4;
+    scores.jester = (scores.jester ?? 0) + Math.abs(auraFactor) * 3;
+    scores.sage = (scores.sage ?? 0) + auraFactor * 3;
+  }
+  if (auraFactor >= 0) {
+    // Cold side: push toward sage, magician, explorer
+    scores.sage = (scores.sage ?? 0) + auraFactor * 5;
+    scores.magician = (scores.magician ?? 0) + auraFactor * 4;
+    scores.explorer = (scores.explorer ?? 0) + auraFactor * 3;
+    scores.lover = (scores.lover ?? 0) - auraFactor * 3;
+  }
   }
 
   return scores;

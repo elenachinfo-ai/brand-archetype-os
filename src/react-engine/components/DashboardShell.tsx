@@ -150,7 +150,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
     : "#CFFFE5";
   const loc = locale as "ru" | "en" | "ar";
   const isRTL = direction === "rtl";
-  const totalSteps = 8; // 0=start, 1-3=BlockA, 4-5=BlockB, 6-7=BlockC, 8=result
+  const totalSteps = 9; // 0=start, 1-3=BlockA, 4-5=BlockB, 6-8=BlockC, 9=result
 
   // Determine current block
   const currentBlock =
@@ -158,22 +158,22 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
       ? "a"
       : step >= 4 && step <= 5
         ? "b"
-        : step >= 6 && step <= 7
+        : step >= 6 && step <= 8
           ? "c"
           : null;
   const stepLabel =
     step === 0
       ? "Старт"
       : currentBlock
-        ? `${BLOCK_TITLES[loc]?.[currentBlock] ?? ""} · ${step}/7`
-        : step === 8
+        ? `${BLOCK_TITLES[loc]?.[currentBlock] ?? ""} · ${step}/8`
+        : step === 9
           ? "Результат"
           : "";
 
   // ---- Button text helpers ----
   const btnBack = loc === "ru" ? "← Назад" : loc === "ar" ? "→ رجوع" : "← Back";
   const btnNext =
-    step === 7
+    step === 8
       ? loc === "ru"
         ? "Завершить"
         : loc === "ar"
@@ -251,10 +251,10 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                 </h1>
                 <p className="text-sm text-slate-500 leading-relaxed">
                   {loc === "ru"
-                    ? "Диагностический инструмент для определения ДНК вашего бренда. 7 вопросов — и вы узнаете свой архетип, получите палитру, шрифты и структуру сайта."
+                    ? "Диагностический инструмент для определения ДНК вашего бренда. 8 вопросов — и вы узнаете свой архетип, получите палитру, шрифты и структуру сайта."
                     : loc === "ar"
-                      ? "أداة تشخيصية لتحديد الحمض النووي لعلامتك التجارية. ٧ أسئلة — وستعرف نمطك الأصلي ولوحة الألوان والخطوط وهيكل الموقع."
-                      : "A diagnostic tool to determine your brand's DNA. 7 questions — and you'll know your archetype, color palette, fonts, and site structure."}
+                      ? "أداة تشخيصية لتحديد الحمض النووي لعلامتك التجارية. ٨ أسئلة — وستعرف نمطك الأصلي ولوحة الألوان والخطوط وهيكل الموقع."
+                      : "A diagnostic tool to determine your brand's DNA. 8 questions — and you'll know your archetype, color palette, fonts, and site structure."}
                 </p>
                 <button
                   onClick={() => setStep(1)}
@@ -271,7 +271,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
             )}
 
             {/* ---- STEPS 1-7: Diagnostic ---- */}
-            {step >= 1 && step <= 7 && (
+            {step >= 1 step >= 1 && step <= 7step >= 1 && step <= 7 step <= 8 && (
               <>
                 <GlassPanel intensity="medium" className="p-4 space-y-4">
                   {/* Block header */}
@@ -452,6 +452,30 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                       }
                       color={glow}
                       ariaLabel="Risk Appetite"
+n                  {/* Q8: Brand Aura */}
+                  {step === 8 && (
+                    <PowerDial
+                      id="q8_aura"
+                      value={powerDials.q8_aura.value}
+                      onChange={setPowerDial}
+                      leftLabel={
+                        loc === "ru"
+                          ? "Тёплое свечение"
+                          : loc === "ar"
+                            ? "توهج دافئ"
+                            : "Warm Glow"
+                      }
+                      rightLabel={
+                        loc === "ru"
+                          ? "Холодная чистота"
+                          : loc === "ar"
+                            ? "صفاء بارد"
+                            : "Cold Clarity"
+                      }
+                      color={glow}
+                      ariaLabel="Brand Aura"
+                    />
+                  )}
                     />
                   )}
                 </GlassPanel>
@@ -487,7 +511,7 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
             )}
 
             {/* ---- STEP 8: Result ---- */}
-            {step === 8 && isComplete && dominantArchetype && (
+            {step === 9 step === 8 && isCompletestep === 8 && isComplete isComplete && dominantArchetype && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
