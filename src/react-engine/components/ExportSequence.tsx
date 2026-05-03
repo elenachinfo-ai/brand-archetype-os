@@ -328,7 +328,7 @@ export const ExportSequence: React.FC<{ className?: string }> = ({
                       hover:bg-white/80 transition-all duration-300"
                     style={{ minHeight: 44 }}
                   >
-                    {copied === "figma" ? "✓ Copied!" : "Copy to Figma"}
+                    {copied === "figma" ? "Copied" : "Copy to Figma"}
                   </button>
                   <button
                     onClick={() => copyToClipboard("tilda")}
@@ -337,7 +337,7 @@ export const ExportSequence: React.FC<{ className?: string }> = ({
                       hover:bg-white/80 transition-all duration-300"
                     style={{ minHeight: 44 }}
                   >
-                    {copied === "tilda" ? "✓ Copied!" : "Copy to Tilda"}
+                    {copied === "tilda" ? "Copied" : "Copy to Tilda"}
                   </button>
                 </div>
                 <button
@@ -347,7 +347,7 @@ export const ExportSequence: React.FC<{ className?: string }> = ({
                     hover:bg-white/50 transition-all duration-300"
                   style={{ minHeight: 36 }}
                 >
-                  {copied === "url" ? "✓ Link copied!" : "Copy Shareable Link"}
+                  {copied === "url" ? "Link copied" : "Copy Shareable Link"}
                 </button>
               </motion.div>
             )}

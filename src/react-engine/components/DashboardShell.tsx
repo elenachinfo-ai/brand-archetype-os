@@ -38,12 +38,12 @@ const GLOW: Record<string, string> = {
 
 // ---- Question block definitions ----
 const BLOCK_TITLES: Record<string, Record<string, string>> = {
-  ru: { a: "🎯 Визуальное ДНК", b: "🏛️ Метафоры бренда", c: "🎚️ Динамика UX" },
-  en: { a: "🎯 Visual DNA", b: "🏛️ Brand Metaphors", c: "🎚️ UX Dynamics" },
+  ru: { a: "Визуальное ДНК", b: "Метафоры бренда", c: "Динамика UX" },
+  en: { a: "Visual DNA", b: "Brand Metaphors", c: "UX Dynamics" },
   ar: {
-    a: "🎯 الحمض النووي البصري",
-    b: "🏛️ استعارات العلامة التجارية",
-    c: "🎚️ ديناميكيات UX",
+    a: "الحمض النووي البصري",
+    b: "استعارات العلامة التجارية",
+    c: "ديناميكيات UX",
   },
 };
 
@@ -51,17 +51,17 @@ const BLOCK_TITLES: Record<string, Record<string, string>> = {
 const Q4_OPTIONS = [
   {
     key: "scandinavian_library",
-    label: "📚 Скандинавская библиотека",
+    label: "Скандинавская библиотека",
     desc: "Свет, порядок, тишина.",
   },
   {
     key: "artistic_workshop",
-    label: "🎨 Арт-мастерская",
+    label: "Арт-мастерская",
     desc: "Творчество, энергия, свобода.",
   },
   {
     key: "infinite_field",
-    label: "🌅 Бескрайнее поле на рассвете",
+    label: "Бескрайнее поле на рассвете",
     desc: "Горизонт, свежесть, открытие.",
   },
 ];
@@ -69,17 +69,17 @@ const Q4_OPTIONS = [
 const Q5_OPTIONS = [
   {
     key: "quiet_whisper",
-    label: "🌙 Тихий шёпот",
+    label: "Тихий шёпот",
     desc: "Незаметно, но незабываемо.",
   },
   {
     key: "confident_handshake",
-    label: "🤝 Уверенное рукопожатие",
+    label: "Уверенное рукопожатие",
     desc: "Прямо, сильно, ведущее.",
   },
   {
     key: "infectious_laugh",
-    label: "✨ Заразительный смех",
+    label: "Заразительный смех",
     desc: "Мгновенный центр внимания.",
   },
 ];
@@ -169,10 +169,10 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
   const btnNext =
     step === 7
       ? loc === "ru"
-        ? "Завершить ✓"
+        ? "Завершить"
         : loc === "ar"
-          ? "إنهاء ✓"
-          : "Finish ✓"
+          ? "إنهاء"
+          : "Finish"
       : loc === "ru"
         ? "Далее →"
         : loc === "ar"
@@ -180,16 +180,16 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
           : "Next →";
   const btnStart =
     loc === "ru"
-      ? "🚀 Начать диагностику"
+      ? "Начать диагностику"
       : loc === "ar"
-        ? "🚀 ابدأ التشخيص"
-        : "🚀 Begin Diagnosis";
+        ? "ابدأ التشخيص"
+        : "Begin Diagnosis";
   const btnOrder =
     loc === "ru"
-      ? "💎 Заказать сайт по архетипу"
+      ? "Заказать сайт по архетипу"
       : loc === "ar"
-        ? "💎 اطلب موقعاً حسب النمط"
-        : "💎 Order Website by Archetype";
+        ? "اطلب موقعاً حسب النمط"
+        : "Order Website by Archetype";
 
   return (
     <div
@@ -242,7 +242,9 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                 intensity="medium"
                 className="p-6 text-center space-y-4"
               >
-                <div className="text-3xl">🧬</div>
+                <div className="text-3xl font-light text-slate-400">
+                  ArchetypeOS
+                </div>
                 <h1 className="text-lg font-light text-slate-700 tracking-wide">
                   ArchetypeOS
                 </h1>
@@ -581,7 +583,6 @@ export const DashboardShell: React.FC<DashboardShellProps> = ({ children }) => {
                   className="w-full py-2.5 text-xs text-slate-400 font-light bg-transparent hover:text-slate-600 transition-colors"
                   style={{ minHeight: 44 }}
                 >
-                  ↺{" "}
                   {loc === "ru"
                     ? "Новая сессия"
                     : loc === "ar"

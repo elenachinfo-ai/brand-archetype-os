@@ -33,11 +33,7 @@ export const MemoryModule: React.FC<MemoryModuleProps> = ({
   ariaLabel = "Select an option",
 }) => {
   return (
-    <div
-      className="space-y-2.5"
-      role="radiogroup"
-      aria-label={ariaLabel}
-    >
+    <div className="space-y-2.5" role="radiogroup" aria-label={ariaLabel}>
       {options.map((opt) => {
         const isActive = selectedKey === opt.key;
 
@@ -76,11 +72,7 @@ export const MemoryModule: React.FC<MemoryModuleProps> = ({
                 className={`
                   mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center
                   text-sm flex-shrink-0 transition-all duration-300
-                  ${
-                    isActive
-                      ? "bg-white/80 shadow-sm"
-                      : "bg-white/20"
-                  }
+                  ${isActive ? "bg-white/80 shadow-sm" : "bg-white/20"}
                 `}
                 style={
                   isActive
@@ -88,7 +80,7 @@ export const MemoryModule: React.FC<MemoryModuleProps> = ({
                     : undefined
                 }
               >
-                {opt.icon || "◇"}
+                {opt.icon || ""}
               </div>
 
               <div className="min-w-0">
