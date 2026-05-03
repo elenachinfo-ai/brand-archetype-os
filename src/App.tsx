@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, Component } from "react";
-import { SimpleShell } from "./react-engine/components/SimpleShell";
+import { DashboardShell } from "./react-engine/components/DashboardShell";
 
 // Error boundary to catch runtime errors
 class ErrorBoundary extends Component<
@@ -88,7 +88,7 @@ function CoreFallback() {
 export function App() {
   return (
     <ErrorBoundary>
-      <SimpleShell>
+      <DashboardShell>
         <Suspense fallback={<CoreFallback />}>
           <Canvas
             camera={{ position: [0, 0, 5], fov: 45 }}
@@ -106,7 +106,7 @@ export function App() {
             </Suspense>
           </Canvas>
         </Suspense>
-      </SimpleShell>
+      </DashboardShell>
     </ErrorBoundary>
   );
 }
