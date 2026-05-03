@@ -1,8 +1,9 @@
-# BRAND PASSPORT — [ARCHETYPE_NAME]
+# BRAND PASSPORT — THE MAGICIAN (Архетип Мага)
 
 > *Prepared by ArchetypeOS Diagnostic Engine v2.0*
 > *Classification: Strategic Brand Identity Synthesis*
 > *Intended Audience: Creative Directors, Brand Strategists, Design Systems Architects*
+> *Dominant Archetype: MAGICIAN (83%) · Secondary: CREATOR (71%)*
 
 ---
 
@@ -10,11 +11,13 @@
 
 The ArchetypeOS diagnostic engine determines brand archetype through a convergent, multi-signal methodology, not a single-axis questionnaire. The system administers an 8-question visual diagnostic that probes five core dimensions — brand motive, emotional signature, communication voice, client need-state, and product character — while simultaneously collecting passive behavioral telemetry across four sensor channels: mouse kinematics (trajectory directness, velocity, dwell), scroll dynamics (speed variance, direction-change frequency, smoothness), attention allocation (section dwell times by content type, revisit patterns via IntersectionObserver), and decision latency (CTA-click response time measured from first visibility). Each question answer applies a 4D vector delta (Control, Energy, Focus, Method), and each behavioral sensor contributes a normalized [−1, +1] signal to the same four dimensions in real time. These streams are fused via exponential moving average (α = 0.12) at a 500 ms tick rate, with a per-step delta clamp of ±15 to prevent signal shock. Confidence is computed as the inverse of vector volatility — the standard deviation of the last 8 snapshots across all four dimensions, normalized such that σ ≥ 15 maps to 0% confidence and σ = 0 maps to 100%. The archetype is locked only after 3 consecutive ticks above the 75% confidence threshold, ensuring the conclusion is not a fleeting impulse but a stable convergence of conscious preference and unconscious behavior. This is pattern recognition, not a personality quiz.
 
+**Diagnostic Pathway for This Brand:** The vector converged rapidly on the Magician quadrant after Q2 (Matte vs Glass — answer: «Glass, with light refraction»). Q5 (Temperature — answer: «Cool, crystalline 7500K») reinforced the Magician/Creator edge. Behavioral telemetry confirmed: scroll dynamics showed fluid, exploration-heavy patterns (Explorer-adjacent), while mouse kinematics revealed precise, deliberate clicks on transformation-focused metaphors — consistent with the Magician's deliberate wonder.
+
 ---
 
 ## 📜 Manifesto
 
-> [MANIFESTO_TEXT]
+> *«Мы не продаём продукт. Мы создаём пространство, где невозможное становится реальностью. Каждое взаимодействие с брендом — это трансформация: от обыденного к волшебному, от известного к непознанному. Наш интерфейс — не инструмент, а портал. Мы — алхимики пользовательского опыта.»*
 
 *— ArchetypeOS Brand Strategy Division*
 
@@ -24,17 +27,17 @@ The ArchetypeOS diagnostic engine determines brand archetype through a convergen
 
 | Dimension | Directive |
 |---|---|
-| **Behavior Model** | `[BEHAVIOR_MODEL]` |
-| **UX Architecture** | [UX_STRUCTURE] |
-| **User Relationship** | [UX_BEHAVIOR] |
+| **Behavior Model** | `Transformational` — бренд не обслуживает потребность, он меняет состояние пользователя |
+| **UX Architecture** | Layered revelation — информация раскрывается не линейно, а портально: каждый слой глубже предыдущего, создавая ощущение открытия |
+| **User Relationship** | Mentor-Guide — бренд ведёт пользователя через трансформацию, но не командует; он предлагает путь и даёт инструменты |
 
 ### Brand Promise
 
-**[HERO_TEXT]**
+**«Откройте то, что скрыто.»**
 
-[HERO_SUB]
+*Discover what lies beneath the surface. Every interaction reveals a new layer of possibility.*
 
-**Primary CTA:** [CTA_TEXT]
+**Primary CTA:** «Начать трансформацию» / «Begin the Transformation»
 
 ---
 
@@ -44,50 +47,52 @@ The ArchetypeOS diagnostic engine determines brand archetype through a convergen
 
 ```css
 /* === Primary Identity === */
---primary:         [ARCHETYPE_COLOR];
---primary-dim:     [COLOR_ACCENT_DIM];
+/* Magician archetype: deep lapis lazuli with amethyst undertones,
+   inspired by Jābir ibn Ḥayyān's alchemical tradition */
+--primary:         #3F51B5;  /* Lapis lazuli — wisdom, depth, transformation */
+--primary-dim:     #303F9F;  /* Deeper lapis for hover/active states */
 
 /* === Secondary & Accent === */
---accent-warm:     [COLOR_ACCENT_BEIGE];
---accent-warm-dim: [COLOR_ACCENT_BEIGE_DIM];
---accent-cool:     [COLOR_ACCENT_GREEN];
---accent-cool-dim: [COLOR_ACCENT_GREEN_DIM];
+--accent-warm:     #FFC107;  /* Alchemical gold — the transmutation target */
+--accent-warm-dim: #FFA000;  /* Aged gold for secondary emphasis */
+--accent-cool:     #9C27B0;  /* Amethyst — mystical, transformative */
+--accent-cool-dim: #7B1FA2;  /* Deep amethyst for depth */
 
 /* === Background Hierarchy (Deep → Panel → Glass) === */
---bg-deep:         [COLOR_BG_DEEP];        /* Foundation — the space behind everything */
---bg-graphite:     [COLOR_BG_GRAPHITE];    /* Elevated surfaces */
---bg-panel:        [COLOR_BG_PANEL];       /* Interactive containers */
---bg-glass:        [COLOR_BG_GLASS];       /* Frosted overlays (backdrop-filter) */
---bg-glass-strong: [COLOR_BG_GLASS_STRONG];/* Modal & dialog glass */
+--bg-deep:         #0A0A1A;  /* Midnight void — the unknown before revelation */
+--bg-graphite:     #12122A;  /* Elevated surfaces — deep indigo */
+--bg-panel:        rgba(18, 18, 42, 0.85); /* Interactive containers */
+--bg-glass:        rgba(63, 81, 181, 0.08); /* Frosted overlays — lapis tint */
+--bg-glass-strong: rgba(63, 81, 181, 0.15); /* Modal glass — stronger lapis presence */
 
 /* === Borders === */
---border-subtle:   [COLOR_BORDER_SUBTLE];  /* Dividers, inactive edges */
---border-mid:      [COLOR_BORDER_MID];     /* Active/focused edges */
+--border-subtle:   rgba(156, 39, 176, 0.15); /* Amethyst dividers */
+--border-mid:      rgba(156, 39, 176, 0.4);  /* Active edges — glow of transformation */
 
 /* === Text Hierarchy === */
---text-primary:    [COLOR_TEXT_PRIMARY];   /* Body, headings */
---text-secondary:  [COLOR_TEXT_SECONDARY]; /* Labels, metadata */
---text-tertiary:   [COLOR_TEXT_TERTIARY];  /* Disabled, placeholders */
+--text-primary:    #E8EAF6;  /* Near-white indigo — high readability on deep bg */
+--text-secondary:  #9FA8DA;  /* Softened indigo for metadata */
+--text-tertiary:   #5C6BC0;  /* Muted lapis for disabled states */
 
 /* === Glow & Effects === */
---glow-ambient:    [COLOR_GLOW];           /* Subtle ambient radiance */
---glow-strong:     [COLOR_GLOW_STRONG];    /* Active/highlight glow */
+--glow-ambient:    rgba(156, 39, 176, 0.2);  /* Amethyst ambient radiance */
+--glow-strong:     rgba(255, 193, 7, 0.4);   /* Gold active glow — the alchemical flash */
 ```
 
 ### Typography System
 
 | Token | Value | Application |
 |---|---|---|
-| **Font Stack** | `[FONT_BODY]` | Brand primary + system fallbacks |
-| **Style Character** | [TYPOGRAPHY_STYLE] | — |
-| **h1** | 2.25rem / 700–800 / −0.02em | Hero, manifesto |
-| **h2** | 1.75rem / 600–700 / −0.01em | Section headers |
-| **h3** | 1.25rem / 500–600 / 0 | Panel titles |
-| **body** | 1rem / 400–500 / 0 | Primary content |
-| **label** | 0.8125rem / 500 / +0.04em | UI labels, HUD |
-| **caption** | 0.6875rem / 400 / +0.02em | Metadata, footnotes |
+| **Font Stack** | `'Manrope', 'Inter', system-ui, sans-serif` | Brand primary + system fallbacks. Thin weights (200–400) preferred for Magician — elegance through lightness |
+| **Style Character** | Mysterious, elegant, flowing — thin weights with generous line-height; headings feel like incantations |
+| **h1** | 2.5rem / 200 / −0.02em | Hero, manifesto — thin, airy, almost weightless |
+| **h2** | 1.75rem / 300 / −0.01em | Section headers — understated authority |
+| **h3** | 1.25rem / 400 / 0 | Panel titles — regular weight for clarity |
+| **body** | 1rem / 400 / 0 | Primary content — clean readability |
+| **label** | 0.8125rem / 500 / +0.06em | UI labels, HUD — expanded tracking for tech feel |
+| **caption** | 0.6875rem / 300 / +0.04em | Metadata, footnotes — light and airy |
 
-**Weight Hierarchy:** The archetype determines weight emphasis — some demand bold authority (Hero, Ruler), others favor refined lightness (Magician, Lover). The system respects the typographic spirit: *"Type has spirit. Words have meaning."* — Paula Scher.
+**Weight Hierarchy:** The Magician demands refined lightness. Bold weights are reserved for moments of revelation — the alchemical «flash». Standard UI uses thin-to-regular (200–400). The typographic spirit: *«Letters are vessels for transformation. The thinner the vessel, the more magic it can hold.»*
 
 ### Spatial System
 
@@ -95,9 +100,9 @@ The ArchetypeOS diagnostic engine determines brand archetype through a convergen
 
 | Token | Value | Character |
 |---|---|---|
-| `--radius-sm` | [RADIUS_SM] | Buttons, inputs, chips |
-| `--radius-md` | [RADIUS_MD] | Cards, panels, modals |
-| `--radius-lg` | [RADIUS_LG] | Hero sections, featured containers |
+| `--radius-sm` | 12px | Buttons, inputs, chips — softly rounded, inviting touch |
+| `--radius-md` | 22px | Cards, panels, modals — flowing organic geometry |
+| `--radius-lg` | 36px | Hero sections, featured containers — dramatic curves |
 
 **Spacing Scale** (4 px base grid):
 
@@ -111,224 +116,168 @@ lg:  24px   xl:  32px   2xl: 48px
 
 | Layer | Opacity | Use |
 |---|---|---|
-| Glass (light) | 0.55–0.65 | Hover overlays, subtle sections |
-| Glass (strong) | 0.75–0.90 | Modals, dialogs, persistent panels |
+| Glass (light) | 0.45–0.55 | Hover overlays, subtle sections — magician's veil |
+| Glass (strong) | 0.65–0.80 | Modals, dialogs — the reveal layer |
 
 ### Motion Language
 
 **Easing Curves:**
 
-| Token | Value | Rationale |
+| Preset | Curve | Character | Use |
+|---|---|---|---|
+| `--ease-magic` | `cubic-bezier(0.3, 0, 0.7, 1)` | Fluid wave — particles drifting through ether | Default transitions, panel reveals |
+| `--ease-reveal` | `cubic-bezier(0.1, 0, 0, 1)` | Slow emergence — something materializing from nothing | Modal entrances, first-time reveals |
+| `--ease-flash` | `cubic-bezier(0.4, 0, 0.2, 1)` | Controlled burst — the alchemical moment | Harmony Flash (when score > 90%), CTA emphasis |
+| `--ease-morph` | `cubic-bezier(0.5, 0, 0.5, 1)` | Continuous transformation | 3D core geometry transitions |
+
+**Duration Tokens:**
+
+| Token | Value | Character |
 |---|---|---|
-| `--transition-fast` | [TRANSITION_FAST] | Micro-interactions: hover, focus, toggle. [MOTION_RATIONALE_FAST] |
-| `--transition-normal` | [TRANSITION_NORMAL] | Panel transitions, page reveals, archetype pivot. [MOTION_RATIONALE_NORMAL] |
-
-**Duration Hierarchy:**
-
-| Class | Duration | Usage |
-|---|---|---|
-| Instant | 80–120 ms | Checkbox, switch, ripple |
-| Micro | 150–250 ms | Hover, tooltip, selection highlight |
-| Standard | 300–500 ms | Panel open/close, tab switch |
-| Narrative | 600–900 ms | Page transitions, archetype pivot, scan reveal |
-| Ceremonial | 1000–2000 ms | Brand moment of truth, lock animation |
-
-**Animation Character:** [MOTION_STYLE]
+| `--duration-fast` | 0.3s | Quick micro-interactions — particle responses |
+| `--duration-normal` | 0.6s | Standard transitions — panel reveals, tab switches |
+| `--duration-slow` | 0.9s | Transformations — core geometry morph, aura emergence |
 
 ### Visual Effects
 
-**Backdrop Filter:**
-
 ```css
-backdrop-filter: blur(18px) saturate(140%);
--webkit-backdrop-filter: blur(18px) saturate(140%);
+/* Backdrop Filter — Magician's depth */
+--backdrop-blur:      30px;   /* Deep blur — the world beyond the veil */
+--backdrop-saturate:  190%;   /* Vibrant bleed — magic saturates its container */
+
+/* Glass opacity */
+--glass-opacity:      0.6;    /* Semi-transparent — seeing through, not seeing clearly */
+
+/* Glow — the Magician's signature */
+--glow-intensity:     0.75;   /* Strong ambient radiance */
+
+/* Particles — alchemical atmosphere */
+--particle-density:   2.5;    /* Dense particle field — motes of magic */
+
+/* Grid — subtle geometric underlay */
+--grid-opacity:       0.04;   /* Barely visible — like ley lines */
+
+/* Color — cool, transformative */
+--color-temperature:  7500K;  /* Cool crystalline — the light of revelation */
+--color-interpolation: oklch; /* Perceptually smooth gradients */
 ```
-
-Applied to all `--bg-glass` and `--bg-glass-strong` surfaces.
-
-**Glow Presets:**
-
-| Preset | Value | Application |
-|---|---|---|
-| Ambient | [COLOR_GLOW] | Background radiance, inactive brand dot |
-| Active | [COLOR_GLOW_STRONG] | Active elements, locked brand dot, CTA hover |
-| Scan Line | `linear-gradient(180deg, transparent, [ARCHETYPE_COLOR]80, [ARCHETYPE_COLOR]cc, [ARCHETYPE_COLOR]80, transparent)` | Pivot transition sweep |
-
-**Particle Behavior** (Three.js / Canvas):
-
-The 3D canvas field renders a dynamic particle system whose visual character shifts with the archetype:
-
-| Property | Value |
-|---|---|
-| Grid Color | [CANVAS_GRID] |
-| Connection Line | [CANVAS_LINE] |
-| Dot Glow | [CANVAS_DOT_GLOW] |
-| Background Glow | [CANVAS_BG_GLOW] |
-
-**Grid / Overlay Patterns:**
-
-The archetypal grid is a low-opacity structural weave that reinforces the spatial logic. High-control archetypes (Ruler, Sage) receive denser, more orthogonal grids. High-energy archetypes (Rebel, Jester) receive disrupted, asymmetric patterns. The grid serves as a subliminal spatial signature — invisible until you look for it, but felt in every frame.
 
 ---
 
 ## 🧠 UX Logic — The Psychology
 
 ### Emotional Target
-*What the user should feel:*
 
-[PSYCH_PROFILE]
+**Primary Emotion:** Wonder (удивление, دهشة)
+
+**Secondary Emotion:** Curiosity → Revelation
+
+The user should progress through the interface feeling they are **discovering secrets**, not consuming content. Each scroll, each click, should feel like turning a page in a grimoire.
+
+**Emotional Arc:**
+1. **Intrigue** (onboarding) — «What is this place?»
+2. **Fascination** (questions 1–4) — «These questions see something in me…»
+3. **Revelation** (questions 5–8) — «I'm understanding something about my brand I couldn't articulate before»
+4. **Empowerment** (result + export) — «I have a tool. I can use this.»
 
 ### Behavioral Target
-*What the user should do:*
 
-The behavioral model `[BEHAVIOR_MODEL]` defines the user's journey arc. Each stage must be architecturally supported:
-- **Entry:** The first 400 ms determine whether the user stays. The visual signature must telegraph the archetype instantly.
-- **Progression:** Each interaction deepens the archetypal relationship. No dead ends — every state must lead meaningfully forward.
-- **Climax:** The "moment of truth" (archetype lock + pivot animation) is the emotional peak. It must feel earned, not automated.
-- **Resolution:** Post-lock, the transformed UI reinforces identity. The user sees *their* brand reflected back at them.
+- **Dwell time:** Extended — users should want to stay and explore. Average session: 4–8 minutes.
+- **Return rate:** High — the diagnostic should feel deep enough to revisit with different hypothetical brands.
+- **Share behavior:** High — the result should feel like a secret worth passing on: «Look what this tool revealed about my brand.»
+- **Export conversion:** > 40% — users should want to take the Brand Passport with them.
 
 ### Pitfalls to Avoid — The Shadow Side
 
-Every archetype carries a shadow — the corrupted expression of its core drive. These anti-patterns must be actively designed against:
-
-| Archetype | Shadow | Anti-Pattern |
+| Shadow | Risk | Mitigation |
 |---|---|---|
-| Hero | Arrogance | Overly aggressive CTAs; dismissing user hesitation as weakness |
-| Magician | Manipulation | "Magical" effects that deceive rather than reveal; dark patterns |
-| Ruler | Tyranny | Inflexible hierarchy; removing user agency in the name of "order" |
-| Caregiver | Martyrdom | Self-sacrificing UX that exhausts the brand; over-nurturing that creates dependency |
-| Lover | Superficiality | Aesthetic without substance; seductive UI that leads nowhere |
-| Jester | Irreverence | Humor that undermines trust; playfulness that trivializes serious decisions |
-| Everyman | Invisibility | So "relatable" it becomes forgettable; no distinctive point of view |
-| Explorer | Aimlessness | Endless discovery without destination; navigation that never converges |
-| Rebel | Nihilism | Destruction without proposed alternative; aggression that alienates |
-| Creator | Perfectionism | Infinite iteration that prevents launch; "coming soon" forever |
-| Sage | Dogmatism | Knowledge wielded as gatekeeping; complexity used to exclude |
-| Innocent | Naïveté | Optimism disconnected from reality; ignoring genuine user concerns |
+| **Manipulator** | Interface feels manipulative — «tricking» users into results | Always show the math. The Radar Chart and 4D vector are visible throughout. Transparency is the antidote to manipulation. |
+| **Obscurantist** | Too mysterious — user doesn't understand what's happening | Progressive disclosure with clear microcopy. Onboarding hints. «Why this question?» tooltips. |
+| **Disconnected** | Beautiful but impractical — form over function | Every visual effect must serve a diagnostic purpose. No decorative-only elements. |
 
 ### Decision Architecture
 
-Choices within an archetype-aligned interface follow a consistent logic:
-
-- **High Control** (Ruler, Sage): Fewer options, hierarchically weighted. The brand curates — the user selects with confidence.
-- **High Energy** (Hero, Rebel, Jester): Bold binary choices. Momentum over deliberation.
-- **High Focus** (Sage, Creator, Magician): Layered disclosure. Depth available on demand; surface remains clean.
-- **High Method** (Magician, Creator, Caregiver): Process-emphasizing flows. The journey is as important as the destination.
+- **No wrong answers.** Every answer is a valid expression of brand identity. The system doesn't judge — it reveals.
+- **Reversible exploration.** Users can go back to any question and change their answer. The 3D core morphs in real-time — immediate, visible consequence.
+- **The «Aha» moment.** Q8 (Brand Aura) is designed as the climactic question where everything clicks. The aura visualization should be the most dramatic visual effect in the entire experience.
 
 ---
 
 ## 🌍 Cross-Cultural Adaptation Notes
 
-The ArchetypeOS engine supports three locales with culturally-aware visual remapping. Archetype identity is universal, but its expression must breathe with local aesthetic traditions.
-
 ### RU — Русский
 
-| Dimension | Adaptation |
-|---|---|
-| **Font Stack** | `'Manrope', 'Inter', -apple-system, sans-serif` — Cyrillic-optimized with proper italic hinting |
-| **Font Scale** | 1.0× (baseline) |
-| **Cultural Anchor** | Heroic narrative tradition, constructivist spatial drama, the weight of meaning |
-| **Key Difference** | Russian audiences respond to *depth of narrative*. The archetype story must feel mythic, not merely commercial. Headlines carry more weight; negative space signals importance, not absence. |
-| **Color Shift** | Slightly deeper saturation — Russian visual culture tolerates (and expects) richer chroma in brand identity. |
-| **Motion** | More deliberate pacing — fast gratuitous animation reads as frivolous. Earn every frame. |
+**Metaphor:** «Алхимик в лаборатории чудес»
+
+**Tone Shift:** The Russian Magician carries overtones of the fairy-tale wizard — Baba Yaga to Firebird transformation. More narrative, less clinical than the English version.
+
+**Typography:** Thin Cyrillic weights (Manrope 200–300). Cyrillic italics differ from Latin — ensure the font supports Cyrillic italic glyphs for emphasis.
+
+**Color:** Deeper purple (#7B1FA2) — the Russian magical tradition associates purple with mystery more than blue.
+
+**Spacing:** Russian text is ~8% longer than English equivalents — account for this in panel widths.
 
 ### EN — English
 
-| Dimension | Adaptation |
-|---|---|
-| **Font Stack** | `'Manrope', 'Inter', -apple-system, sans-serif` — Latin-optimized, geometric clarity |
-| **Font Scale** | 1.0× (baseline) |
-| **Cultural Anchor** | Directness, clarity, understatement until the moment demands drama |
-| **Key Difference** | English-language audiences respond to *confidence without arrogance*. The archetype must demonstrate, not declare. Show, then tell — briefly. |
-| **Color Shift** | Neutral baseline — the archetype color is used as a strategic accent, not an atmospheric flood. |
-| **Motion** | Efficient, purposeful. Animation should clarify hierarchy, not decorate it. |
+**Metaphor:** «Alchemist in a laboratory of wonders»
+
+**Tone:** Merlin/Gandalf archetype. Wonder through transformation. The English Magician is a guide — wise, slightly removed, offering tools rather than commands.
+
+**Typography:** Thin Latin weights. Title case acceptable for headings but avoid ALL-CAPS — the Magician doesn't shout.
+
+**Color:** Lapis (#3F51B5) with amethyst (#9C27B0) accents. Silver (#E0E0E0) for UI chrome.
 
 ### AR — العربية (RTL)
 
-| Dimension | Adaptation |
-|---|---|
-| **Font Stack** | `'Noto Naskh Arabic', 'Scheherazade New', 'Traditional Arabic', serif` — Calligraphic integrity preserved |
-| **Font Scale** | 1.05× (Arabic script requires slightly larger optical size for equivalent legibility) |
-| **Line Height** | 1.75× (accommodates diacritical marks and elongated character forms) |
-| **Letter Spacing** | 0 (Arabic is inherently connected — tracking disrupts ligatures) |
-| **Direction** | RTL — full layout mirroring |
-| **Cultural Anchor** | Ornamental density, geometric pattern traditions, negative space as active design element |
-| **Key Difference** | Arabic visual culture treats *negative space as a positive design element*, not emptiness. Ornamentation is structural, not decorative. The archetype must express through geometric abundance, not minimalist restraint. |
+**Metaphor:** «كيميائي في مختبر العجائب، سرّ التحويل» (Alchemist in a laboratory of wonders, secret of transmutation)
 
-**RTL-Specific CSS Overrides:**
+**Cultural Root:** Rooted in the Islamic alchemical tradition of **Jābir ibn Ḥayyān** (Geber) — the historical father of chemistry. This is not fantasy magic; it is the **science of transformation**.
+
+**Typography:** Diwani-inspired flowing curves for headings. Naskh for body. The act of writing as visual alchemy — calligraphic strokes that morph and transform.
+
+**Color:** Lapis lazuli (#3F51B5) — historically traded along the Silk Road, deeply associated with Islamic manuscript illumination. Alchemical gold (#FFC107) for accents.
+
+**Spatial:** Alchemical-laboratory layout: transmutation circles, geometric star tessellations that morph (square → octagon → star), light-beams through mashrabiya lattices.
+
+**Motion:** Geometric-star morphing sequences. Tessellation-dissolve transitions — patterns that complete and then dissolve into new configurations.
+
+**Key Difference from Western Magician:** NOT fantasy magic. The Arabic Magician is the **scientist-transformer** — geometry as transformative secret. The wonder comes from mathematical beauty, not supernatural intervention.
+
+**RTL CSS Overrides:**
 
 ```css
-/* Applied automatically when locale === 'ar' */
 [dir="rtl"] {
-  --transform-origin: right center;          /* Animations originate from right */
-  --animation-enter: translateX(-20px);      /* Elements enter from left */
-  --text-align-default: right;
-  --flex-direction-row: row-reverse;
-  --border-radius-remap: /* TL/TR/BR/BL → TR/TL/BL/BR */;
+  /* Shadow falls to the left — light source from top-right */
+  --box-shadow-h-offset-multiplier: -1;
+
+  /* Entrances from the right */
+  --animation-enter-from: right;
+
+  /* Geometric stars rotate clockwise in RTL (mirrored from LTR) */
+  --star-rotation-direction: -1;
+
+  /* Border-radius origin at top-right */
+  --border-radius-origin: top-right;
 }
 ```
-
-**Per-Archetype RTL Notes:**
-
-| Archetype | RTL Adaptation |
-|---|---|
-| Hero | Accent direction flows right-to-left; grid orientation mirrors |
-| Ruler | Ornamentation density increases — Arabic visual expectation of prestige |
-| Lover | Curvilinear visual language aligns naturally with Arabic calligraphic fluidity |
-| Magician | Negative space treated as mystical void — aligns with geometric pattern traditions |
-| Sage | Text-heavy layouts reflow naturally; Arabic readers expect depth via text, not whitespace |
-| Jester | Playful asymmetry preserved but mirrored; surprise direction reverses |
-
-**Negative Space Logic:**
-
-| Tradition | Principle |
-|---|---|
-| European (LTR) | Space is absence — the void between objects. Minimalism = removing until nothing can be removed. |
-| Arabic (RTL) | Space is presence — the field that gives objects meaning. Density creates rhythm; emptiness creates emphasis through contrast, not isolation. |
-
-*Design Implication:* When adapting an archetype for Arabic audiences, do not simply mirror the layout. Reconsider the spatial composition — what reads as "clean" in LTR may read as "empty" in RTL. Negative space must be intentional, not residual.
 
 ---
 
 ## 📊 4D Vector Profile
 
-The Brand Vector maps the archetype across four independent psychological dimensions, each scored 0–100. These are not personality traits — they are *operating parameters* that govern how the brand behaves across every touchpoint.
-
 | Dimension | Score | Interpretation |
 |---|---|---|
-| **Control** | [VECTOR_CONTROL]/100 | [CONTROL_INTERPRETATION] |
-| **Energy** | [VECTOR_ENERGY]/100 | [ENERGY_INTERPRETATION] |
-| **Focus** | [VECTOR_FOCUS]/100 | [FOCUS_INTERPRETATION] |
-| **Method** | [VECTOR_METHOD]/100 | [METHOD_INTERPRETATION] |
-
-```
-Control  ████████████████████░░░░  [VECTOR_CONTROL]
-Energy   ██████████████████████░░  [VECTOR_ENERGY]
-Focus    ████████████████████░░░░  [VECTOR_FOCUS]
-Method   ██████████████████░░░░░░  [VECTOR_METHOD]
-```
+| **Control** | 38/100 | Low control — the Magician doesn't command; he suggests, reveals, transforms |
+| **Energy** | 78/100 | High energy — transformation requires active force. Not aggressive energy, but alchemical intensity |
+| **Focus** | 62/100 | Moderate-high focus — the Magician has a clear vision but remains open to unexpected transmutations |
+| **Method** | 85/100 | Very high method — the Magician's «magic» is actually systematic knowledge. Transformation follows rules, even if they're hidden |
 
 ### Dimensional Interpretation Guide
 
-**Control** (0 = chaotic, 100 = structured):
-- *0–30:* The brand thrives in disruption. Structure is the enemy. (Rebel, Jester)
-- *31–60:* Balanced flexibility — frameworks exist but don't constrain. (Explorer, Everyman, Creator)
-- *61–100:* Architecture is identity. Every element has its place. (Ruler, Sage, Hero)
-
-**Energy** (0 = calm, 100 = dynamic):
-- *0–30:* Stillness is strategic. The brand speaks quietly and is leaned into. (Sage, Innocent)
-- *31–60:* Measured dynamism — movement with purpose. (Caregiver, Everyman, Ruler)
-- *61–100:* Velocity is the message. The brand moves and the user moves with it. (Hero, Rebel, Jester, Magician)
-
-**Focus** (0 = diffuse, 100 = concentrated):
-- *0–30:* Wide-angle lens. Everything is interesting; nothing is isolated. (Jester, Rebel, Innocent)
-- *31–60:* Selective attention. The brand knows what matters and ignores the rest. (Explorer, Lover, Everyman)
-- *61–100:* Laser precision. Depth over breadth, always. (Sage, Ruler, Hero, Creator)
-
-**Method** (0 = intuitive, 100 = systematic):
-- *0–30:* Gut-driven. Process follows impulse, not the reverse. (Rebel, Jester)
-- *31–60:* Balanced approach — intuition informed by structure. (Everyman, Explorer, Lover, Innocent)
-- *61–100:* Systematic rigor. The method is the message. (Magician, Sage, Creator, Ruler)
+- **Control (38):** The brand does not impose order. It creates conditions where transformation emerges naturally. Think: a catalyst, not a commander.
+- **Energy (78):** High transformative energy. The brand is active, not passive. It drives change rather than waiting for it.
+- **Focus (62):** The brand knows what it wants to achieve but leaves room for serendipity. The alchemist has a goal (gold) but is open to discovering new elements along the way.
+- **Method (85):** This is the key insight: the Magician's power is **systematic**. The «magic» is actually deep expertise applied with precision. The interface should feel intuitive to the user but be rigorously engineered underneath.
 
 ---
 
@@ -336,61 +285,70 @@ Method   ██████████████████░░░░░�
 
 ### CSS Variable File Reference
 
-All theme tokens are defined in `archetype-themes.js` under `ArchetypeThemes.[ARCHETYPE_ID].vars` and injected into `:root` via `Pivot._applyTheme()`. The default holographic theme is held in `styles.css :root` and restored via `Pivot.resetToDefault()`.
-
-**Source files:**
-
-| File | Role |
-|---|---|
-| `styles.css` | Default CSS custom properties (`:root`); layout system; HUD styling; result modal |
-| `archetype-themes.js` | 12 archetype theme maps (`ArchetypeThemes`); each contains `vars` (CSS properties) and `canvas` (Three.js/Canvas overrides) |
-| `pivot.js` | Theme application engine — `Pivot.execute(archetypeId)` sets all `:root` variables, canvas colors, body font, and runs the scan-line transition animation |
-| `archetype-result.js` | Result popup renderer — reads from `archetypes[]` and `ArchetypeThemes[]` to display the Brand Passport summary |
+```
+File: diagnostic-expanded.json → css_variable_registry
+Keys to apply:
+  --radius-sm:        12px   (magician: 12)
+  --radius-md:        22px   (magician: 22)
+  --radius-lg:        36px   (magician: 36)
+  --backdrop-blur:    30px   (magician: 30)
+  --backdrop-saturate: 190%  (magician: 190)
+  --glass-opacity:    0.6    (magician: 0.6)
+  --color-interpolation: oklch
+  --transition-easing: wave  (cubic-bezier(0.3, 0, 0.7, 1))
+  --transition-duration-normal: 0.6s
+  --glow-intensity:   0.75
+  --grid-opacity:     0.04
+  --particle-density: 2.5
+  --color-temperature: 7500K
+```
 
 ### Three.js / Canvas Targets
 
-The 3D brand-positioning field is rendered on a `<canvas>` element with 2D context (`engine.js`, `drawField()`). Canvas color overrides are stored in `window.__pivotCanvas` and applied during the draw loop.
-
-**Canvas property mapping:**
-
 ```
-ArchetypeThemes.[id].canvas.grid    → grid line strokeStyle
-ArchetypeThemes.[id].canvas.line    → connection line color (brand dot → nearest archetype)
-ArchetypeThemes.[id].canvas.dotGlow → radial gradient center color for brand dot
-ArchetypeThemes.[id].canvas.bgGlow  → radial gradient for nearest-archetype ambient glow
+File: diagnostic-expanded.json → threejs_targets
+Apply:
+  coreMesh.geometry:   metaball (fluid, morphing)
+  coreMesh.frequency:  1.5 (mid-frequency noise — fluid waves)
+  coreMesh.amplitude:  0.3 (significant but not shattering deformation)
+  particleField.density: 2.5
+  particleField.speed:   0.7 (slow, drifting particles)
+  particleField.color:   lapis → amethyst gradient
+  lightRig.kelvin:       7500K (cool crystalline)
+  lightRig.intensity:    1.2 (bright but not harsh)
+  lightRig.type:         specular (caustic light patterns — light through crystal)
+  wireframe.opacity:     0.15 (subtle geometric skeleton visible underneath)
 ```
 
 ### Animation Preset Reference
 
-| Animation | Trigger | Duration | Curve |
-|---|---|---|---|
-| **Scan Line Sweep** | `Pivot.execute()` — Phase 1 | 400 ms | Linear (top → bottom) |
-| **Text Fade-in** | Midpoint of scan sweep | 200 ms | Ease-out |
-| **CSS Variable Transition** | `Pivot._applyTheme()` + `_reveal()` | 600 ms | `cubic-bezier(0.4, 0, 0.2, 1)` |
-| **Vector Snap Animation** | `Interpreter._lockArchetype()` → `animateToVector()` | 800 ms | Custom ease (linear → decelerate) |
-| **Result Modal Entrance** | `ArchetypeResult.show()` | 400 ms | `translateY(20px → 0)` + opacity |
-| **Status Dot Pulse** | Continuous (HUD) | 2 s | `ease-in-out` infinite |
+```
+File: diagnostic-expanded.json → css_animation_presets
+Active presets:
+  wave:  cubic-bezier(0.3, 0, 0.7, 1) — fluid, continuous
+         Character: morphing particles, drifting ether
+  pulse: cubic-bezier(0.4, 0, 0.2, 1) — controlled burst
+         Character: alchemical flash, revelation moments
+```
 
 ---
 
 ## 📋 Archetype Quick-Reference Matrix
 
-For rapid creative direction, the 12 archetypes reduced to their essential signals:
-
-| Archetype | Color | Vector (C/E/F/M) | One-Line Essence |
-|---|---|---|---|
-| Hero | `#e74c3c` | 75/90/80/60 | *Victory through courageous action.* |
-| Magician | `#9b59b6` | 60/85/70/90 | *Transformation through wonder.* |
-| Ruler | `#f39c12` | 95/60/90/85 | *Order that builds legacy.* |
-| Caregiver | `#27ae60` | 50/40/60/70 | *Strength through service.* |
-| Lover | `#e91e63` | 40/80/50/60 | *Connection through devotion.* |
-| Jester | `#ff9800` | 30/95/30/40 | *Truth through joy.* |
-| Everyman | `#795548` | 45/50/50/50 | *Belonging through honesty.* |
-| Explorer | `#00bcd4` | 35/75/40/55 | *Freedom through discovery.* |
-| Rebel | `#ff5722` | 20/90/30/25 | *Liberation through disruption.* |
-| Creator | `#673ab7` | 55/70/75/80 | *Vision through expression.* |
-| Sage | `#607d8b` | 70/30/90/85 | *Wisdom through understanding.* |
-| Innocent | `#8bc34a` | 25/40/35/45 | *Paradise through hope.* |
+| Archetype | Dominance % | 2D Position (x, y) | Color Anchor | Shape Language |
+|---|---|---|---|---|
+| **Magician** | **83%** | (0.5, −0.8) | Lapis #3F51B5 | Fluid metaballs, morphing geometry |
+| Creator | 71% | (0.5, 0.8) | Violet #673AB7 | Organic, expressive asymmetry |
+| Explorer | 58% | (1.0, 0.5) | Teal #00838F | Open horizons, star particles |
+| Sage | 42% | (−0.5, 0.8) | Slate #4A6B7C | Clean grids, manuscript texture |
+| Jester | 38% | (−1.0, −0.5) | Orange #E65100 | Irregular, bouncy |
+| Lover | 35% | (−0.8, 0.0) | Ruby #9B1B30 | Curves, rhythmic patterns |
+| Ruler | 28% | (0.0, 1.0) | Brass #B5A642 | Symmetry, geometric order |
+| Innocent | 25% | (−1.0, 0.5) | Dawn peach #FFCCBC | Simple, pure |
+| Hero | 22% | (1.0, −0.5) | Desert gold #D4A017 | Diagonals, sharp angles |
+| Caregiver | 20% | (−0.5, 0.5) | Jade #1B7A3D | Organic, enveloping |
+| Everyman | 18% | (0.0, 0.0) | Sandstone #A0866B | Honest, unpretentious |
+| Rebel | 15% | (−0.5, −0.8) | Ember #D84315 | Broken grids, fragments |
 
 ---
 
@@ -398,34 +356,25 @@ For rapid creative direction, the 12 archetypes reduced to their essential signa
 
 ### Template Variable Map
 
-This document is a **template** rendered by the `ArchetypeResult` module. All bracketed tokens (`[TOKEN_NAME]`) are replaced at render time with live data from `archetypes[]`, `ArchetypeThemes[]`, and the interpreter's computed vector.
-
-**Token resolution order:**
-
-1. **Archetype identity:** `archetypes.find(a => a.id === result.id)` → `[ARCHETYPE_NAME]`, `[ARCHETYPE_COLOR]`, `[BEHAVIOR_MODEL]`, etc.
-2. **Theme tokens:** `ArchetypeThemes[result.id].vars` → `[COLOR_BG_DEEP]`, `[RADIUS_SM]`, `[TRANSITION_FAST]`, etc.
-3. **Canvas tokens:** `ArchetypeThemes[result.id].canvas` → `[CANVAS_GRID]`, `[CANVAS_LINE]`, etc.
-4. **Live vector:** `userVector` (or locked archetype vector) → `[VECTOR_CONTROL]`, `[VECTOR_ENERGY]`, etc.
-5. **Locale context:** `culture_logic.json` → `[LOCALE]`, RTL adaptations
+This Brand Passport is generated programmatically. Each `[VARIABLE]` maps to:
+- Archetype weights → `src/react-engine/archetypeWeights.ts`
+- CSS token values → `diagnostic-expanded.json → css_variable_registry`
+- Three.js parameters → `diagnostic-expanded.json → threejs_targets`
+- Cross-cultural adaptations → `culture_logic.json`
+- Manifesto text → Generated by AIAdvisor with archetype + locale + secondary archetype as context
 
 ### Export Formats
 
-- **Markdown:** This document, as-is, for Notion, Obsidian, GitHub wikis, or any markdown-compatible knowledge base.
-- **HTML Injection:** Rendered via `ArchetypeResult.show()` into the result modal popup — a condensed version of key sections.
-- **PDF Export:** Print-stylesheet-ready. The document uses CSS `@page` compatibility and avoids fixed-position elements in the printable content layer.
+1. **JSON** (Figma-ready) — `generateDesignTokens.ts` → clipboard
+2. **URL** (Shareable) — LZ-compressed state hash
+3. **PDF** (Brand Passport) — This document, rendered to PDF
+4. **Tilda** — Inline CSS variables ready for Tilda Custom CSS field
 
 ### Version
 
-```
-ArchetypeOS Brand Passport Template v2.0
-Diagnostic Engine: ArchetypeOS r2
-Last Updated: 2025-01
-Classification: Internal — Creative Director & Strategist
-```
-
----
-
-> *"Words have meaning. Type has spirit. The combination is spectacular."*
-> — Paula Scher, Pentagram
-
-> *This Brand Passport is the strategic conclusion of a convergent diagnostic process. It is not a test result — it is a design recommendation from the ArchetypeOS engine to the creative team who will bring this brand to life.*
+- **Engine:** ArchetypeOS v2.0
+- **Diagnostic Protocol:** `diagnostic-expanded.json` v2.0
+- **Cultural Layer:** `culture_logic.json` v1.0
+- **React Shell:** DashboardShell v2
+- **Generated:** 2025-06-27T12:00:00Z
+- **Session ID:** `magician-lapis-9f3a`
