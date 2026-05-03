@@ -201,17 +201,17 @@ export const ArchetypeCore: React.FC = () => {
     mat.uniforms.uSoft.value = s;
     mat.uniforms.uVibrant.value = v;
     mat.uniforms.uComplex.value = c;
-    // DRAMATIC ranges: Ruler→freq 0.4/amp 0.04, Outlaw→freq 5.5/amp 1.2
-    mat.uniforms.uFreq.value = 0.4 + v * 5.0 + (1.0 - s) * 2.5;
-    mat.uniforms.uAmp.value = 0.04 + v * 0.9 + c * 0.5 + (1.0 - s) * 0.4;
-    mat.uniforms.uGlowIntensity.value = 0.3 + v * 0.7;
+    // Subtle ranges: Ruler→freq 0.3/amp 0.02, Outlaw→freq 2.2/amp 0.45
+    mat.uniforms.uFreq.value = 0.3 + v * 1.5 + (1.0 - s) * 0.6;
+    mat.uniforms.uAmp.value = 0.02 + v * 0.28 + c * 0.15 + (1.0 - s) * 0.12;
+    mat.uniforms.uGlowIntensity.value = 0.2 + v * 0.4;
     mat.uniforms.uPulse.value = pulseRef.current;
     mat.uniforms.uCameraPos.value.copy(state.camera.position);
     if (meshRef.current) {
-      meshRef.current.rotation.y += 0.003 * (0.3 + v * 1.5);
+      meshRef.current.rotation.y += 0.0015 * (0.4 + v * 0.6);
       meshRef.current.rotation.x =
-        Math.sin(t * 0.3) * 0.2 * (1.0 - s + v * 0.5);
-      meshRef.current.rotation.z = Math.cos(t * 0.35) * 0.15 * v;
+        Math.sin(t * 0.2) * 0.1 * (1.0 - s + v * 0.3);
+      meshRef.current.rotation.z = Math.cos(t * 0.2) * 0.06 * v;
       meshRef.current.scale.setScalar(1.0 + pulseRef.current * 0.08);
     }
   });
