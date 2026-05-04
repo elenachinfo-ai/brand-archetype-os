@@ -376,21 +376,13 @@ var HolographicQuest = {
     var statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Готово";
 
+    // Use the already-accumulated userVector (same as what right panel shows)
     var finalVector = { control: 50, energy: 50, focus: 50, method: 50 };
-    for (var i = 0; i < this._answers.length; i++) {
-      var delta = this._answers[i].delta;
-      var dims = ["control", "energy", "focus", "method"];
-      for (var j = 0; j < dims.length; j++) {
-        var d = dims[j];
-        finalVector[d] = Math.max(0, Math.min(100, finalVector[d] + delta[d]));
-      }
-    }
-
     if (typeof userVector !== "undefined") {
-      var dims2 = ["control", "energy", "focus", "method"];
-      for (var k = 0; k < dims2.length; k++) {
-        userVector[dims2[k]] = finalVector[dims2[k]];
-      }
+      finalVector.control = userVector.control;
+      finalVector.energy = userVector.energy;
+      finalVector.focus = userVector.focus;
+      finalVector.method = userVector.method;
     }
     if (typeof updateBrandPositionFromVector === "function")
       updateBrandPositionFromVector();
