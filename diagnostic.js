@@ -218,9 +218,16 @@ var HolographicQuest = {
     btn.style.fontWeight = "500";
     btn.style.cursor = "pointer";
     btn.textContent = "Начать диагностику";
-    btn.onclick = function() {
+    btn.onclick = function(e) {
+      if (e) e.preventDefault();
       console.log("Button clicked");
-      HolographicQuest.start();
+      try {
+        HolographicQuest.start();
+        console.log("start() completed");
+      } catch(err) {
+        console.error("start() error:", err);
+      }
+      return false;
     };
     wrap.appendChild(btn);
 
@@ -244,6 +251,7 @@ var HolographicQuest = {
     this._selectedIdx = -1;
     var left = document.getElementById("panel-controllers");
     var right = document.getElementById("panel-output");
+    console.log("_renderStep: left=" + !!left + " right=" + !!right + " step=" + this._step);
     if (!left || !right) { console.log("panels missing"); return; }
     var statusEl = document.getElementById("hud-status-text");
     var totalSteps = 5;
