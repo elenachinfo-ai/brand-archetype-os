@@ -18,157 +18,356 @@ const HolographicQuest = {
 
   questions: [
     {
-      id: "market_position",
-      title: "Как ваш бренд занимает рынок?",
-      subtitle: "Выберите модель, которая ближе к вашей бизнес-логике",
+      id: "motive",
+      title: "Что движет брендом?",
       answers: [
         {
-          icon: "◈", label: "Доминирование",
-          text: "Мы задаём стандарты. Конкуренты ориентируются на нас",
-          delta: { control: 12, energy: 4, focus: 8, method: 2 },
-          css_commands: { "--radius-sm": "4px", "--radius-md": "6px", "--radius-lg": "12px", "--transition-fast": "0.25s cubic-bezier(0.6,0,0.4,1)", "--transition-normal": "0.5s cubic-bezier(0.6,0,0.4,1)", "--glow-strong": "rgba(196,168,124,0.7)", "--backdrop-blur": "blur(8px)", "--grid-opacity": "0.1", easing: "cubic-bezier(0.6,0,0.4,1)" },
+          icon: "⚔️",
+          label: "Победа",
+          text: "Достигать, быть первыми",
+          delta: { control: 8, energy: 10, focus: 4, method: 0 },
+          css_commands: {
+            "--radius-sm": "6px",
+            "--radius-md": "10px",
+            "--radius-lg": "16px",
+            "--transition-fast": "0.22s cubic-bezier(0.4,0,0.6,1)",
+            "--transition-normal": "0.45s cubic-bezier(0.4,0,0.6,1)",
+            "--glow-strong": "rgba(231,76,60,0.8)",
+            "--backdrop-blur": "blur(6px)",
+            easing: "cubic-bezier(0.4,0,0.6,1)",
+          },
         },
         {
-          icon: "◈", label: "Инновация",
-          text: "Мы создаём новое. Рынок ещё не знает, что ему это нужно",
-          delta: { control: 0, energy: 8, focus: 4, method: 10 },
-          css_commands: { "--radius-sm": "10px", "--radius-md": "20px", "--radius-lg": "32px", "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.2)", "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.2)", "--glow-strong": "rgba(160,144,184,0.7)", "--backdrop-blur": "blur(14px)", "--grid-opacity": "0.04", easing: "cubic-bezier(0.4,0,0.2,1.2)" },
+          icon: "✨",
+          label: "Магия",
+          text: "Трансформировать, вдохновлять",
+          delta: { control: 0, energy: 8, focus: 2, method: 8 },
+          css_commands: {
+            "--radius-sm": "12px",
+            "--radius-md": "22px",
+            "--radius-lg": "36px",
+            "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.2)",
+            "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.2)",
+            "--glow-strong": "rgba(155,89,182,0.8)",
+            "--backdrop-blur": "blur(14px)",
+            "--grid-opacity": "0.04",
+            easing: "cubic-bezier(0.4,0,0.2,1.2)",
+          },
         },
         {
-          icon: "◈", label: "Сервис",
-          text: "Мы — точка доверия. Клиенты возвращаются годами",
-          delta: { control: 4, energy: -4, focus: 2, method: 6 },
-          css_commands: { "--radius-sm": "12px", "--radius-md": "22px", "--radius-lg": "34px", "--transition-fast": "0.35s ease-out", "--transition-normal": "0.7s ease-out", "--glow-strong": "rgba(138,170,138,0.5)", "--backdrop-blur": "blur(6px)", "--grid-opacity": "0.03", easing: "ease-out" },
+          icon: "👑",
+          label: "Порядок",
+          text: "Управлять, строить системы",
+          delta: { control: 10, energy: -2, focus: 8, method: 6 },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "12px",
+            "--transition-fast": "0.3s cubic-bezier(0.6,0,0.4,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.6,0,0.4,1)",
+            "--glow-strong": "rgba(243,156,18,0.85)",
+            "--backdrop-blur": "blur(8px)",
+            "--grid-opacity": "0.1",
+            easing: "cubic-bezier(0.6,0,0.4,1)",
+          },
         },
         {
-          icon: "◈", label: "Вызов",
-          text: "Мы ломаем правила. Статус-кво — наш враг",
-          delta: { control: -6, energy: 10, focus: -4, method: -4 },
-          css_commands: { "--radius-sm": "2px", "--radius-md": "4px", "--radius-lg": "8px", "--transition-fast": "0.15s cubic-bezier(0.7,0,1,0.5)", "--transition-normal": "0.3s cubic-bezier(0.7,0,1,0.5)", "--glow-strong": "rgba(200,112,80,0.9)", "--backdrop-blur": "blur(2px)", "--grid-opacity": "0.12", easing: "cubic-bezier(0.7,0,1,0.5)" },
+          icon: "🤲",
+          label: "Забота",
+          text: "Поддерживать, делать жизнь лучше",
+          delta: { control: -4, energy: -6, focus: 2, method: 4 },
+          css_commands: {
+            "--radius-sm": "14px",
+            "--radius-md": "24px",
+            "--radius-lg": "38px",
+            "--transition-fast": "0.35s ease-out",
+            "--transition-normal": "0.7s ease-out",
+            "--glow-strong": "rgba(39,174,96,0.7)",
+            "--backdrop-blur": "blur(4px)",
+            "--grid-opacity": "0.03",
+            easing: "ease-out",
+          },
         },
       ],
     },
     {
-      id: "client_relationship",
-      title: "Как клиент чувствует ваш бренд?",
-      subtitle: "Определите эмоциональную дистанцию",
+      id: "emotion",
+      title: "Какие эмоции вызывает бренд?",
       answers: [
         {
-          icon: "◈", label: "На равных",
-          text: "Мы — партнёры. Честный диалог без пафоса",
-          delta: { control: 0, energy: 0, focus: 0, method: 2 },
-          css_commands: { "--radius-sm": "8px", "--radius-md": "14px", "--radius-lg": "20px", "--transition-fast": "0.25s ease", "--transition-normal": "0.5s ease", "--glow-strong": "rgba(160,144,128,0.4)", easing: "ease" },
-        },
-        {
-          icon: "◈", label: "Снизу вверх",
-          text: "Клиент смотрит на нас с уважением. Мы — авторитет",
-          delta: { control: 10, energy: -2, focus: 8, method: 4 },
-          css_commands: { "--radius-sm": "4px", "--radius-md": "8px", "--radius-lg": "14px", "--transition-fast": "0.3s cubic-bezier(0.6,0,0.4,1)", "--transition-normal": "0.6s cubic-bezier(0.6,0,0.4,1)", "--glow-strong": "rgba(196,168,124,0.75)", "--heading-weight": "600", easing: "cubic-bezier(0.6,0,0.4,1)" },
-        },
-        {
-          icon: "◈", label: "Объятия",
-          text: "Мы — семья. Тепло, забота, безопасность",
-          delta: { control: 0, energy: -6, focus: 2, method: 4 },
-          css_commands: { "--radius-sm": "16px", "--radius-md": "28px", "--radius-lg": "42px", "--transition-fast": "0.4s ease-out", "--transition-normal": "0.8s ease-out", "--glow-strong": "rgba(138,170,138,0.45)", easing: "ease-out" },
-        },
-        {
-          icon: "◈", label: "Восхищение",
-          text: "Клиент очарован. Мы — объект желания",
-          delta: { control: 2, energy: 6, focus: -2, method: 6 },
-          css_commands: { "--radius-sm": "14px", "--radius-md": "26px", "--radius-lg": "40px", "--transition-fast": "0.3s cubic-bezier(0.3,0,0.5,1)", "--transition-normal": "0.6s cubic-bezier(0.3,0,0.5,1)", "--glow-strong": "rgba(196,128,144,0.7)", "--backdrop-blur": "blur(16px)", easing: "cubic-bezier(0.3,0,0.5,1)" },
-        },
-      ],
-    },
-    {
-      id: "decision_logic",
-      title: "Как ваш клиент принимает решение?",
-      subtitle: "Логика покупки определяет структуру сайта",
-      answers: [
-        {
-          icon: "◈", label: "Мгновенно",
-          text: "Увидел → почувствовал → купил. Интуиция",
+          icon: "🎉",
+          label: "Восторг",
+          text: "Радость, удивление, лёгкость",
           delta: { control: -4, energy: 10, focus: -6, method: -2 },
-          css_commands: { "--radius-sm": "10px", "--radius-md": "18px", "--radius-lg": "28px", "--transition-fast": "0.18s cubic-bezier(0.4,0,0.6,1)", "--transition-normal": "0.35s cubic-bezier(0.4,0,0.6,1)", "--glow-strong": "rgba(200,152,96,0.8)", easing: "cubic-bezier(0.4,0,0.6,1)" },
+          css_commands: {
+            "--radius-sm": "12px",
+            "--radius-md": "20px",
+            "--radius-lg": "30px",
+            "--transition-fast": "0.2s cubic-bezier(0.2,1.2,0.6,1)",
+            "--transition-normal": "0.4s cubic-bezier(0.2,1.2,0.6,1)",
+            "--glow-strong": "rgba(255,152,0,0.8)",
+            easing: "cubic-bezier(0.2,1.2,0.6,1)",
+          },
         },
         {
-          icon: "◈", label: "Аналитически",
-          text: "Изучил → сравнил → выбрал. Логика и данные",
-          delta: { control: 8, energy: -8, focus: 10, method: 8 },
-          css_commands: { "--radius-sm": "4px", "--radius-md": "8px", "--radius-lg": "12px", "--transition-fast": "0.35s cubic-bezier(0.5,0,0.3,1)", "--transition-normal": "0.7s cubic-bezier(0.5,0,0.3,1)", "--glow-strong": "rgba(136,152,160,0.45)", "--backdrop-blur": "blur(10px)", "--grid-opacity": "0.08", easing: "cubic-bezier(0.5,0,0.3,1)" },
+          icon: "🏠",
+          label: "Доверие",
+          text: "Спокойствие, «как дома»",
+          delta: { control: 2, energy: -4, focus: 0, method: 0 },
+          css_commands: {
+            "--radius-sm": "8px",
+            "--radius-md": "14px",
+            "--radius-lg": "20px",
+            "--transition-fast": "0.25s ease",
+            "--transition-normal": "0.5s ease",
+            "--glow-strong": "rgba(121,85,72,0.6)",
+            easing: "ease",
+          },
         },
         {
-          icon: "◈", label: "Через доверие",
-          text: "Посоветовался → проверил репутацию → купил",
-          delta: { control: 4, energy: -4, focus: 2, method: 4 },
-          css_commands: { "--radius-sm": "8px", "--radius-md": "14px", "--radius-lg": "22px", "--transition-fast": "0.3s ease", "--transition-normal": "0.6s ease", "--glow-strong": "rgba(160,144,128,0.4)", easing: "ease" },
+          icon: "💋",
+          label: "Страсть",
+          text: "Желание, эстетическое наслаждение",
+          delta: { control: -2, energy: 6, focus: -2, method: 4 },
+          css_commands: {
+            "--radius-sm": "16px",
+            "--radius-md": "28px",
+            "--radius-lg": "44px",
+            "--transition-fast": "0.3s cubic-bezier(0.3,0,0.5,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.3,0,0.5,1)",
+            "--glow-strong": "rgba(233,30,99,0.8)",
+            "--backdrop-blur": "blur(18px)",
+            easing: "cubic-bezier(0.3,0,0.5,1)",
+          },
         },
         {
-          icon: "◈", label: "Через историю",
-          text: "Услышал историю → вдохновился → купил",
-          delta: { control: 0, energy: 4, focus: 0, method: 6 },
-          css_commands: { "--radius-sm": "10px", "--radius-md": "18px", "--radius-lg": "30px", "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.1)", "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.1)", "--glow-strong": "rgba(136,120,168,0.65)", easing: "cubic-bezier(0.4,0,0.2,1.1)" },
-        },
-      ],
-    },
-    {
-      id: "value_anchor",
-      title: "За что клиент платит вам деньги?",
-      subtitle: "Истинная ценность — не продукт, а результат",
-      answers: [
-        {
-          icon: "◈", label: "За власть",
-          text: "Контроль, порядок, уверенность в завтрашнем дне",
-          delta: { control: 10, energy: 2, focus: 6, method: 4 },
-          css_commands: { "--radius-sm": "4px", "--radius-md": "8px", "--radius-lg": "12px", "--transition-fast": "0.3s cubic-bezier(0.6,0,0.4,1)", "--transition-normal": "0.6s cubic-bezier(0.6,0,0.4,1)", "--glow-strong": "rgba(196,168,124,0.8)", "--heading-weight": "600", easing: "cubic-bezier(0.6,0,0.4,1)" },
-        },
-        {
-          icon: "◈", label: "За трансформацию",
-          text: "Стать другим человеком. Магия результата",
-          delta: { control: 0, energy: 8, focus: 4, method: 8 },
-          css_commands: { "--radius-sm": "12px", "--radius-md": "22px", "--radius-lg": "36px", "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.2)", "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.2)", "--glow-strong": "rgba(160,144,184,0.75)", "--backdrop-blur": "blur(14px)", easing: "cubic-bezier(0.4,0,0.2,1.2)" },
-        },
-        {
-          icon: "◈", label: "За красоту",
-          text: "Эстетика, статус, обладание прекрасным",
-          delta: { control: 4, energy: 4, focus: 0, method: 6 },
-          css_commands: { "--radius-sm": "14px", "--radius-md": "26px", "--radius-lg": "42px", "--transition-fast": "0.3s cubic-bezier(0.3,0,0.5,1)", "--transition-normal": "0.6s cubic-bezier(0.3,0,0.5,1)", "--glow-strong": "rgba(196,128,144,0.7)", "--backdrop-blur": "blur(16px)", easing: "cubic-bezier(0.3,0,0.5,1)" },
-        },
-        {
-          icon: "◈", label: "За правду",
-          text: "Знания, ясность, экспертиза без иллюзий",
+          icon: "📚",
+          label: "Уважение",
+          text: "Ясность, уверенность в экспертизе",
           delta: { control: 6, energy: -6, focus: 8, method: 6 },
-          css_commands: { "--radius-sm": "4px", "--radius-md": "8px", "--radius-lg": "14px", "--transition-fast": "0.35s cubic-bezier(0.5,0,0.3,1)", "--transition-normal": "0.7s cubic-bezier(0.5,0,0.3,1)", "--glow-strong": "rgba(136,152,160,0.5)", "--grid-opacity": "0.06", easing: "cubic-bezier(0.5,0,0.3,1)" },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "14px",
+            "--transition-fast": "0.35s cubic-bezier(0.5,0,0.3,1)",
+            "--transition-normal": "0.7s cubic-bezier(0.5,0,0.3,1)",
+            "--glow-strong": "rgba(96,125,139,0.7)",
+            "--backdrop-blur": "blur(10px)",
+            easing: "cubic-bezier(0.5,0,0.3,1)",
+          },
         },
       ],
     },
     {
-      id: "brand_voice",
-      title: "Как звучит голос вашего бренда?",
-      subtitle: "Тон коммуникации определяет типографику и ритм интерфейса",
+      id: "voice",
+      title: "Как бренд общается?",
       answers: [
         {
-          icon: "◈", label: "Тихо и веско",
-          text: "Мы не кричим. Нас слышат, потому что мы правы",
-          delta: { control: 8, energy: -6, focus: 8, method: 4 },
-          css_commands: { "--radius-sm": "6px", "--radius-md": "10px", "--radius-lg": "16px", "--transition-fast": "0.4s cubic-bezier(0.5,0,0.3,1)", "--transition-normal": "0.8s cubic-bezier(0.5,0,0.3,1)", "--glow-strong": "rgba(136,152,160,0.4)", "--heading-weight": "300", "--heading-letter-spacing": "0.06em", easing: "cubic-bezier(0.5,0,0.3,1)" },
+          icon: "🔥",
+          label: "Вызов",
+          text: "Прямо, смело, без фильтров",
+          delta: { control: -6, energy: 8, focus: -4, method: -6 },
+          css_commands: {
+            "--radius-sm": "2px",
+            "--radius-md": "4px",
+            "--radius-lg": "8px",
+            "--transition-fast": "0.15s cubic-bezier(0.7,0,1,0.5)",
+            "--transition-normal": "0.3s cubic-bezier(0.7,0,1,0.5)",
+            "--glow-strong": "rgba(255,87,34,0.9)",
+            "--backdrop-blur": "blur(2px)",
+            easing: "cubic-bezier(0.7,0,1,0.5)",
+          },
         },
         {
-          icon: "◈", label: "Громко и дерзко",
-          text: "Мы — голос перемен. Нас нельзя игнорировать",
-          delta: { control: -4, energy: 12, focus: -2, method: -4 },
-          css_commands: { "--radius-sm": "2px", "--radius-md": "4px", "--radius-lg": "8px", "--transition-fast": "0.12s cubic-bezier(0.7,0,1,0.5)", "--transition-normal": "0.25s cubic-bezier(0.7,0,1,0.5)", "--glow-strong": "rgba(200,112,80,1.0)", "--backdrop-blur": "blur(2px)", "--heading-weight": "700", easing: "cubic-bezier(0.7,0,1,0.5)" },
+          icon: "🎨",
+          label: "Творчество",
+          text: "Вдохновляюще, с воображением",
+          delta: { control: 0, energy: 4, focus: 4, method: 6 },
+          css_commands: {
+            "--radius-sm": "8px",
+            "--radius-md": "16px",
+            "--radius-lg": "26px",
+            "--transition-fast": "0.25s cubic-bezier(0.4,0,0.2,1.1)",
+            "--transition-normal": "0.5s cubic-bezier(0.4,0,0.2,1.1)",
+            "--glow-strong": "rgba(103,58,183,0.8)",
+            "--backdrop-blur": "blur(12px)",
+            easing: "cubic-bezier(0.4,0,0.2,1.1)",
+          },
         },
         {
-          icon: "◈", label: "Тепло и душевно",
-          text: "Мы — друг. С нами комфортно и безопасно",
-          delta: { control: 2, energy: -4, focus: 0, method: 2 },
-          css_commands: { "--radius-sm": "14px", "--radius-md": "24px", "--radius-lg": "36px", "--transition-fast": "0.35s ease-out", "--transition-normal": "0.7s ease-out", "--glow-strong": "rgba(138,170,138,0.4)", easing: "ease-out" },
+          icon: "🤝",
+          label: "Честность",
+          text: "Просто, без прикрас и пафоса",
+          delta: { control: 0, energy: -2, focus: -2, method: 0 },
+          css_commands: {
+            "--radius-sm": "8px",
+            "--radius-md": "14px",
+            "--radius-lg": "20px",
+            "--transition-fast": "0.25s ease",
+            "--transition-normal": "0.5s ease",
+            "--glow-strong": "rgba(121,85,72,0.45)",
+            easing: "ease",
+          },
         },
         {
-          icon: "◈", label: "Остроумно и легко",
-          text: "Мы — праздник. С нами интересно и неожиданно",
-          delta: { control: -2, energy: 8, focus: -4, method: 0 },
-          css_commands: { "--radius-sm": "12px", "--radius-md": "20px", "--radius-lg": "30px", "--transition-fast": "0.2s cubic-bezier(0.2,1.2,0.6,1)", "--transition-normal": "0.4s cubic-bezier(0.2,1.2,0.6,1)", "--glow-strong": "rgba(200,152,96,0.7)", easing: "cubic-bezier(0.2,1.2,0.6,1)" },
+          icon: "🥂",
+          label: "Престиж",
+          text: "Элегантно, с чувством превосходства",
+          delta: { control: 8, energy: 0, focus: 2, method: 4 },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "12px",
+            "--transition-fast": "0.3s cubic-bezier(0.6,0,0.4,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.6,0,0.4,1)",
+            "--glow-strong": "rgba(243,156,18,0.85)",
+            "--heading-weight": "600",
+            easing: "cubic-bezier(0.6,0,0.4,1)",
+          },
+        },
+      ],
+    },
+    {
+      id: "need",
+      title: "Что ищет ваш клиент?",
+      answers: [
+        {
+          icon: "🧭",
+          label: "Свободу",
+          text: "Приключения, новые горизонты",
+          delta: { control: -4, energy: 6, focus: -6, method: 0 },
+          css_commands: {
+            "--radius-sm": "10px",
+            "--radius-md": "18px",
+            "--radius-lg": "28px",
+            "--transition-fast": "0.28s cubic-bezier(0.3,0,0.7,1)",
+            "--transition-normal": "0.55s cubic-bezier(0.3,0,0.7,1)",
+            "--glow-strong": "rgba(0,188,212,0.75)",
+            "--backdrop-blur": "blur(10px)",
+            easing: "cubic-bezier(0.3,0,0.7,1)",
+          },
+        },
+        {
+          icon: "🔍",
+          label: "Истину",
+          text: "Знания, понимание, мудрость",
+          delta: { control: 4, energy: -8, focus: 10, method: 6 },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "14px",
+            "--transition-fast": "0.35s cubic-bezier(0.5,0,0.3,1)",
+            "--transition-normal": "0.7s cubic-bezier(0.5,0,0.3,1)",
+            "--glow-strong": "rgba(96,125,139,0.55)",
+            "--backdrop-blur": "blur(12px)",
+            "--grid-opacity": "0.08",
+            easing: "cubic-bezier(0.5,0,0.3,1)",
+          },
+        },
+        {
+          icon: "🛡️",
+          label: "Безопасность",
+          text: "Заботу, тепло и защиту",
+          delta: { control: 2, energy: -6, focus: 0, method: 4 },
+          css_commands: {
+            "--radius-sm": "14px",
+            "--radius-md": "24px",
+            "--radius-lg": "38px",
+            "--transition-fast": "0.35s ease-out",
+            "--transition-normal": "0.7s ease-out",
+            "--glow-strong": "rgba(39,174,96,0.5)",
+            "--backdrop-blur": "blur(4px)",
+            easing: "ease-out",
+          },
+        },
+        {
+          icon: "🏆",
+          label: "Признание",
+          text: "Статус, уважение, достижения",
+          delta: { control: 8, energy: 6, focus: 4, method: 0 },
+          css_commands: {
+            "--radius-sm": "6px",
+            "--radius-md": "10px",
+            "--radius-lg": "16px",
+            "--transition-fast": "0.22s cubic-bezier(0.4,0,0.6,1)",
+            "--transition-normal": "0.45s cubic-bezier(0.4,0,0.6,1)",
+            "--glow-strong": "rgba(231,76,60,0.8)",
+            "--heading-weight": "700",
+            easing: "cubic-bezier(0.4,0,0.6,1)",
+          },
+        },
+      ],
+    },
+    {
+      id: "product",
+      title: "Характер вашего продукта?",
+      answers: [
+        {
+          icon: "🔮",
+          label: "Инновация",
+          text: "Магический — преображает реальность",
+          delta: { control: 0, energy: 6, focus: 4, method: 8 },
+          css_commands: {
+            "--radius-sm": "12px",
+            "--radius-md": "22px",
+            "--radius-lg": "36px",
+            "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.2)",
+            "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.2)",
+            "--glow-strong": "rgba(155,89,182,0.85)",
+            "--backdrop-blur": "blur(16px)",
+            "--grid-opacity": "0.05",
+            easing: "cubic-bezier(0.4,0,0.2,1.2)",
+          },
+        },
+        {
+          icon: "⚙️",
+          label: "Надёжность",
+          text: "Качественный, проверенный временем",
+          delta: { control: 4, energy: -4, focus: 0, method: 2 },
+          css_commands: {
+            "--radius-sm": "6px",
+            "--radius-md": "10px",
+            "--radius-lg": "14px",
+            "--transition-fast": "0.25s ease",
+            "--transition-normal": "0.5s ease",
+            "--glow-strong": "rgba(96,125,139,0.4)",
+            "--backdrop-blur": "blur(6px)",
+            easing: "ease",
+          },
+        },
+        {
+          icon: "💥",
+          label: "Дерзость",
+          text: "Ломает правила и стандарты",
+          delta: { control: -8, energy: 10, focus: -4, method: -4 },
+          css_commands: {
+            "--radius-sm": "2px",
+            "--radius-md": "4px",
+            "--radius-lg": "8px",
+            "--transition-fast": "0.15s cubic-bezier(0.7,0,1,0.5)",
+            "--transition-normal": "0.3s cubic-bezier(0.7,0,1,0.5)",
+            "--glow-strong": "rgba(255,87,34,1.0)",
+            "--backdrop-blur": "blur(2px)",
+            "--grid-opacity": "0.12",
+            easing: "cubic-bezier(0.7,0,1,0.5)",
+          },
+        },
+        {
+          icon: "💎",
+          label: "Красота",
+          text: "Чувственный — им хочется обладать",
+          delta: { control: 2, energy: 4, focus: -2, method: 6 },
+          css_commands: {
+            "--radius-sm": "16px",
+            "--radius-md": "28px",
+            "--radius-lg": "44px",
+            "--transition-fast": "0.3s cubic-bezier(0.3,0,0.5,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.3,0,0.5,1)",
+            "--glow-strong": "rgba(233,30,99,0.75)",
+            "--backdrop-blur": "blur(18px)",
+            "--transmission": "0.8",
+            easing: "cubic-bezier(0.3,0,0.5,1)",
+          },
         },
       ],
     },
@@ -243,29 +442,33 @@ const HolographicQuest = {
   ],
 
   // ==================== START SCREEN ====================
-    showStartScreen(onComplete) {
-    var ex = document.getElementById("quest-start-overlay");
+  showStartScreen() {
+    const ex = document.getElementById("quest-start-overlay");
     if (ex) ex.remove();
-    var overlay = document.createElement("div");
+
+    const overlay = document.createElement("div");
     overlay.id = "quest-start-overlay";
     overlay.className = "quest-start-overlay";
-    overlay.innerHTML = '<div class="quest-start-backdrop"></div>' +
-      '<div class="quest-start-card">' +
-        '<div class="quest-start-icon">◈</div>' +
-        '<h1 class="quest-start-title">ArchetypeOS</h1>' +
-        '<p class="quest-start-subtitle">Brand DNA Diagnostic Engine</p>' +
-        '<p class="quest-start-desc">Система проектирования восприятия бренда.<br>12 архетипов. 10 лет экспертизы. Британская школа дизайна.</p>' +
-        '<div class="quest-start-principles"><span>Тихая роскошь</span><span>•</span><span>Воздух в кадре</span><span>•</span><span>Пастельная палитра</span></div>' +
-        '<button class="quest-start-btn" id="quest-start-btn"><span>→</span> Определить архетип бренда</button>' +
-        '<p class="quest-start-hint">Elena Charlesworth • ArchetypeOS.ru</p>' +
-      '</div>';
+    overlay.innerHTML = `
+      <div class="quest-start-backdrop"></div>
+      <div class="quest-start-card">
+        <div class="quest-start-icon">🔮</div>
+        <h1 class="quest-start-title">Определите архетип<br>вашего бренда</h1>
+        <p class="quest-start-sub">7 шагов — и вы получите персональный стиль сайта:<br>цвета, шрифты, анимацию и структуру лендинга</p>
+        <button class="quest-start-btn" id="quest-start-btn">
+          <span>🚀</span> Пройти тест
+        </button>
+        <p class="quest-start-hint">~2 минуты</p>
+      </div>
+    `;
     document.body.appendChild(overlay);
-    var self = this;
-    document.getElementById("quest-start-btn").onclick = function() {
+    document.getElementById("quest-start-btn").addEventListener("click", () => {
       overlay.style.opacity = "0";
-      setTimeout(function() { if (overlay.parentNode) overlay.remove(); }, 300);
-      self.start(onComplete);
-    };
+      setTimeout(() => {
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      }, 300);
+      this.start();
+    });
   },
 
   // ==================== START ====================
@@ -313,8 +516,8 @@ const HolographicQuest = {
     help.innerHTML = `
       <div class="quest-help-inner">
         <strong>Как это работает</strong>
-        <p>5 вопросов о позиционировании бренда + выбор звуковой волны.</p>
-        <p>Каждый ответ — это команда: интерфейс перестраивается под ДНК бренда в реальном времени.</p>
+        <p>Вы отвечаете на 6 вопросов о бренде + выбираете звуковую волну.</p>
+        <p>Каждый ответ сдвигает точку на голографическом поле — видно, как определяется архетип.</p>
         <p>Интерфейс трансформируется в реальном времени: цвета, скругления, анимации.</p>
         <p>В конце — детальный разбор с рекомендациями для сайта.</p>
         <button class="quest-help-close">Понятно</button>
@@ -337,9 +540,9 @@ const HolographicQuest = {
     if (!left || !right) return;
 
     const statusEl = document.getElementById("hud-status-text");
-    const totalSteps = 6;
+    const totalSteps = 7;
 
-    if (this._step <= 4) {
+    if (this._step <= 5) {
       const q = this.questions[this._step - 1];
       if (statusEl) statusEl.textContent = `Вопрос ${this._step}/${totalSteps}`;
 
@@ -362,7 +565,7 @@ const HolographicQuest = {
         <div class="quest-panel-header">АРХЕТИП БРЕНДА</div>
         <div class="quest-question-block">
           <div class="quest-q-num">Шаг ${this._step} из ${totalSteps}</div>
-          <div class="quest-q-title">${q.title}</div><div class="quest-q-subtitle">${q.subtitle || ""}</div>
+          <div class="quest-q-title">${q.title}</div>
           <div class="quest-q-bar"><div class="quest-q-bar-fill" style="width:${(this._step / totalSteps) * 100}%"></div></div>
           <div class="quest-answers-list" id="quest-answers-list">
             ${answersHTML}
@@ -381,7 +584,7 @@ const HolographicQuest = {
 
       // RIGHT PANEL: live status
       this._renderRightPanel(right, totalSteps);
-    } else if (this._step === 5) {
+    } else if (this._step === 6) {
       if (statusEl)
         statusEl.textContent = `Звуковая волна ${this._step}/${totalSteps}`;
 
@@ -554,20 +757,25 @@ const HolographicQuest = {
     if (nextBtn) {
       nextBtn.disabled = false;
       nextBtn.textContent = "Далее →";
-      var self = this;
-      nextBtn.addEventListener("click", function() { self._advance(); }, { once: true });
+      nextBtn.addEventListener(
+        "click",
+        function () {
+          this._advance();
+        }.bind(this),
+        { once: true },
+      );
     }
 
     // Resolve answer
     var delta = null,
       label = "",
       cssCommands = null;
-    if (this._step <= 4) {
+    if (this._step <= 5) {
       var a = this.questions[this._step - 1].answers[idx];
       delta = a.delta;
       label = a.label;
       cssCommands = a.css_commands || null;
-    } else if (this._step === 5) {
+    } else if (this._step === 6) {
       var a = this.soundWaves[idx];
       delta = a.delta;
       label = a.label;
@@ -600,9 +808,8 @@ const HolographicQuest = {
   },
 
   _advance() {
-    if (this._step >= 6) return; // guard: already finished
     this._step++;
-    if (this._step >= 6) {
+    if (this._step >= 7) {
       this._finish();
     } else {
       this._renderStep();
@@ -613,74 +820,66 @@ const HolographicQuest = {
   _finish() {
     this._active = false;
     if (this._helpEl) this._helpEl.style.display = "none";
-    var statusEl = document.getElementById("hud-status-text");
+    const statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Готово";
 
-    // Clear CSS transitions
-    clearTimeout(this._cssTransitionTimer);
-    document.documentElement.style.transition = "";
-
-    var finalVector = { control: 50, energy: 50, focus: 50, method: 50 };
-    this._answers.forEach(function(a) {
-      ["control", "energy", "focus", "method"].forEach(function(d) {
-        finalVector[d] = Math.max(0, Math.min(100, finalVector[d] + a.delta[d]));
+    const finalVector = { control: 50, energy: 50, focus: 50, method: 50 };
+    this._answers.forEach((a) => {
+      ["control", "energy", "focus", "method"].forEach((d) => {
+        finalVector[d] = Math.max(
+          0,
+          Math.min(100, finalVector[d] + a.delta[d]),
+        );
       });
     });
 
     if (typeof Tracker !== "undefined") {
-      var tv = Tracker.getBehaviorVector();
-      ["control", "energy", "focus", "method"].forEach(function(d) {
+      const tv = Tracker.getBehaviorVector();
+      ["control", "energy", "focus", "method"].forEach((d) => {
         finalVector[d] = Math.round(finalVector[d] * 0.8 + tv[d] * 0.2);
       });
     }
 
     if (typeof userVector !== "undefined") {
-      ["control", "energy", "focus", "method"].forEach(function(d) {
+      ["control", "energy", "focus", "method"].forEach((d) => {
         userVector[d] = finalVector[d];
       });
     }
-    if (typeof updateBrandPositionFromVector === "function") updateBrandPositionFromVector();
+    if (typeof updateBrandPositionFromVector === "function")
+      updateBrandPositionFromVector();
     if (typeof updateAll === "function") updateAll();
 
-    var primary = null;
-    if (typeof getRankings === "function") {
-      var r = getRankings();
-      if (r) primary = r.primary;
-    }
+    let primary = null;
+    if (typeof getRankings === "function") primary = getRankings().primary;
 
-    console.log("[HoloQuest] _finish: primary=", primary);
-
-    // Restore panels
-    var left = document.getElementById("panel-controllers");
-    var right = document.getElementById("panel-output");
+    // Restore dashboard panels
+    const left = document.getElementById("panel-controllers");
+    const right = document.getElementById("panel-output");
     if (left && this._savedLeftHTML) left.innerHTML = this._savedLeftHTML;
     if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
-    console.log("[HoloQuest] _finish: panels restored");
 
-    // Re-init
-    setTimeout(function() {
-      if (typeof initJogDials === "function") initJogDials();
-      if (typeof initPresets === "function") initPresets();
-      if (typeof updateAll === "function") updateAll();
-      console.log("[HoloQuest] _finish: re-init done");
-    }, 100);
+    // Re-init jog dials & presets
+    if (typeof initJogDials === "function") initJogDials();
+    if (typeof initPresets === "function") initPresets();
+    if (typeof updateAll === "function") updateAll();
 
-    // Show result (delayed to let DOM settle)
-    var self = this;
-    setTimeout(function() {
-      if (typeof ArchetypeResult !== "undefined" && primary) {
-        console.log("[HoloQuest] _finish: showing result");
-        ArchetypeResult.show(primary, finalVector, self._answers);
-      }
-      if (self._onComplete) self._onComplete(finalVector, primary);
-    }, 200);
+    // Show result
+    if (typeof ArchetypeResult !== "undefined")
+      ArchetypeResult.show(primary, finalVector, this._answers);
+    if (this._onComplete) this._onComplete(finalVector, primary);
+    if (typeof Pivot !== "undefined" && primary) Pivot.execute(primary.id);
 
     console.log(
-      "%c[HoloQuest] OK " + (primary ? primary.nameRu : "---"),
-      "color:" + (primary ? primary.color : "#fff") + ";font-size:16px;"
+      `%c[HoloQuest] ✅ ${primary?.nameRu || "—"}`,
+      `color:${primary?.color || "#fff"};font-size:16px;font-weight:bold;`,
     );
-  },  },
+  },
 };
 
-// Auto-show disabled — use HUD button instead
-console.log('[HoloQuest] Ready. Use HUD button to start.');
+// Auto-show start screen on load
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    const already = document.getElementById("quest-start-overlay");
+    if (!already) HolographicQuest.showStartScreen();
+  }, 800);
+});
