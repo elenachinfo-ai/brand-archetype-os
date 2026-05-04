@@ -757,13 +757,8 @@ const HolographicQuest = {
     if (nextBtn) {
       nextBtn.disabled = false;
       nextBtn.textContent = "Далее →";
-      nextBtn.addEventListener(
-        "click",
-        function () {
-          this._advance();
-        }.bind(this),
-        { once: true },
-      );
+      var self = this;
+      nextBtn.addEventListener("click", function() { self._advance(); }, { once: true });
     }
 
     // Resolve answer
@@ -852,26 +847,47 @@ const HolographicQuest = {
     let primary = null;
     if (typeof getRankings === "function") primary = getRankings().primary;
 
+    console.log("[HoloQuest] _finish: restoring panels...");
+
     // Restore dashboard panels
-    const left = document.getElementById("panel-controllers");
-    const right = document.getElementById("panel-output");
-    if (left && this._savedLeftHTML) left.innerHTML = this._savedLeftHTML;
-    if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
+    try {
+      var left = document.getElementById("panel-controllers");
+      var right = document.getElementById("panel-output");
+      if (left && this._savedLeftHTML) left.innerHTML = this._savedLeftHTML;
+      if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
+      console.log("[HoloQuest] _finish: panels restored");
+    } catch(e) { console.error("[HoloQuest] _finish: panel restore error", e); }
 
     // Re-init jog dials & presets
-    if (typeof initJogDials === "function") initJogDials();
-    if (typeof initPresets === "function") initPresets();
-    if (typeof updateAll === "function") updateAll();
+    try {
+      if (typeof initJogDials === "function") initJogDials();
+      if (typeof initPresets === "function") initPresets();
+      if (typeof updateAll === "function") updateAll();
+      console.log("[HoloQuest] _finish: jog dials + updateAll done");
+    } catch(e) { console.error("[HoloQuest] _finish: re-init error", e); }
 
     // Show result
-    if (typeof ArchetypeResult !== "undefined")
-      ArchetypeResult.show(primary, finalVector, this._answers);
+    try {
+      if (typeof ArchetypeResult !== "undefined") {
+        console.log("[HoloQuest] _finish: showing ArchetypeResult...");
+        ArchetypeResult.show(primary, finalVector, this._answers);
+        console.log("[HoloQuest] _finish: ArchetypeResult shown");
+      }
+    } catch(e) { console.error("[HoloQuest] _finish: result error", e); }
+
     if (this._onComplete) this._onComplete(finalVector, primary);
-    if (typeof Pivot !== "undefined" && primary) Pivot.execute(primary.id);
+
+    try {
+      if (typeof Pivot !== "undefined" && primary) {
+        console.log("[HoloQuest] _finish: executing Pivot...");
+        Pivot.execute(primary.id);
+        console.log("[HoloQuest] _finish: Pivot done");
+      }
+    } catch(e) { console.error("[HoloQuest] _finish: pivot error", e); }
 
     console.log(
-      `%c[HoloQuest] ✅ ${primary?.nameRu || "—"}`,
-      `color:${primary?.color || "#fff"};font-size:16px;font-weight:bold;`,
+      "%c[HoloQuest] ✅ " + (primary ? primary.nameRu : "---"),
+      "color:" + (primary ? primary.color : "#fff") + ";font-size:16px;font-weight:bold;"
     );
   },
 };
