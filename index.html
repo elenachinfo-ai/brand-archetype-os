@@ -30,7 +30,10 @@
             <div class="hud-info">
                 <span class="hud-version">v4.0</span>
             </div>
-
+            <button class="btn-start-diag" id="btn-start-diag" onclick="HolographicQuest.showStartScreen(function(vector, archetype) { if(archetype) Pivot.execute(archetype.id); })">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v4M8 11h0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Пройти диагностику
+            </button>
             </div>
         </header>
 
@@ -429,15 +432,15 @@
             </div>
         </div>
 
-        <script src="data.js?v=f8e1df4"></script>
-        <script src="tracker.js?v=f8e1df4"></script>
-        <script src="interpreter.js?v=f8e1df4"></script>
-        <script src="archetype-themes.js?v=f8e1df4"></script>
-        <script src="pivot.js?v=f8e1df4"></script>
-        <script src="diagnostic.js?v=f8e1df4"></script>
-        <script src="archetype-result.js?v=f8e1df4"></script>
-        <script src="engine.js?v=f8e1df4"></script>
-        <script src="init-tracking.js?v=f8e1df4"></script>
+        <script src="data.js"></script>
+        <script src="tracker.js"></script>
+        <script src="interpreter.js"></script>
+        <script src="archetype-themes.js"></script>
+        <script src="pivot.js"></script>
+        <script src="diagnostic.js"></script>
+        <script src="archetype-result.js"></script>
+        <script src="engine.js"></script>
+        <script src="init-tracking.js"></script>
 
         <!-- ===== RTL & LOCALE DETECTOR (ArchetypeOS v4) [DISABLED] ===== -->
         <script>

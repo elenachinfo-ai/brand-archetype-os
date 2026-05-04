@@ -161,78 +161,35 @@ var HolographicQuest = {
     },
   ],
 
-
-    init: function() {
-    var left = document.getElementById("panel-controllers");
-    var right = document.getElementById("panel-output");
-    if (!left) return;
-
-    // Clear right panel too
-    if (right) right.innerHTML = "<div class='output-header'>ARCHEYPEOS</div><p style='font-size:12px;color:var(--text-secondary);padding:10px;'>Нажмите «Начать диагностику»<br>для определения ДНК бренда</p>";
-
-    // Build prompt with DOM
-    left.innerHTML = "";
-    var wrap = document.createElement("div");
-    wrap.style.textAlign = "center";
-    wrap.style.padding = "40px 20px";
-
-    var icon = document.createElement("div");
-    icon.style.fontSize = "48px";
-    icon.style.marginBottom = "16px";
-    icon.textContent = "◈";
-    wrap.appendChild(icon);
-
-    var h2 = document.createElement("h2");
-    h2.style.fontWeight = "300";
-    h2.style.fontSize = "20px";
-    h2.style.color = "var(--text-primary)";
-    h2.style.margin = "0 0 10px";
-    h2.textContent = "ArchetypeOS";
-    wrap.appendChild(h2);
-
-    var sub = document.createElement("p");
-    sub.style.fontSize = "11px";
-    sub.style.color = "var(--text-tertiary)";
-    sub.style.letterSpacing = "0.1em";
-    sub.style.margin = "0 0 6px";
-    sub.textContent = "BRAND DNA DIAGNOSTIC";
-    wrap.appendChild(sub);
-
-    var desc = document.createElement("p");
-    desc.style.fontSize = "13px";
-    desc.style.color = "var(--text-secondary)";
-    desc.style.lineHeight = "1.6";
-    desc.style.margin = "0 0 24px";
-    desc.innerHTML = "12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.";
-    wrap.appendChild(desc);
-
-    var btn = document.createElement("button");
-    btn.id = "start-diag-btn";
-    btn.style.padding = "12px 36px";
-    btn.style.background = "var(--accent-blue)";
-    btn.style.color = "#fff";
-    btn.style.border = "none";
-    btn.style.borderRadius = "var(--radius-md)";
-    btn.style.fontFamily = "var(--font-body)";
-    btn.style.fontSize = "14px";
-    btn.style.fontWeight = "500";
-    btn.style.cursor = "pointer";
-    btn.textContent = "Начать диагностику";
-    btn.onclick = function(e) {
-      if (e) e.preventDefault();
-      console.log("Button clicked");
-      try {
-        HolographicQuest.start();
-        console.log("start() completed");
-      } catch(err) {
-        console.error("start() error:", err);
-      }
-      return false;
+  showStartScreen: function (onComplete) {
+    var ex = document.getElementById("quest-start-overlay");
+    if (ex) ex.remove();
+    var overlay = document.createElement("div");
+    overlay.id = "quest-start-overlay";
+    overlay.className = "quest-start-overlay";
+    overlay.innerHTML =
+      "<div class='quest-start-backdrop'></div>" +
+      "<div class='quest-start-card'>" +
+      "<div class='quest-start-icon'>◈</div>" +
+      "<h1 class='quest-start-title'>ArchetypeOS</h1>" +
+      "<p class='quest-start-subtitle'>Brand DNA Diagnostic Engine</p>" +
+      "<p class='quest-start-desc'>Система проектирования восприятия бренда.<br>12 архетипов. 10 лет экспертизы.</p>" +
+      "<div class='quest-start-principles'><span>Тихая роскошь</span><span>•</span><span>Воздух в кадре</span><span>•</span><span>Пастельная палитра</span></div>" +
+      "<button class='quest-start-btn' id='quest-start-btn'><span>→</span> Определить архетип бренда</button>" +
+      "<p class='quest-start-hint'>Elena Charlesworth</p>" +
+      "</div>";
+    document.body.appendChild(overlay);
+    var self = this;
+    document.getElementById("quest-start-btn").onclick = function () {
+      overlay.style.opacity = "0";
+      setTimeout(function () {
+        if (overlay.parentNode) overlay.remove();
+      }, 300);
+      self.start(onComplete);
     };
-    wrap.appendChild(btn);
+  },
 
-    left.appendChild(wrap);
-  },  start: function (onComplete) {
+  start: function (onComplete) {
     this._active = true;
     this._step = 1;
     this._answers = [];
@@ -251,8 +208,7 @@ var HolographicQuest = {
     this._selectedIdx = -1;
     var left = document.getElementById("panel-controllers");
     var right = document.getElementById("panel-output");
-    console.log("_renderStep: left=" + !!left + " right=" + !!right + " step=" + this._step);
-    if (!left || !right) { console.log("panels missing"); return; }
+    if (!left || !right) return;
     var statusEl = document.getElementById("hud-status-text");
     var totalSteps = 5;
 
@@ -495,24 +451,6 @@ var HolographicQuest = {
     var self = this;
     if (self._onComplete) self._onComplete(finalVector, primary);
 
-    // Add restart hint
-    setTimeout(function() {
-      var left = document.getElementById("panel-controllers");
-      if (left) {
-        var existing = document.getElementById("restart-diag-btn");
-        if (!existing) {
-          var btn = document.createElement("button");
-          btn.id = "restart-diag-btn";
-          btn.className = "quest-next-btn";
-          btn.textContent = "← Пройти заново";
-          btn.onclick = function() { HolographicQuest.start(); };
-          left.appendChild(btn);
-        }
-      }
-    }, 300);
-
     console.log("[HoloQuest] Done: " + (primary ? primary.nameRu : "---"));
   },
 };
-
-document.addEventListener("DOMContentLoaded", function() { setTimeout(function() { HolographicQuest.init(); }, 300); });
