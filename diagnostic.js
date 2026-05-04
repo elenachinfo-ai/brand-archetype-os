@@ -516,7 +516,7 @@ const HolographicQuest = {
     help.innerHTML = `
       <div class="quest-help-inner">
         <strong>Как это работает</strong>
-        <p>Вы отвечаете на 6 вопросов о бренде + выбираете звуковую волну.</p>
+        <p>Вы отвечаете на 5 вопросов о бренде.</p>
         <p>Каждый ответ сдвигает точку на голографическом поле — видно, как определяется архетип.</p>
         <p>Интерфейс трансформируется в реальном времени: цвета, скругления, анимации.</p>
         <p>В конце — детальный разбор с рекомендациями для сайта.</p>
@@ -540,7 +540,7 @@ const HolographicQuest = {
     if (!left || !right) return;
 
     const statusEl = document.getElementById("hud-status-text");
-    const totalSteps = 7;
+    const totalSteps = 5;
 
     if (this._step <= 5) {
       const q = this.questions[this._step - 1];
@@ -584,69 +584,7 @@ const HolographicQuest = {
 
       // RIGHT PANEL: live status
       this._renderRightPanel(right, totalSteps);
-    } else if (this._step === 6) {
-      if (statusEl)
-        statusEl.textContent = `Звуковая волна ${this._step}/${totalSteps}`;
-
-      let wavesHTML = this.soundWaves
-        .map(
-          (sw, i) => `
-        <div class="quest-answer-card quest-sound-card" data-idx="${i}" id="quest-ans-${i}">
-          <div class="quest-waveform"><svg width="64" height="20" viewBox="0 0 64 20">
-            <rect x="0" y="9" width="2" height="2" rx="1" fill="currentColor" opacity="0.3"/>
-            <rect x="3" y="7" width="2" height="6" rx="1" fill="currentColor" opacity="0.5"/>
-            <rect x="6" y="4" width="2" height="12" rx="1" fill="currentColor" opacity="0.7"/>
-            <rect x="9" y="2" width="2" height="16" rx="1" fill="currentColor"/>
-            <rect x="12" y="1" width="2" height="18" rx="1" fill="currentColor"/>
-            <rect x="15" y="2" width="2" height="16" rx="1" fill="currentColor"/>
-            <rect x="18" y="4" width="2" height="12" rx="1" fill="currentColor" opacity="0.9"/>
-            <rect x="21" y="7" width="2" height="6" rx="1" fill="currentColor" opacity="0.5"/>
-            <rect x="24" y="9" width="2" height="2" rx="1" fill="currentColor" opacity="0.3"/>
-          </svg></div>
-          <div class="quest-ans-content">
-            <span class="quest-ans-label">${sw.label}</span>
-            <span class="quest-ans-text">${sw.desc}</span>
-          </div>
-        </div>
-      `,
-        )
-        .join("");
-
-      left.innerHTML = `
-        <div class="quest-panel-header">ЗВУКОВАЯ ВОЛНА</div>
-        <div class="quest-question-block">
-          <div class="quest-q-num">Шаг ${this._step} из ${totalSteps}</div>
-          <div class="quest-q-title">Выберите звуковую волну бренда</div>
-          <div class="quest-q-bar"><div class="quest-q-bar-fill" style="width:${(this._step / totalSteps) * 100}%"></div></div>
-          <div class="quest-answers-list" id="quest-answers-list">
-            ${wavesHTML}
-          </div>
-          <button class="quest-next-btn" id="quest-next-btn" disabled>Выберите вариант ↑</button>
-        </div>
-      `;
-
-      document.querySelectorAll(".quest-answer-card").forEach((card) => {
-        card.addEventListener("click", () => {
-          const idx = parseInt(card.dataset.idx);
-          this._selectAnswer(idx);
-        });
-      });
-
-      this._renderRightPanel(right, totalSteps);
-    }
-  },
-
-  _renderRightPanel(right, total) {
-    const r = typeof getRankings === "function" ? getRankings() : null;
-    const primaryName = r ? r.primary.nameRu : "—";
-    const primaryColor = r ? r.primary.color : "var(--accent-blue)";
-    const dims = ["control", "energy", "focus", "method"];
-    const labels = {
-      control: "Контроль",
-      energy: "Энергия",
-      focus: "Фокус",
-      method: "Метод",
-    };
+    ;
 
     let barsHTML = dims
       .map((d) => {
@@ -775,12 +713,7 @@ const HolographicQuest = {
       delta = a.delta;
       label = a.label;
       cssCommands = a.css_commands || null;
-    } else if (this._step === 6) {
-      var a = this.soundWaves[idx];
-      delta = a.delta;
-      label = a.label;
-      cssCommands = a.css_commands || null;
-    }
+
 
     if (delta) {
       this._answers.push({
@@ -809,7 +742,7 @@ const HolographicQuest = {
 
   _advance() {
     this._step++;
-    if (this._step >= 7) {
+    if (this._step >= 6) {
       this._finish();
     } else {
       this._renderStep();
