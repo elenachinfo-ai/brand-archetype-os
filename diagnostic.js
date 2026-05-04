@@ -173,7 +173,7 @@ var HolographicQuest = {
         "<p style='font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 24px;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
         "<button id='start-diag-btn' style='padding:12px 36px;background:var(--accent-blue);color:#fff;border:none;border-radius:var(--radius-md);font-family:var(--font-body);font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
       "</div>";
-    document.getElementById("start-diag-btn").onclick = function() {
+    document.getElementById("start-diag-btn").onclick = function() { alert('start');
       HolographicQuest.start();
     };
   },  start: function (onComplete) {
@@ -195,7 +195,7 @@ var HolographicQuest = {
     this._selectedIdx = -1;
     var left = document.getElementById("panel-controllers");
     var right = document.getElementById("panel-output");
-    if (!left || !right) return;
+    if (!left || !right) { alert("panels missing: " + !!left + " " + !!right); return; }
     var statusEl = document.getElementById("hud-status-text");
     var totalSteps = 5;
 
