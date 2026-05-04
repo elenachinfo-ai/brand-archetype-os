@@ -161,32 +161,22 @@ var HolographicQuest = {
     },
   ],
 
-  showStartScreen: function (onComplete) {
-    // Direct start - no popup. Button is in the left panel.
-    this.start(onComplete);
-  },
 
-  showInitialPrompt: function() {
+  init: function() {
     var left = document.getElementById("panel-controllers");
-    if (left) {
-      left.innerHTML =
-        "<div class='quest-panel-header'>ARCHEYPEOS</div>" +
-        "<div style='text-align:center;padding:30px 0;'>" +
-          "<div style='font-size:40px;margin-bottom:12px;'>◈</div>" +
-          "<h2 style='font-weight:300;font-size:18px;color:var(--text-primary);margin:0 0 8px;'>Brand DNA Diagnostic</h2>" +
-          "<p style='font-size:12px;color:var(--text-secondary);line-height:1.6;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
-          "<button class='quest-next-btn' id='start-diag-btn' style='margin-top:16px;width:auto;padding:12px 32px;'>→ Начать диагностику</button>" +
-        "</div>";
-      var self = this;
-      setTimeout(function() {
-        var btn = document.getElementById("start-diag-btn");
-        if (btn) btn.onclick = function() { self.showStartScreen(); };
-      }, 50);
-    }
-  },
-
-  start: function (onComplete) {
-    console.log("[HoloQuest] start() called");
+    if (!left) return;
+    left.innerHTML =
+      "<div style='text-align:center;padding:40px 20px;'>" +
+        "<div style='font-size:48px;margin-bottom:16px;'>◈</div>" +
+        "<h2 style='font-weight:300;font-size:20px;color:var(--text-primary);margin:0 0 10px;'>ArchetypeOS</h2>" +
+        "<p style='font-size:11px;color:var(--text-tertiary);letter-spacing:0.1em;margin:0 0 6px;'>BRAND DNA DIAGNOSTIC</p>" +
+        "<p style='font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 24px;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
+        "<button id='start-diag-btn' style='padding:12px 36px;background:var(--accent-blue);color:#fff;border:none;border-radius:var(--radius-md);font-family:var(--font-body);font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
+      "</div>";
+    document.getElementById("start-diag-btn").onclick = function() {
+      HolographicQuest.start();
+    };
+  },  start: function (onComplete) {
     this._active = true;
     this._step = 1;
     this._answers = [];
@@ -194,17 +184,11 @@ var HolographicQuest = {
     this._onComplete = onComplete || null;
     var left = document.getElementById("panel-controllers");
     var right = document.getElementById("panel-output");
-    console.log("[HoloQuest] panels:", left, right);
     if (left) this._savedLeftHTML = left.innerHTML;
     if (right) this._savedRightHTML = right.innerHTML;
     var statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Шаг 1/5";
-    try {
-      this._renderStep();
-      console.log("[HoloQuest] _renderStep done");
-    } catch(e) {
-      console.error("[HoloQuest] _renderStep error:", e);
-    }
+    this._renderStep();
   },
 
   _renderStep: function () {
@@ -464,7 +448,7 @@ var HolographicQuest = {
           btn.id = "restart-diag-btn";
           btn.className = "quest-next-btn";
           btn.textContent = "← Пройти заново";
-          btn.onclick = function() { HolographicQuest.showStartScreen(); };
+          btn.onclick = function() { HolographicQuest.start(); };
           left.appendChild(btn);
         }
       }
@@ -474,5 +458,4 @@ var HolographicQuest = {
   },
 };
 
-// Auto-show initial prompt
-document.addEventListener("DOMContentLoaded", function() { setTimeout(function() { HolographicQuest.showInitialPrompt(); }, 500); });
+document.addEventListener("DOMContentLoaded", function() { setTimeout(function() { HolographicQuest.init(); }, 300); });
