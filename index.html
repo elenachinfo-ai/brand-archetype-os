@@ -442,9 +442,10 @@
         <script src="engine.js"></script>
         <script src="init-tracking.js"></script>
 
-        <!-- ===== RTL & LOCALE DETECTOR (ArchetypeOS v4) ===== -->
+        <!-- ===== RTL & LOCALE DETECTOR (ArchetypeOS v4) [DISABLED] ===== -->
         <script>
-            (function () {
+            console.log('[RTL] disabled for debugging');
+            // (function () {
                 var html = document.documentElement;
                 var lang = (html.lang || navigator.language || "en").toLowerCase();
                 var isRTL = /^(ar|fa|he|ur|ps|sd|yi|ckb|dv)/.test(lang);
@@ -496,7 +497,7 @@
                     " | Dir: " + html.dir,
                     "color: #7bbcd4; font-size: 12px;"
                 );
-            })();
+            // })();
         </script>
     </body>
 </html>
