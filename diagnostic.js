@@ -278,65 +278,20 @@ var HolographicQuest = {
     var r = typeof getRankings === "function" ? getRankings() : null;
     var primaryName = r ? r.primary.nameRu : "—";
     var primaryColor = r ? r.primary.color : "var(--accent-blue)";
-    var dims = ["control", "energy", "focus", "method"];
-    var labels = {
-      control: "Контроль",
-      energy: "Энергия",
-      focus: "Фокус",
-      method: "Метод",
-    };
 
-    var barsHTML = "";
-    for (var i = 0; i < dims.length; i++) {
-      var d = dims[i];
-      var val = typeof userVector !== "undefined" ? userVector[d] : 50;
-      barsHTML +=
-        "<div class='quest-vector-row'>" +
-        "<span class='quest-vector-label'>" +
-        labels[d] +
-        "</span>" +
-        "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" +
-        val +
-        "%;background:" +
-        primaryColor +
-        ";'></div></div>" +
-        "<span class='quest-vector-val'>" +
-        val +
-        "</span>" +
-        "</div>";
-    }
-
+    // Compact horizontal: archetype name + vector dots + step dots
     var stepsHTML = "";
     for (var s = 0; s < total; s++) {
       var done = s + 1 <= this._step ? " done" : "";
       var current = s + 1 === this._step ? " current" : "";
       var mark = s + 1 <= this._step ? "✓" : s + 1;
-      stepsHTML +=
-        "<div class='quest-step-dot" + done + current + "'>" + mark + "</div>";
+      stepsHTML += "<div class='quest-step-dot" + done + current + "'>" + mark + "</div>";
     }
 
     right.innerHTML =
-      "<div class='output-header'>РЕЗУЛЬТАТ</div>" +
-      "<div class='quest-right-card' style='border-color:" +
-      primaryColor +
-      "44;'>" +
-      "<div class='quest-right-archetype' style='color:" +
-      primaryColor +
-      "'>" +
-      primaryName +
-      "</div>" +
-      "<div class='quest-right-sub'>Текущий архетип</div>" +
-      "</div>" +
-      "<div class='quest-right-section'>" +
-      "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" +
-      barsHTML +
-      "</div>" +
-      "<div class='quest-right-section'>" +
-      "<div class='quest-right-section-title'>ПРОГРЕСС</div>" +
-      "<div class='quest-right-steps'>" +
-      stepsHTML +
-      "</div>" +
-      "</div>";
+      "<span style='font-size:12px;font-weight:600;color:" + primaryColor + ";'>" + primaryName + "</span>" +
+      "<span style='font-size:10px;color:var(--text-tertiary);'>Текущий архетип</span>" +
+      "<div class='quest-right-steps' style='margin-left:auto;'>" + stepsHTML + "</div>";
   },
 
   _selectAnswer: function (idx) {

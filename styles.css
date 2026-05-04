@@ -185,26 +185,25 @@ body {
 /* ==================== WORKSPACE ==================== */
 .workspace {
     display: flex;
+    flex-direction: column;
     flex: 1;
     height: calc(100vh - 48px);
     overflow: hidden;
     position: relative;
 }
 
-/* ==================== LEFT PANEL: PRIMARY CONTROL SURFACE ==================== */
+/* ==================== TOP PANEL: QUESTION AREA ==================== */
 .panel-controllers {
-    width: 340px;
-    min-width: 340px;
+    width: 100%;
     background: var(--bg-panel);
-    border-right: 1px solid var(--border-mid);
-    border-left: 2px solid var(--accent-blue);
+    border-bottom: 1px solid var(--border-mid);
     display: flex;
     flex-direction: column;
-    padding: 22px 20px;
-    gap: 20px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    padding: 18px 24px;
+    gap: 12px;
+    overflow: visible;
     z-index: 10;
+    flex-shrink: 0;
 }
 
 .controllers-header {
@@ -376,6 +375,7 @@ body {
     background: var(--bg-graphite);
     overflow: hidden;
     cursor: crosshair;
+    min-height: 300px;
 }
 
 #field-canvas {
@@ -465,8 +465,18 @@ body {
 
 /* ==================== RIGHT PANEL: OUTPUT ==================== */
 .panel-output {
-    width: 260px;
-    min-width: 260px;
+    width: 100%;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 24px;
+    gap: 24px;
+    overflow: hidden;
+    z-index: 5;
+    flex-shrink: 0;
+    flex-wrap: wrap;
     background: var(--bg-panel);
     border-left: 1px solid var(--border-subtle);
     display: flex;
@@ -577,10 +587,7 @@ body {
 }
 
 .output-rules-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+    }
 
 .output-rule {
     display: flex;
@@ -1958,12 +1965,12 @@ body {
     border-radius: 1px;
     transition: width 0.5s ease;
 }
-.quest-answers-list {
+.quest-answers-list { display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.quest-answer-card {
+.quest-answer-card { flex: 1; min-width: 180px; max-width: 280px;
     display: flex;
     align-items: center;
     gap: 14px;
