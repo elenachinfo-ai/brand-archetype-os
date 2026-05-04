@@ -816,84 +816,73 @@ const HolographicQuest = {
   _finish() {
     this._active = false;
     if (this._helpEl) this._helpEl.style.display = "none";
-    const statusEl = document.getElementById("hud-status-text");
+    var statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Готово";
 
-    const finalVector = { control: 50, energy: 50, focus: 50, method: 50 };
-    this._answers.forEach((a) => {
-      ["control", "energy", "focus", "method"].forEach((d) => {
-        finalVector[d] = Math.max(
-          0,
-          Math.min(100, finalVector[d] + a.delta[d]),
-        );
+    // Clear CSS transitions
+    clearTimeout(this._cssTransitionTimer);
+    document.documentElement.style.transition = "";
+
+    var finalVector = { control: 50, energy: 50, focus: 50, method: 50 };
+    this._answers.forEach(function(a) {
+      ["control", "energy", "focus", "method"].forEach(function(d) {
+        finalVector[d] = Math.max(0, Math.min(100, finalVector[d] + a.delta[d]));
       });
     });
 
     if (typeof Tracker !== "undefined") {
-      const tv = Tracker.getBehaviorVector();
-      ["control", "energy", "focus", "method"].forEach((d) => {
+      var tv = Tracker.getBehaviorVector();
+      ["control", "energy", "focus", "method"].forEach(function(d) {
         finalVector[d] = Math.round(finalVector[d] * 0.8 + tv[d] * 0.2);
       });
     }
 
     if (typeof userVector !== "undefined") {
-      ["control", "energy", "focus", "method"].forEach((d) => {
+      ["control", "energy", "focus", "method"].forEach(function(d) {
         userVector[d] = finalVector[d];
       });
     }
-    if (typeof updateBrandPositionFromVector === "function")
-      updateBrandPositionFromVector();
+    if (typeof updateBrandPositionFromVector === "function") updateBrandPositionFromVector();
     if (typeof updateAll === "function") updateAll();
 
-    let primary = null;
-    if (typeof getRankings === "function") primary = getRankings().primary;
+    var primary = null;
+    if (typeof getRankings === "function") {
+      var r = getRankings();
+      if (r) primary = r.primary;
+    }
 
-    // Clear any pending CSS transitions from live preview
-    clearTimeout(this._cssTransitionTimer);
-    document.documentElement.style.transition = "";
-    console.log("[HoloQuest] _finish: restoring panels...");
+    console.log("[HoloQuest] _finish: primary=", primary);
 
-    // Restore dashboard panels
-    try {
-      var left = document.getElementById("panel-controllers");
-      var right = document.getElementById("panel-output");
-      if (left && this._savedLeftHTML) left.innerHTML = this._savedLeftHTML;
-      if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
-      console.log("[HoloQuest] _finish: panels restored");
-    } catch(e) { console.error("[HoloQuest] _finish: panel restore error", e); }
+    // Restore panels
+    var left = document.getElementById("panel-controllers");
+    var right = document.getElementById("panel-output");
+    if (left && this._savedLeftHTML) left.innerHTML = this._savedLeftHTML;
+    if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
+    console.log("[HoloQuest] _finish: panels restored");
 
-    // Re-init jog dials & presets
-    try {
+    // Re-init
+    setTimeout(function() {
       if (typeof initJogDials === "function") initJogDials();
       if (typeof initPresets === "function") initPresets();
       if (typeof updateAll === "function") updateAll();
-      console.log("[HoloQuest] _finish: jog dials + updateAll done");
-    } catch(e) { console.error("[HoloQuest] _finish: re-init error", e); }
+      console.log("[HoloQuest] _finish: re-init done");
+    }, 100);
 
-    // Show result
-    try {
-      if (typeof ArchetypeResult !== "undefined") {
-        console.log("[HoloQuest] _finish: showing ArchetypeResult...");
-        ArchetypeResult.show(primary, finalVector, this._answers);
-        console.log("[HoloQuest] _finish: ArchetypeResult shown");
+    // Show result (delayed to let DOM settle)
+    var self = this;
+    setTimeout(function() {
+      if (typeof ArchetypeResult !== "undefined" && primary) {
+        console.log("[HoloQuest] _finish: showing result");
+        ArchetypeResult.show(primary, finalVector, self._answers);
       }
-    } catch(e) { console.error("[HoloQuest] _finish: result error", e); }
-
-    if (this._onComplete) this._onComplete(finalVector, primary);
-
-    try {
-      if (typeof Pivot !== "undefined" && primary) {
-        console.log("[HoloQuest] _finish: executing Pivot...");
-        Pivot.execute(primary.id);
-        console.log("[HoloQuest] _finish: Pivot done");
-      }
-    } catch(e) { console.error("[HoloQuest] _finish: pivot error", e); }
+      if (self._onComplete) self._onComplete(finalVector, primary);
+    }, 200);
 
     console.log(
-      "%c[HoloQuest] ✅ " + (primary ? primary.nameRu : "---"),
-      "color:" + (primary ? primary.color : "#fff") + ";font-size:16px;font-weight:bold;"
+      "%c[HoloQuest] OK " + (primary ? primary.nameRu : "---"),
+      "color:" + (primary ? primary.color : "#fff") + ";font-size:16px;"
     );
-  },
+  },  },
 };
 
 // Auto-show start screen on load
