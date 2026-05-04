@@ -162,31 +162,27 @@ var HolographicQuest = {
   ],
 
   showStartScreen: function (onComplete) {
-    var ex = document.getElementById("quest-start-overlay");
-    if (ex) ex.remove();
-    var overlay = document.createElement("div");
-    overlay.id = "quest-start-overlay";
-    overlay.className = "quest-start-overlay";
-    overlay.innerHTML =
-      "<div class='quest-start-backdrop'></div>" +
-      "<div class='quest-start-card'>" +
-      "<div class='quest-start-icon'>◈</div>" +
-      "<h1 class='quest-start-title'>ArchetypeOS</h1>" +
-      "<p class='quest-start-subtitle'>Brand DNA Diagnostic Engine</p>" +
-      "<p class='quest-start-desc'>Система проектирования восприятия бренда.<br>12 архетипов. 10 лет экспертизы.</p>" +
-      "<div class='quest-start-principles'><span>Тихая роскошь</span><span>•</span><span>Воздух в кадре</span><span>•</span><span>Пастельная палитра</span></div>" +
-      "<button class='quest-start-btn' id='quest-start-btn'><span>→</span> Определить архетип бренда</button>" +
-      "<p class='quest-start-hint'>Elena Charlesworth</p>" +
-      "</div>";
-    document.body.appendChild(overlay);
-    var self = this;
-    document.getElementById("quest-start-btn").onclick = function () {
-      overlay.style.opacity = "0";
-      setTimeout(function () {
-        if (overlay.parentNode) overlay.remove();
-      }, 300);
-      self.start(onComplete);
-    };
+    // Direct start - no popup. Button is in the left panel.
+    this.start(onComplete);
+  },
+
+  showInitialPrompt: function() {
+    var left = document.getElementById("panel-controllers");
+    if (left) {
+      left.innerHTML =
+        "<div class='quest-panel-header'>ARCHEYPEOS</div>" +
+        "<div style='text-align:center;padding:30px 0;'>" +
+          "<div style='font-size:40px;margin-bottom:12px;'>◈</div>" +
+          "<h2 style='font-weight:300;font-size:18px;color:var(--text-primary);margin:0 0 8px;'>Brand DNA Diagnostic</h2>" +
+          "<p style='font-size:12px;color:var(--text-secondary);line-height:1.6;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
+          "<button class='quest-next-btn' id='start-diag-btn' style='margin-top:16px;width:auto;padding:12px 32px;'>→ Начать диагностику</button>" +
+        "</div>";
+      var self = this;
+      setTimeout(function() {
+        var btn = document.getElementById("start-diag-btn");
+        if (btn) btn.onclick = function() { self.showStartScreen(); };
+      }, 50);
+    }
   },
 
   start: function (onComplete) {
@@ -458,6 +454,25 @@ var HolographicQuest = {
     var self = this;
     if (self._onComplete) self._onComplete(finalVector, primary);
 
+    // Add restart hint
+    setTimeout(function() {
+      var left = document.getElementById("panel-controllers");
+      if (left) {
+        var existing = document.getElementById("restart-diag-btn");
+        if (!existing) {
+          var btn = document.createElement("button");
+          btn.id = "restart-diag-btn";
+          btn.className = "quest-next-btn";
+          btn.textContent = "← Пройти заново";
+          btn.onclick = function() { HolographicQuest.showStartScreen(); };
+          left.appendChild(btn);
+        }
+      }
+    }, 300);
+
     console.log("[HoloQuest] Done: " + (primary ? primary.nameRu : "---"));
   },
 };
+
+// Auto-show initial prompt
+document.addEventListener("DOMContentLoaded", function() { setTimeout(function() { HolographicQuest.showInitialPrompt(); }, 500); });
