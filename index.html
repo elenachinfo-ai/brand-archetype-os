@@ -439,62 +439,6 @@
         <script src="engine.js?v=1777919222"></script>
         <script src="init-tracking.js?v=1777919222"></script>
 
-        <!-- ===== RTL & LOCALE DETECTOR (ArchetypeOS v4) ===== -->
-        <script>
-            console.log('[RTL] disabled for debugging');
-            // (function () {
-                var html = document.documentElement;
-                var lang = (html.lang || navigator.language || "en").toLowerCase();
-                var isRTL = /^(ar|fa|he|ur|ps|sd|yi|ckb|dv)/.test(lang);
-                var isArabic = lang.indexOf("ar") === 0;
-
-                // Set direction
-                html.dir = isRTL ? "rtl" : "ltr";
-                html.setAttribute("data-locale", isArabic ? "ar" : lang.indexOf("ru") === 0 ? "ru" : "en");
-
-                if (isArabic) {
-                    // Load Arabic fonts
-                    var link = document.createElement("link");
-                    link.rel = "stylesheet";
-                    link.href =
-                        "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap";
-                    document.head.appendChild(link);
-
-                    // Override font stack for Arabic
-                    var style = document.createElement("style");
-                    style.textContent =
-                        ":root { --font-body: 'Tajawal', 'Cairo', sans-serif; } " +
-                        "body { font-family: 'Tajawal', 'Cairo', sans-serif; } " +
-                        ".hud-header, .panel-controllers, .panel-output { direction: rtl; text-align: right; } " +
-                        ".hud-logo, .hud-info { flex-direction: row-reverse; } " +
-                        "#field-canvas { direction: ltr; } " +
-                        ".quest-answer-card, .diag-answer-card { text-align: right; } " +
-                        ".quest-ans-content, .diag-answer-content { text-align: right; }";
-                    document.head.appendChild(style);
-
-                    console.log(
-                        "%c[ArchetypeOS] 🌙 Arabic locale detected — RTL + Tajawal/Cairo fonts loaded.",
-                        "color: #f39c12; font-size: 13px;"
-                    );
-                } else if (isRTL) {
-                    var style = document.createElement("style");
-                    style.textContent =
-                        ".hud-header, .panel-controllers, .panel-output { direction: rtl; } " +
-                        "#field-canvas { direction: ltr; }";
-                    document.head.appendChild(style);
-                }
-
-                // Expose locale for culture_logic.json integration
-                window.__archetypeLocale = isArabic ? "ar" : lang.indexOf("ru") === 0 ? "ru" : "en";
-                window.__archetypeIsRTL = isRTL;
-
-                console.log(
-                    "%c[ArchetypeOS] Locale: " + window.__archetypeLocale.toUpperCase() +
-                    " | RTL: " + isRTL +
-                    " | Dir: " + html.dir,
-                    "color: #7bbcd4; font-size: 12px;"
-                );
-            })();
-        </script>
+        
     </body>
 </html>
