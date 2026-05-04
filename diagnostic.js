@@ -713,7 +713,7 @@ const HolographicQuest = {
       delta = a.delta;
       label = a.label;
       cssCommands = a.css_commands || null;
-
+    }
 
     if (delta) {
       this._answers.push({
@@ -797,15 +797,11 @@ const HolographicQuest = {
     if (typeof updateAll === "function") updateAll();
 
     // Show result
-    if (typeof ArchetypeResult !== "undefined")
+    if (typeof ArchetypeResult !== "undefined" && primary)
       ArchetypeResult.show(primary, finalVector, this._answers);
     if (this._onComplete) this._onComplete(finalVector, primary);
-    if (typeof Pivot !== "undefined" && primary) Pivot.execute(primary.id);
 
-    console.log(
-      `%c[HoloQuest] ✅ ${primary?.nameRu || "—"}`,
-      `color:${primary?.color || "#fff"};font-size:16px;font-weight:bold;`,
-    );
+    console.log('[HoloQuest] Done: ' + (primary ? primary.nameRu : '---'));
   },
 };
 
