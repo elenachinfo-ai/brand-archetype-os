@@ -240,6 +240,8 @@ var HolographicQuest = {
           "</div>";
       }
 
+      // Store result data for the Brand Passport button
+      self._lastResult = { primary: primary, vector: finalVector };
       left.innerHTML =
         "<div class='quest-panel-header'>АРХЕТИП БРЕНДА</div>" +
         "<div class='quest-question-block'>" +
@@ -372,6 +374,7 @@ var HolographicQuest = {
   },
 
   _finish: function () {
+    var self = this;
     this._active = false;
     var statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Готово";
@@ -408,6 +411,8 @@ var HolographicQuest = {
           "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" + v + "%;background:" + color + ";'></div></div>" +
           "<span class='quest-vector-val'>" + v + "</span></div>";
       }
+      // Store result data for the Brand Passport button
+      self._lastResult = { primary: primary, vector: finalVector };
       left.innerHTML =
         "<div class='quest-panel-header'>РЕЗУЛЬТАТ ДИАГНОСТИКИ</div>" +
         "<div class='quest-right-card' style='border-color:" + color + "44;'>" +
@@ -416,8 +421,21 @@ var HolographicQuest = {
         "</div>" +
         "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" + vecHTML +
         "<p style='font-size:11px;color:var(--text-secondary);margin-top:8px;'>" + (primary.ui_rules ? primary.ui_rules.visual : "") + "</p>" +
-        "<button class='quest-next-btn' style='margin-top:12px;' onclick='ArchetypeResult.show(archetypes.find(function(a){return a.id===&quot;" + primary.id + "&quot;;})," + JSON.stringify(finalVector) + ",[])'>Открыть Brand Passport</button>";
+        "<button class='quest-next-btn' style='margin-top:12px;' id='result-show-passport'>Открыть Brand Passport</button>";
     }
+
+    // Bind Brand Passport button
+    setTimeout(function() {
+      var btn = document.getElementById("result-show-passport");
+      if (btn && self._lastResult) {
+        btn.onclick = function() {
+          if (typeof ArchetypeResult !== "undefined") {
+            var r = self._lastResult;
+            ArchetypeResult.show(r.primary, r.vector, self._answers);
+          }
+        };
+      }
+    }, 50);
 
     // Restore right panel
     var right = document.getElementById("panel-output");
