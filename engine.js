@@ -82,7 +82,8 @@ function drawField() {
   ctx.clearRect(0, 0, W, H);
 
   // ---- Subtle background grid ----
-  const pc = window.__pivotCanvas; ctx.strokeStyle = pc ? pc.grid : "rgba(255,255,255,0.03)";
+  const pc = window.__pivotCanvas;
+  ctx.strokeStyle = pc ? pc.grid : "rgba(255,255,255,0.03)";
   ctx.lineWidth = 1;
   const gridSize = 40;
   for (let x = 0; x < W; x += gridSize) {
@@ -503,12 +504,11 @@ function updateAll() {
   if (statusText) statusText.textContent = r.primary.nameRu;
 
   // Primary card
-  document.getElementById("output-primary-name").textContent = r.primary.nameRu;
-  document.getElementById("output-primary-behavior").textContent =
-    r.primary.behavior_model;
-  const primaryDot = document.getElementById("output-primary-dot");
-  primaryDot.style.background = r.primary.color;
-  primaryDot.style.boxShadow = `0 0 12px ${r.primary.color}`;
+  var el; el = document.getElementById("output-primary-name"); if (el) el.textContent = r.primary.nameRu;
+  el = document.getElementById("output-primary-behavior"); if (el) el.textContent = r.primary.behavior_model;
+  var primaryDot = document.getElementById("output-primary-dot");
+  if (primaryDot) { primaryDot.style.background = r.primary.color;
+  primaryDot.style.boxShadow = "0 0 12px " + r.primary.color; }
   const primaryGlow = document.getElementById("output-primary-glow");
   if (primaryGlow) {
     primaryGlow.style.opacity = "1";
@@ -520,27 +520,25 @@ function updateAll() {
   }
 
   // Secondary card
-  document.getElementById("output-secondary-name").textContent =
-    r.secondary.nameRu;
-  const secondaryDot = document.getElementById("output-secondary-dot");
-  secondaryDot.style.background = r.secondary.color;
-  secondaryDot.style.boxShadow = `0 0 8px ${r.secondary.color}`;
+  el = document.getElementById("output-secondary-name"); if (el) el.textContent = r.secondary.nameRu;
+  var secondaryDot = document.getElementById("output-secondary-dot");
+  if (secondaryDot) { secondaryDot.style.background = r.secondary.color;
+  secondaryDot.style.boxShadow = "0 0 8px " + r.secondary.color; }
 
   // Conflict card
-  document.getElementById("output-conflict-name").textContent =
-    r.conflict.nameRu;
+  el = document.getElementById("output-conflict-name"); if (el) el.textContent = r.conflict.nameRu;
   const conflictDot = document.getElementById("output-conflict-dot");
   conflictDot.style.background = r.conflict.color;
   conflictDot.style.boxShadow = `0 0 8px ${r.conflict.color}`;
 
   // Rules
-  document.getElementById("rule-typography").textContent =
+  el = document.getElementById("rule-typography"); if (el) el.textContent =
     r.primary.ui_rules.typography;
-  document.getElementById("rule-spacing").textContent =
+  el = document.getElementById("rule-spacing"); if (el) el.textContent =
     r.primary.ui_rules.spacing;
-  document.getElementById("rule-motion").textContent =
+  el = document.getElementById("rule-motion"); if (el) el.textContent =
     r.primary.ui_rules.motion;
-  document.getElementById("rule-visual").textContent =
+  el = document.getElementById("rule-visual"); if (el) el.textContent =
     r.primary.ui_rules.visual;
 }
 
