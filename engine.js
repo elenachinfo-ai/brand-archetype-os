@@ -346,7 +346,8 @@ function initBrandDrag() {
   function onEnd() {
     if (isDraggingBrand) {
       isDraggingBrand = false;
-      document.getElementById("brand-dot").style.cursor = "grab";
+  var el = document.getElementById("brand-dot");
+  if (el) el.style.cursor = "grab";
     }
   }
 
@@ -503,16 +504,20 @@ function updateAll() {
   if (statusText) statusText.textContent = r.primary.nameRu;
 
   // Primary card
-  document.getElementById("output-primary-name").textContent = r.primary.nameRu;
-  document.getElementById("output-primary-behavior").textContent =
+  var el = document.getElementById("output-primary-name");
+  if (el) el.textContent = r.primary.nameRu;
+  var el = document.getElementById("output-primary-behavior");
+  if (el) el.textContent =
     r.primary.behavior_model;
-  const primaryDot = document.getElementById("output-primary-dot");
-  primaryDot.style.background = r.primary.color;
-  primaryDot.style.boxShadow = `0 0 12px ${r.primary.color}`;
+  var primaryDot = document.getElementById("output-primary-dot");
+  if (primaryDot) {
+    primaryDot.style.background = r.primary.color;
+    primaryDot.style.boxShadow = "0 0 12px " + r.primary.color;
+  }
   const primaryGlow = document.getElementById("output-primary-glow");
   if (primaryGlow) {
     primaryGlow.style.opacity = "1";
-    primaryGlow.style.boxShadow = `inset 0 0 30px ${r.primary.color}30, 0 0 20px ${r.primary.color}20`;
+    primaryGlow.style.boxShadow = "inset 0 0 30px " + r.primary.color + "30, 0 0 20px " + r.primary.color + "20";
   }
   const primaryCard = document.getElementById("output-primary");
   if (primaryCard) {
@@ -520,27 +525,35 @@ function updateAll() {
   }
 
   // Secondary card
-  document.getElementById("output-secondary-name").textContent =
+  var el = document.getElementById("output-secondary-name");
+  if (el) el.textContent =
     r.secondary.nameRu;
-  const secondaryDot = document.getElementById("output-secondary-dot");
-  secondaryDot.style.background = r.secondary.color;
-  secondaryDot.style.boxShadow = `0 0 8px ${r.secondary.color}`;
+  var secondaryDot = document.getElementById("output-secondary-dot");
+  if (secondaryDot) {
+    secondaryDot.style.background = r.secondary.color;
+    secondaryDot.style.boxShadow = "0 0 8px " + r.secondary.color;
+  }
 
   // Conflict card
-  document.getElementById("output-conflict-name").textContent =
+  var el = document.getElementById("output-conflict-name");
+  if (el) el.textContent =
     r.conflict.nameRu;
   const conflictDot = document.getElementById("output-conflict-dot");
   conflictDot.style.background = r.conflict.color;
   conflictDot.style.boxShadow = `0 0 8px ${r.conflict.color}`;
 
   // Rules
-  document.getElementById("rule-typography").textContent =
+  var el = document.getElementById("rule-typography");
+  if (el) el.textContent =
     r.primary.ui_rules.typography;
-  document.getElementById("rule-spacing").textContent =
+  var el = document.getElementById("rule-spacing");
+  if (el) el.textContent =
     r.primary.ui_rules.spacing;
-  document.getElementById("rule-motion").textContent =
+  var el = document.getElementById("rule-motion");
+  if (el) el.textContent =
     r.primary.ui_rules.motion;
-  document.getElementById("rule-visual").textContent =
+  var el = document.getElementById("rule-visual");
+  if (el) el.textContent =
     r.primary.ui_rules.visual;
 }
 
