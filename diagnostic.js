@@ -803,6 +803,7 @@ const HolographicQuest = {
   },
 
   _advance() {
+    if (this._step >= 7) return; // guard: already finished
     this._step++;
     if (this._step >= 7) {
       this._finish();
@@ -847,6 +848,9 @@ const HolographicQuest = {
     let primary = null;
     if (typeof getRankings === "function") primary = getRankings().primary;
 
+    // Clear any pending CSS transitions from live preview
+    clearTimeout(this._cssTransitionTimer);
+    document.documentElement.style.transition = "";
     console.log("[HoloQuest] _finish: restoring panels...");
 
     // Restore dashboard panels
