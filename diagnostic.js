@@ -190,6 +190,7 @@ var HolographicQuest = {
   },
 
   start: function (onComplete) {
+    console.log("[HoloQuest] start() called");
     this._active = true;
     this._step = 1;
     this._answers = [];
@@ -197,11 +198,17 @@ var HolographicQuest = {
     this._onComplete = onComplete || null;
     var left = document.getElementById("panel-controllers");
     var right = document.getElementById("panel-output");
+    console.log("[HoloQuest] panels:", left, right);
     if (left) this._savedLeftHTML = left.innerHTML;
     if (right) this._savedRightHTML = right.innerHTML;
     var statusEl = document.getElementById("hud-status-text");
     if (statusEl) statusEl.textContent = "Шаг 1/5";
-    this._renderStep();
+    try {
+      this._renderStep();
+      console.log("[HoloQuest] _renderStep done");
+    } catch(e) {
+      console.error("[HoloQuest] _renderStep error:", e);
+    }
   },
 
   _renderStep: function () {
