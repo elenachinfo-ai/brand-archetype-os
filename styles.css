@@ -188,7 +188,7 @@ body {
     grid-template-areas:
         "controllers field"
         "output      field";
-    grid-template-columns: 420px 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
     flex: 1;
     height: calc(100vh - 48px);
