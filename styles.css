@@ -186,9 +186,9 @@ body {
 .workspace {
     display: grid;
     grid-template-areas:
-        "controllers output"
-        "field      field";
-    grid-template-columns: 1fr 280px;
+        "controllers field"
+        "output      field";
+    grid-template-columns: 420px 1fr;
     grid-template-rows: auto 1fr;
     flex: 1;
     height: calc(100vh - 48px);
@@ -200,6 +200,8 @@ body {
 .panel-controllers {
     grid-area: controllers;
     min-width: 0;
+    max-height: 100%;
+    overflow-y: auto;
     background: transparent;
     display: flex;
     flex-direction: column;
@@ -374,6 +376,7 @@ body {
 /* ==================== CENTER: ARCHETYPE FIELD ==================== */
 .panel-field {
     grid-area: field;
+    border-left: 1px solid var(--border-mid);
     position: relative;
     background: var(--bg-graphite);
     overflow: hidden;
@@ -471,7 +474,7 @@ body {
 .panel-output {
     grid-area: output;
     width: auto;
-    min-width: 220px;
+    border-top: 1px solid var(--border-mid);
     background: transparent;
     border-left: 1px solid var(--border-subtle);
     display: flex;
@@ -842,6 +845,11 @@ body {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
     }
+    .panel-field {
+        border-left: none;
+        border-top: 1px solid var(--border-mid);
+        min-height: 300px;
+    }
     .panel-output {
         width: 100%;
         min-width: 100%;
@@ -1079,6 +1087,11 @@ body {
             "field";
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
+    }
+    .panel-field {
+        border-left: none;
+        border-top: 1px solid var(--border-mid);
+        min-height: 300px;
     }
     .panel-output {
         width: 100%;
@@ -1734,6 +1747,11 @@ body {
             "field";
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
+    }
+    .panel-field {
+        border-left: none;
+        border-top: 1px solid var(--border-mid);
+        min-height: 300px;
     }
     .panel-output {
         width: 100%;
