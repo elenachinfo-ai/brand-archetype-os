@@ -402,24 +402,44 @@ var HolographicQuest = {
       if (r) primary = r.primary;
     }
 
+    // Show result in LEFT panel (replaces test)
     var left = document.getElementById("panel-controllers");
+    if (left && primary) {
+      var color = primary.color || "#c4a87c";
+      var dims = ["control", "energy", "focus", "method"];
+      var labels = { control: "Контроль", energy: "Энергия", focus: "Фокус", method: "Метод" };
+      var vecHTML = "";
+      for (var i = 0; i < dims.length; i++) {
+        var d = dims[i];
+        var v = finalVector[d] || 50;
+        vecHTML += "<div class='quest-vector-row'><span class='quest-vector-label'>" + labels[d] + "</span>" +
+          "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" + v + "%;background:" + color + ";'></div></div>" +
+          "<span class='quest-vector-val'>" + v + "</span></div>";
+      }
+      left.innerHTML =
+        "<div class='quest-panel-header'>РЕЗУЛЬТАТ ДИАГНОСТИКИ</div>" +
+        "<div class='quest-right-card' style='border-color:" + color + "44;'>" +
+          "<div class='quest-right-archetype' style='color:" + color + ";font-size:22px;'>" + primary.nameRu + "</div>" +
+          "<div class='quest-right-sub'>" + (primary.behavior_model || "") + "</div>" +
+        "</div>" +
+        "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" + vecHTML +
+        "<p style='font-size:11px;color:var(--text-secondary);margin-top:8px;'>" + (primary.ui_rules ? primary.ui_rules.visual : "") + "</p>" +
+        "<button class='quest-next-btn' style='margin-top:12px;' onclick='ArchetypeResult.show(archetypes.find(function(a){return a.id===&quot;" + primary.id + "&quot;;})," + JSON.stringify(finalVector) + ",[])'>Открыть Brand Passport</button>";
+    }
+
+    // Restore right panel
     var right = document.getElementById("panel-output");
-    if (left && this._savedLeftHTML) left.innerHTML = this._savedLeftHTML;
     if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
 
+    // Force canvas redraw
     setTimeout(function () {
+      if (typeof updateAll === "function") updateAll();
       if (typeof initJogDials === "function") initJogDials();
       if (typeof initPresets === "function") initPresets();
-      if (typeof updateAll === "function") updateAll();
     }, 100);
 
     var self = this;
-    setTimeout(function () {
-      if (typeof ArchetypeResult !== "undefined" && primary) {
-        ArchetypeResult.show(primary, finalVector, self._answers);
-      }
-      if (self._onComplete) self._onComplete(finalVector, primary);
-    }, 200);
+    if (self._onComplete) self._onComplete(finalVector, primary);
 
     console.log("[HoloQuest] Done: " + (primary ? primary.nameRu : "---"));
   },
