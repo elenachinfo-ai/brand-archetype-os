@@ -243,48 +243,29 @@ const HolographicQuest = {
   ],
 
   // ==================== START SCREEN ====================
-  showStartScreen(onComplete) {
+    showStartScreen(onComplete) {
     var ex = document.getElementById("quest-start-overlay");
     if (ex) ex.remove();
     var overlay = document.createElement("div");
     overlay.id = "quest-start-overlay";
     overlay.className = "quest-start-overlay";
-    overlay.innerHTML =
-      '<div class="quest-start-backdrop"></div>' +
+    overlay.innerHTML = '<div class="quest-start-backdrop"></div>' +
       '<div class="quest-start-card">' +
         '<div class="quest-start-icon">◈</div>' +
         '<h1 class="quest-start-title">ArchetypeOS</h1>' +
         '<p class="quest-start-subtitle">Brand DNA Diagnostic Engine</p>' +
-        '<p class="quest-start-desc">' +
-          'Система проектирования восприятия бренда в цифровой среде. ' +
-          '12 архетипических моделей. 10 лет экспертизы. ' +
-          'Британская школа дизайна.' +
-        '</p>' +
-        '<div class="quest-start-principles">' +
-          '<span>Тихая роскошь</span>' +
-          '<span>•</span>' +
-          '<span>Воздух в кадре</span>' +
-          '<span>•</span>' +
-          '<span>Пастельная палитра</span>' +
-        '</div>' +
-        '<p class="quest-start-method">' +
-          'От характера денег — к визуальному коду. ' +
-          '5 вопросов. 1 окно. Без попапов.' +
-        '</p>' +
-        '<button class="quest-start-btn" id="quest-start-btn">' +
-          '<span>→</span> Определить архетип бренда' +
-        '</button>' +
+        '<p class="quest-start-desc">Система проектирования восприятия бренда.<br>12 архетипов. 10 лет экспертизы. Британская школа дизайна.</p>' +
+        '<div class="quest-start-principles"><span>Тихая роскошь</span><span>•</span><span>Воздух в кадре</span><span>•</span><span>Пастельная палитра</span></div>' +
+        '<button class="quest-start-btn" id="quest-start-btn"><span>→</span> Определить архетип бренда</button>' +
         '<p class="quest-start-hint">Elena Charlesworth • ArchetypeOS.ru</p>' +
       '</div>';
     document.body.appendChild(overlay);
     var self = this;
-    document.getElementById("quest-start-btn").addEventListener("click", function() {
+    document.getElementById("quest-start-btn").onclick = function() {
       overlay.style.opacity = "0";
-      setTimeout(function() {
-        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-      }, 300);
+      setTimeout(function() { if (overlay.parentNode) overlay.remove(); }, 300);
       self.start(onComplete);
-    });
+    };
   },
 
   // ==================== START ====================
