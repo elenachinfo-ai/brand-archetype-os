@@ -885,10 +885,5 @@ const HolographicQuest = {
   },  },
 };
 
-// Auto-show start screen on load
-document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    const already = document.getElementById("quest-start-overlay");
-    if (!already) HolographicQuest.showStartScreen();
-  }, 800);
-});
+// Auto-show disabled — use HUD button instead
+console.log('[HoloQuest] Ready. Use HUD button to start.');
