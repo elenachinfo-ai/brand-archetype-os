@@ -453,4 +453,28 @@ var HolographicQuest = {
 
     console.log("[HoloQuest] Done: " + (primary ? primary.nameRu : "---"));
   },
-};
+};  // Direct start - no popup. Button is in left panel via init().
+  showStartScreen: function(onComplete) {
+    this.start(onComplete);
+  },
+
+  // Show welcome screen in left panel
+  showWelcome: function() {
+    var left = document.getElementById("panel-controllers");
+    if (!left) return;
+    left.innerHTML = "";
+    var d = document.createElement("div");
+    d.style.cssText = "text-align:center;padding:50px 20px;";
+    d.innerHTML = "<div style='font-size:40px;margin-bottom:14px;'>◈</div>" +
+      "<h2 style='font-weight:300;font-size:18px;color:var(--text-primary);margin:0 0 8px;'>ArchetypeOS</h2>" +
+      "<p style='font-size:11px;color:var(--text-tertiary);letter-spacing:0.1em;margin:0 0 16px;'>BRAND DNA DIAGNOSTIC</p>" +
+      "<p style='font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0 0 24px;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
+      "<button id='welcome-start-btn' style='padding:12px 36px;background:var(--accent-blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>";
+    left.appendChild(d);
+    document.getElementById("welcome-start-btn").onclick = function() {
+      HolographicQuest.showStartScreen();
+    };
+  },
+
+// Auto-show welcome
+document.addEventListener("DOMContentLoaded", function() { setTimeout(function() { HolographicQuest.showWelcome(); }, 400); });
