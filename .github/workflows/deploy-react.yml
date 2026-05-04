@@ -2,7 +2,7 @@ name: Deploy React Engine to GitHub Pages
 
 on:
   push:
-    branches: [feature/react-engine]
+    branches: [fresh-start]
 
 jobs:
   build-and-deploy:
@@ -31,5 +31,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: gh-pages-react
-          commit_message: "Deploy React Engine — ${{ github.sha }}"
+          publish_branch: gh-pages
+          commit_message: "Deploy — ${{ github.sha }}"
