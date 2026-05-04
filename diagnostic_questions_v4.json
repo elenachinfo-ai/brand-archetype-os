@@ -1,0 +1,624 @@
+{
+  "_meta": {
+    "description": "Диагностика ArchetypeOS v4 — 8 вопросов. Каждый ответ = команда изменения CSS/Three.js переменных.",
+    "principle": "Ответы не просто текст, а вектор дельт, которые мгновенно трансформируют интерфейс: border-radius, backdrop-filter, easing-кривые, glow, opacity слоёв.",
+    "total_questions": 8,
+    "base_vector": { "control": 50, "energy": 50, "focus": 50, "method": 50 }
+  },
+
+  "questions": [
+    {
+      "id": "q1_structure",
+      "title_ru": "Что для вас важнее: безупречная структура или живой хаос?",
+      "title_en": "What matters more: flawless structure or living chaos?",
+      "category": "contrast_scale",
+      "css_bindings": {
+        "description": "Влияет на border-radius, жёсткость сетки, метабол-состояние 3D-ядра, blur панелей"
+      },
+      "answers": [
+        {
+          "id": "q1_structure",
+          "icon": "🔷",
+          "label_ru": "Структура",
+          "label_en": "Structure",
+          "text_ru": "Порядок, система, предсказуемость",
+          "text_en": "Order, system, predictability",
+          "vector_delta": {
+            "control": 12,
+            "energy": -4,
+            "focus": 6,
+            "method": 4
+          },
+          "css_commands": {
+            "--radius-sm": "4px",
+            "--radius-md": "6px",
+            "--radius-lg": "10px",
+            "--bg-glass": "rgba(22,22,30,0.75)",
+            "--backdrop-blur": "blur(16px)",
+            "--grid-opacity": "0.12",
+            "threejs_core": "icosahedron",
+            "threejs_wireframe": true,
+            "threejs_metaball": false,
+            "easing": "cubic-bezier(0.6, 0, 0.4, 1)",
+            "animation_type": "linear-fast"
+          }
+        },
+        {
+          "id": "q1_chaos",
+          "icon": "🌀",
+          "label_ru": "Хаос",
+          "label_en": "Chaos",
+          "text_ru": "Свобода, поток, непредсказуемость",
+          "text_en": "Freedom, flow, unpredictability",
+          "vector_delta": {
+            "control": -6,
+            "energy": 10,
+            "focus": -4,
+            "method": -2
+          },
+          "css_commands": {
+            "--radius-sm": "14px",
+            "--radius-md": "24px",
+            "--radius-lg": "38px",
+            "--bg-glass": "rgba(22,22,30,0.45)",
+            "--backdrop-blur": "blur(4px)",
+            "--grid-opacity": "0.03",
+            "threejs_core": "metaball",
+            "threejs_wireframe": false,
+            "threejs_metaball": true,
+            "easing": "cubic-bezier(0.2, 1.2, 0.6, 1)",
+            "animation_type": "spring-physics"
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "q2_texture",
+      "title_ru": "Ваш бренд — это матовый бетон или полированное стекло?",
+      "title_en": "Is your brand matte concrete or polished glass?",
+      "category": "texture_light",
+      "css_bindings": {
+        "description": "Влияет на transmission (прозрачность слоёв), преломление, roughness материалов"
+      },
+      "answers": [
+        {
+          "id": "q2_concrete",
+          "icon": "🧱",
+          "label_ru": "Матовый бетон",
+          "label_en": "Matte Concrete",
+          "text_ru": "Надёжность, тактильность, основательность",
+          "text_en": "Reliability, tactility, solidity",
+          "vector_delta": {
+            "control": 4,
+            "energy": -6,
+            "focus": 4,
+            "method": 2
+          },
+          "css_commands": {
+            "--bg-glass": "rgba(28,26,24,0.85)",
+            "--bg-glass-strong": "rgba(34,32,30,0.95)",
+            "--backdrop-blur": "blur(2px)",
+            "--border-subtle": "rgba(255,255,255,0.04)",
+            "--transmission": "0.15",
+            "--surface-roughness": "0.8",
+            "--specular-intensity": "0.1",
+            "--refraction-index": "1.0",
+            "threejs_material": "MeshStandardMaterial",
+            "threejs_roughness": 0.85,
+            "threejs_metalness": 0.1
+          }
+        },
+        {
+          "id": "q2_glass",
+          "icon": "💎",
+          "label_ru": "Полированное стекло",
+          "label_en": "Polished Glass",
+          "text_ru": "Прозрачность, блеск, современность",
+          "text_en": "Transparency, brilliance, modernity",
+          "vector_delta": {
+            "control": 2,
+            "energy": 4,
+            "focus": -2,
+            "method": 6
+          },
+          "css_commands": {
+            "--bg-glass": "rgba(22,24,30,0.45)",
+            "--bg-glass-strong": "rgba(28,30,38,0.65)",
+            "--backdrop-blur": "blur(20px)",
+            "--border-subtle": "rgba(255,255,255,0.12)",
+            "--transmission": "0.85",
+            "--surface-roughness": "0.05",
+            "--specular-intensity": "0.9",
+            "--refraction-index": "1.5",
+            "threejs_material": "MeshPhysicalMaterial",
+            "threejs_roughness": 0.05,
+            "threejs_metalness": 0.0
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "q3_rhythm",
+      "title_ru": "Как движется ваша идея: как стрела или как облако?",
+      "title_en": "How does your idea move: like an arrow or like a cloud?",
+      "category": "animation_dynamics",
+      "css_bindings": {
+        "description": "Параметр easing для ВСЕХ анимаций интерфейса + physics-based motion"
+      },
+      "answers": [
+        {
+          "id": "q3_arrow",
+          "icon": "🏹",
+          "label_ru": "Стрела",
+          "label_en": "Arrow",
+          "text_ru": "Быстро, прямо, решительно",
+          "text_en": "Fast, direct, decisive",
+          "vector_delta": {
+            "control": 8,
+            "energy": 8,
+            "focus": 6,
+            "method": -4
+          },
+          "css_commands": {
+            "--transition-fast": "0.15s cubic-bezier(0.7, 0, 1, 0.5)",
+            "--transition-normal": "0.3s cubic-bezier(0.7, 0, 1, 0.5)",
+            "--transition-slow": "0.5s cubic-bezier(0.7, 0, 1, 0.5)",
+            "--spring-tension": "400",
+            "--spring-friction": "25",
+            "--spring-mass": "0.5",
+            "animation_style": "linear-kinetic",
+            "hover_scale": "1.03",
+            "hover_duration": "0.12s"
+          }
+        },
+        {
+          "id": "q3_cloud",
+          "icon": "☁️",
+          "label_ru": "Облако",
+          "label_en": "Cloud",
+          "text_ru": "Мягко, плавно, медитативно",
+          "text_en": "Soft, smooth, meditative",
+          "vector_delta": {
+            "control": -2,
+            "energy": -4,
+            "focus": 2,
+            "method": 6
+          },
+          "css_commands": {
+            "--transition-fast": "0.4s cubic-bezier(0.3, 0, 0.5, 1)",
+            "--transition-normal": "0.8s cubic-bezier(0.3, 0, 0.5, 1)",
+            "--transition-slow": "1.2s cubic-bezier(0.3, 0, 0.5, 1)",
+            "--spring-tension": "120",
+            "--spring-friction": "18",
+            "--spring-mass": "1.5",
+            "animation_style": "spring-inertial",
+            "hover_scale": "1.08",
+            "hover_duration": "0.35s"
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "q4_presence",
+      "title_ru": "Ваш бренд заходит в комнату как — или его уже ждали?",
+      "title_en": "Does your brand enter the room — or was it already expected?",
+      "category": "presence_authority",
+      "css_bindings": {
+        "description": "Влияет на контраст, насыщенность акцентов, интенсивность glow, типографический вес"
+      },
+      "answers": [
+        {
+          "id": "q4_bold",
+          "icon": "🦁",
+          "label_ru": "Заходит и заявляет",
+          "label_en": "Enters and declares",
+          "text_ru": "Громко, уверенно, не заметить невозможно",
+          "text_en": "Loud, confident, impossible to miss",
+          "vector_delta": {
+            "control": 6,
+            "energy": 12,
+            "focus": -4,
+            "method": -2
+          },
+          "css_commands": {
+            "--glow-strong": "rgba(accent, 0.9)",
+            "--glow-blue": "rgba(accent, 0.6)",
+            "--contrast-multiplier": "1.3",
+            "--saturation-boost": "1.25",
+            "--heading-weight": "700",
+            "--heading-letter-spacing": "-0.02em",
+            "--accent-size": "1.15",
+            "threejs_glow_intensity": 1.4,
+            "threejs_particle_density": 180
+          }
+        },
+        {
+          "id": "q4_quiet",
+          "icon": "🦉",
+          "label_ru": "Его уже ждали",
+          "label_en": "Already expected",
+          "text_ru": "Тихо, с достоинством, притягивает без слов",
+          "text_en": "Quiet, dignified, attracts without words",
+          "vector_delta": {
+            "control": 4,
+            "energy": -8,
+            "focus": 8,
+            "method": 6
+          },
+          "css_commands": {
+            "--glow-strong": "rgba(accent, 0.45)",
+            "--glow-blue": "rgba(accent, 0.25)",
+            "--contrast-multiplier": "0.9",
+            "--saturation-boost": "0.85",
+            "--heading-weight": "300",
+            "--heading-letter-spacing": "+0.06em",
+            "--accent-size": "0.9",
+            "threejs_glow_intensity": 0.5,
+            "threejs_particle_density": 40
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "q5_depth",
+      "title_ru": "Ваш бренд — это поверхность или глубина?",
+      "title_en": "Is your brand surface or depth?",
+      "category": "depth_layering",
+      "css_bindings": {
+        "description": "Количество слоёв матового стекла, интенсивность backdrop-filter, z-index stacking"
+      },
+      "answers": [
+        {
+          "id": "q5_surface",
+          "icon": "🪞",
+          "label_ru": "Поверхность",
+          "label_en": "Surface",
+          "text_ru": "Сразу видно всё, мгновенное понимание",
+          "text_en": "Everything visible at once, instant understanding",
+          "vector_delta": {
+            "control": -2,
+            "energy": 6,
+            "focus": -4,
+            "method": -4
+          },
+          "css_commands": {
+            "--backdrop-filter": "none",
+            "--glass-layers": "1",
+            "--depth-shadow": "0 2px 8px rgba(0,0,0,0.15)",
+            "--z-stacking": "flat",
+            "--parallax-intensity": "0",
+            "--blur-behind": "0px",
+            "threejs_camera_distance": 4.5,
+            "threejs_fov": 55
+          }
+        },
+        {
+          "id": "q5_depth",
+          "icon": "🌊",
+          "label_ru": "Глубина",
+          "label_en": "Depth",
+          "text_ru": "Многослойность, хочется погружаться",
+          "text_en": "Layered, invites immersion",
+          "vector_delta": {
+            "control": 2,
+            "energy": -2,
+            "focus": 6,
+            "method": 8
+          },
+          "css_commands": {
+            "--backdrop-filter": "blur(24px) saturate(1.4)",
+            "--glass-layers": "4",
+            "--depth-shadow": "0 20px 60px rgba(0,0,0,0.4)",
+            "--z-stacking": "deep",
+            "--parallax-intensity": "1.0",
+            "--blur-behind": "8px",
+            "threejs_camera_distance": 7.0,
+            "threejs_fov": 38
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "q6_color_story",
+      "title_ru": "Ваша палитра — это монохромная симфония или цветовой взрыв?",
+      "title_en": "Your palette — monochrome symphony or color explosion?",
+      "category": "color_interpolation",
+      "css_bindings": {
+        "description": "color-interpolation, градиентные переходы, пастельность vs насыщенность"
+      },
+      "answers": [
+        {
+          "id": "q6_mono",
+          "icon": "🎹",
+          "label_ru": "Монохром",
+          "label_en": "Monochrome",
+          "text_ru": "Оттенки одного цвета, нюансы, тихая роскошь",
+          "text_en": "Shades of one color, nuance, quiet luxury",
+          "vector_delta": {
+            "control": 6,
+            "energy": -6,
+            "focus": 4,
+            "method": 4
+          },
+          "css_commands": {
+            "--color-interpolation": "oklch",
+            "--gradient-stops": "2",
+            "--saturation-range": "0.05-0.15",
+            "--chroma-shift": "0",
+            "--palette-mode": "monochromatic",
+            "--hue-variance": "0deg",
+            "--gradient-type": "subtle-tonal",
+            "threejs_particle_hue_variance": 5
+          }
+        },
+        {
+          "id": "q6_colorful",
+          "icon": "🎆",
+          "label_ru": "Цветовой взрыв",
+          "label_en": "Color Explosion",
+          "text_ru": "Ярко, разнообразно, каждый элемент поёт",
+          "text_en": "Vibrant, diverse, every element sings",
+          "vector_delta": {
+            "control": -4,
+            "energy": 8,
+            "focus": -2,
+            "method": 2
+          },
+          "css_commands": {
+            "--color-interpolation": "srgb",
+            "--gradient-stops": "5",
+            "--saturation-range": "0.4-0.9",
+            "--chroma-shift": "60",
+            "--palette-mode": "analogous-triadic",
+            "--hue-variance": "45deg",
+            "--gradient-type": "vivid-spectrum",
+            "threejs_particle_hue_variance": 80
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "q7_form_language",
+      "title_ru": "Форма вашего бренда: острые грани или текучие линии?",
+      "title_en": "Your brand's form: sharp edges or fluid lines?",
+      "category": "form_geometry",
+      "css_bindings": {
+        "description": "border-radius по шкале от Hero (2px) до Caregiver (40px), organic vs geometric"
+      },
+      "answers": [
+        {
+          "id": "q7_sharp",
+          "icon": "🔺",
+          "label_ru": "Острые грани",
+          "label_en": "Sharp Edges",
+          "text_ru": "Геометрия, чёткость, решительность",
+          "text_en": "Geometry, clarity, decisiveness",
+          "vector_delta": {
+            "control": 8,
+            "energy": 4,
+            "focus": 6,
+            "method": -4
+          },
+          "css_commands": {
+            "--radius-sm": "2px",
+            "--radius-md": "4px",
+            "--radius-lg": "8px",
+            "--shape-mode": "geometric",
+            "--corner-style": "sharp",
+            "--polygon-sides": "8",
+            "threejs_geometry": "icosahedron",
+            "threejs_subdivision": 0,
+            "border_style": "angular"
+          }
+        },
+        {
+          "id": "q7_fluid",
+          "icon": "💧",
+          "label_ru": "Текучие линии",
+          "label_en": "Fluid Lines",
+          "text_ru": "Органика, мягкость, естественность",
+          "text_en": "Organic, soft, natural",
+          "vector_delta": {
+            "control": -4,
+            "energy": 0,
+            "focus": -2,
+            "method": 4
+          },
+          "css_commands": {
+            "--radius-sm": "18px",
+            "--radius-md": "30px",
+            "--radius-lg": "48px",
+            "--shape-mode": "organic",
+            "--corner-style": "superellipse",
+            "--polygon-sides": "∞",
+            "threejs_geometry": "torus_knot",
+            "threejs_subdivision": 3,
+            "border_style": "fluid"
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "q8_time",
+      "title_ru": "Ваш бренд существует в вечности или в моменте 'здесь и сейчас'?",
+      "title_en": "Does your brand exist in eternity or in the 'here and now'?",
+      "category": "temporality_permanence",
+      "css_bindings": {
+        "description": "Скорость обновления данных, персистентность элементов, fade vs instant"
+      },
+      "answers": [
+        {
+          "id": "q8_eternal",
+          "icon": "🏛️",
+          "label_ru": "Вечность",
+          "label_en": "Eternity",
+          "text_ru": "Классика, неподвластная времени",
+          "text_en": "Classic, timeless",
+          "vector_delta": {
+            "control": 8,
+            "energy": -8,
+            "focus": 6,
+            "method": 6
+          },
+          "css_commands": {
+            "--transition-fast": "0.4s ease-out",
+            "--transition-normal": "0.8s ease-out",
+            "--fade-type": "crossfade-slow",
+            "--data-refresh-rate": "3000ms",
+            "--element-persistence": "high",
+            "--animation-loop": "none",
+            "threejs_rotation_speed": 0.05,
+            "hud_update_interval": 800
+          }
+        },
+        {
+          "id": "q8_now",
+          "icon": "⚡",
+          "label_ru": "Здесь и сейчас",
+          "label_en": "Here and Now",
+          "text_ru": "Актуальность, мгновенность, пульс времени",
+          "text_en": "Relevance, instantaneity, pulse of time",
+          "vector_delta": {
+            "control": -2,
+            "energy": 10,
+            "focus": -4,
+            "method": -6
+          },
+          "css_commands": {
+            "--transition-fast": "0.1s ease-in-out",
+            "--transition-normal": "0.2s ease-in-out",
+            "--fade-type": "hard-cut",
+            "--data-refresh-rate": "300ms",
+            "--element-persistence": "low",
+            "--animation-loop": "infinite",
+            "threejs_rotation_speed": 1.2,
+            "hud_update_interval": 150
+          }
+        }
+      ]
+    }
+  ],
+
+  "visual_benchmarks": {
+    "description": "При анализе UX/UI структуры ArchetypeOS, ориентируемся на логику и эстетику трёх классов сложных интерфейсов.",
+    "references": [
+      {
+        "category": "Профессиональные аудио-плагины",
+        "examples": [
+          "FabFilter Pro-Q 3",
+          "Arturia V Collection",
+          "iZotope Ozone"
+        ],
+        "takeaways": {
+          "precision": "Визуализация сложных физических процессов (звуковые волны, частоты) через чистые 2D/3D элементы.",
+          "tactility": "Физические метафоры (ручки, ползунки) с тактильной обратной связью — drag = физическое усилие.",
+          "color_science": "Спектральная палитра как функциональный, а не декоративный элемент (цвет = данные).",
+          "application": "3D-ядро ArchetypeOS должно отражать 'Сердце бренда' с той же спектральной точностью, как эквалайзер отражает частоты."
+        }
+      },
+      {
+        "category": "Интерфейсы управления (HUD)",
+        "examples": [
+          "Iron Man JARVIS HUD",
+          "Minority Report",
+          "Tesla Model S display"
+        ],
+        "takeaways": {
+          "peripheral_density": "Данные распределяются по периферии окна, центр свободен для главного объекта.",
+          "hierarchy_of_glance": "Информация упорядочена по убыванию важности: центр → края, крупное → мелкое.",
+          "transparency_layering": "Стеклянные панели накладываются слоями, создавая глубину без затемнения.",
+          "application": "'Живой план' ArchetypeOS — поле архетипов в центре, все контролы по краям. Центр всегда дышит."
+        }
+      },
+      {
+        "category": "Генеративные арт-инструменты",
+        "examples": ["Figma AI", "Canva Magic Studio", "RunwayML"],
+        "takeaways": {
+          "complexity_hiding": "Сложность ИИ спрятана под простыми ползунками и пресетами. 'In one click' = уважение к пользователю.",
+          "presets_as_shortcuts": "Пресеты не ограничивают, а дают точку старта. Пользователь чувствует себя творцом, а не оператором.",
+          "feedback_loop": "Каждое действие мгновенно отображается — нет задержки между намерением и результатом.",
+          "application": "Пресеты архетипов, джог-диалы, ползунки — все должны давать мгновенный preview, как в Canva."
+        }
+      }
+    ],
+    "synthesis": "ArchetypeOS должен выглядеть как дорогой музыкальный инструмент (FabFilter) или кабина управления футуристичным кораблём (JARVIS), оставаясь 'тихой роскошью' — без визуального шума, с пастельной палитрой и тактильной глубиной."
+  },
+
+  "brand_passport_structure": {
+    "description": "Структура итогового 'Паспорта бренда' — экспертного заключения, а не результата теста.",
+    "sections": {
+      "manifesto": {
+        "title": "Манифест бренда",
+        "content": [
+          "Архетипический портрет: кто вы в мире брендов",
+          "Ключевая метафора: один образ, который всё объясняет",
+          "Behavior Model: как ваш бренд ведёт клиента",
+          "Тональность: голос, ритм, дыхание бренда",
+          "Теневая сторона: предупреждение об опасности архетипа"
+        ],
+        "tone": "Экспертный, визионерский, без поп-психологии. Как заключение Pentagram."
+      },
+      "ui_tokens": {
+        "title": "UI Tokens",
+        "content": [
+          "Цветовая карта: 6 ключевых цветов с HEX/OKLCH",
+          "Типографическая система: шрифты, веса, ритм",
+          "Геометрия: border-radius по шкале, форма иконок, стиль границ",
+          "Материалы: стекло/бетон/металл — параметры прозрачности и шероховатости",
+          "Свечение: интенсивность glow, тени, глубина",
+          "Движение: easing-кривые, spring-параметры, длительности"
+        ],
+        "format": "CSS-переменные + JSON, готовые к прямому импорту в проект"
+      },
+      "ux_logic": {
+        "title": "UX Logic",
+        "content": [
+          "Структура навигации: иерархия vs поток",
+          "Поведенческая модель: как пользователь движется к цели",
+          "Ритм взаимодействия: частота и скорость микровзаимодействий",
+          "Информационная архитектура: глубина vs плоскость",
+          "Паттерны вовлечения: что удерживает, что направляет"
+        ]
+      },
+      "codex": {
+        "title": "Кодекс бренда",
+        "content": [
+          "3 правила, которые нельзя нарушать",
+          "3 приёма, которые усиливают архетип",
+          "Анти-паттерны: чего избегать в дизайне и коммуникации"
+        ]
+      }
+    },
+    "example_hero_passport": {
+      "manifesto": "Ваш бренд — катализатор действий. Вы не просто продаёте продукт — вы ведёте клиента к победе. Ваша аудитория приходит не за товаром, а за силой преодолеть препятствия. Вы — тот, кто говорит 'Ты сможешь', и это правда. Герой без теневой стороны — тиран. Помните: вести за собой ≠ подавлять.",
+      "ui_tokens": {
+        "--accent-blue": "#e74c3c",
+        "--radius-sm": "6px",
+        "--radius-lg": "16px",
+        "--transition-fast": "0.22s cubic-bezier(0.4,0,0.6,1)",
+        "--glow-strong": "rgba(231,76,60,0.8)",
+        "--font-body": "'Manrope','Inter',sans-serif"
+      },
+      "ux_logic": "Прямолинейная навигация. Каждое действие пользователя даёт видимый прогресс. Минимум шагов до цели. Никаких отвлечений — только путь вперёд.",
+      "codex": {
+        "do": [
+          "Резкие контрасты",
+          "Чёткие CTA",
+          "Социальные доказательства побед"
+        ],
+        "dont": [
+          "Размытые формулировки",
+          "Длинные формы",
+          "Пассивные состояния"
+        ]
+      }
+    }
+  }
+}

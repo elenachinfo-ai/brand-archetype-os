@@ -1,0 +1,417 @@
+{
+  "_meta": {
+    "description": "Математика визуализации ArchetypeOS: карта связей ответов → CSS/Three.js переменных",
+    "version": "1.0.0",
+    "principle": "Каждый ответ в диагностике — это не текст, а команда. Эта карта определяет, как именно вектор архетипа трансформируется в конкретные пиксели.",
+    "integration": "Используется Pivot.execute() для мгновенной смены темы и diagnostic_questions_v4.json для live-preview в ходе опроса."
+  },
+
+  "dimensions": {
+    "control": {
+      "label": "Контроль",
+      "range": [0, 100],
+      "css_variables": [
+        "--radius-sm",
+        "--radius-md",
+        "--radius-lg",
+        "--border-subtle",
+        "--border-mid",
+        "--grid-opacity",
+        "--heading-weight",
+        "--contrast-multiplier"
+      ],
+      "threejs": ["wireframe", "icosahedron_subdivision"],
+      "mapping": "linear: high control = smaller radius, more grid, heavier type"
+    },
+    "energy": {
+      "label": "Энергия",
+      "range": [0, 100],
+      "css_variables": [
+        "--transition-fast",
+        "--transition-normal",
+        "--glow-strong",
+        "--glow-blue",
+        "--saturation-boost",
+        "--accent-size"
+      ],
+      "threejs": ["glow_intensity", "particle_density", "rotation_speed"],
+      "mapping": "exponential: high energy = faster transitions, stronger glow, more particles"
+    },
+    "focus": {
+      "label": "Фокус",
+      "range": [0, 100],
+      "css_variables": [
+        "--bg-glass",
+        "--bg-glass-strong",
+        "--backdrop-blur",
+        "--blur-behind",
+        "--depth-shadow",
+        "--parallax-intensity"
+      ],
+      "threejs": ["camera_distance", "fov"],
+      "mapping": "logarithmic: high focus = more blur layers, deeper stacking, narrower FOV"
+    },
+    "method": {
+      "label": "Метод",
+      "range": [0, 100],
+      "css_variables": [
+        "--color-interpolation",
+        "--gradient-stops",
+        "--hue-variance",
+        "--chroma-shift",
+        "--palette-mode",
+        "--transition-slow",
+        "--spring-tension",
+        "--spring-friction"
+      ],
+      "threejs": ["material_type", "roughness", "metalness"],
+      "mapping": "threshold: high method = complex color spaces (oklch), more gradient stops, spring physics"
+    }
+  },
+
+  "archetype_to_variable_map": {
+    "hero": {
+      "border_radius_scale": "sharp",
+      "radius_values": { "sm": "6px", "md": "10px", "lg": "16px" },
+      "backdrop_blur": "blur(6px)",
+      "color_interpolation": "srgb",
+      "easing": "cubic-bezier(0.4, 0, 0.6, 1)",
+      "glow_intensity": 0.8,
+      "transmission": 0.35,
+      "roughness": 0.6,
+      "metalness": 0.4,
+      "threejs_core": "icosahedron",
+      "threejs_wireframe": true,
+      "gradient_type": "high-contrast"
+    },
+    "magician": {
+      "border_radius_scale": "soft",
+      "radius_values": { "sm": "12px", "md": "22px", "lg": "36px" },
+      "backdrop_blur": "blur(14px)",
+      "color_interpolation": "oklch",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1.2)",
+      "glow_intensity": 0.85,
+      "transmission": 0.7,
+      "roughness": 0.35,
+      "metalness": 0.15,
+      "threejs_core": "torus_knot",
+      "threejs_wireframe": false,
+      "gradient_type": "ethereal-morph"
+    },
+    "ruler": {
+      "border_radius_scale": "crisp",
+      "radius_values": { "sm": "4px", "md": "8px", "lg": "12px" },
+      "backdrop_blur": "blur(8px)",
+      "color_interpolation": "srgb",
+      "easing": "cubic-bezier(0.6, 0, 0.4, 1)",
+      "glow_intensity": 0.65,
+      "transmission": 0.25,
+      "roughness": 0.55,
+      "metalness": 0.7,
+      "threejs_core": "icosahedron",
+      "threejs_wireframe": true,
+      "gradient_type": "premium-subtle"
+    },
+    "caregiver": {
+      "border_radius_scale": "round",
+      "radius_values": { "sm": "14px", "md": "24px", "lg": "38px" },
+      "backdrop_blur": "blur(4px)",
+      "color_interpolation": "oklch",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "glow_intensity": 0.4,
+      "transmission": 0.15,
+      "roughness": 0.8,
+      "metalness": 0.05,
+      "threejs_core": "sphere",
+      "threejs_wireframe": false,
+      "gradient_type": "warm-tonal"
+    },
+    "lover": {
+      "border_radius_scale": "max-round",
+      "radius_values": { "sm": "16px", "md": "28px", "lg": "44px" },
+      "backdrop_blur": "blur(18px)",
+      "color_interpolation": "oklch",
+      "easing": "cubic-bezier(0.3, 0, 0.5, 1)",
+      "glow_intensity": 0.75,
+      "transmission": 0.8,
+      "roughness": 0.15,
+      "metalness": 0.1,
+      "threejs_core": "torus_knot",
+      "threejs_wireframe": false,
+      "gradient_type": "sensual-gradient"
+    },
+    "jester": {
+      "border_radius_scale": "bouncy",
+      "radius_values": { "sm": "12px", "md": "20px", "lg": "30px" },
+      "backdrop_blur": "blur(6px)",
+      "color_interpolation": "srgb",
+      "easing": "cubic-bezier(0.2, 1.2, 0.6, 1)",
+      "glow_intensity": 0.9,
+      "transmission": 0.55,
+      "roughness": 0.4,
+      "metalness": 0.2,
+      "threejs_core": "metaball",
+      "threejs_wireframe": false,
+      "gradient_type": "vivid-spectrum"
+    },
+    "everyman": {
+      "border_radius_scale": "moderate",
+      "radius_values": { "sm": "8px", "md": "14px", "lg": "20px" },
+      "backdrop_blur": "blur(4px)",
+      "color_interpolation": "srgb",
+      "easing": "ease",
+      "glow_intensity": 0.3,
+      "transmission": 0.1,
+      "roughness": 0.9,
+      "metalness": 0.05,
+      "threejs_core": "box",
+      "threejs_wireframe": false,
+      "gradient_type": "neutral-flat"
+    },
+    "explorer": {
+      "border_radius_scale": "soft-wide",
+      "radius_values": { "sm": "10px", "md": "18px", "lg": "28px" },
+      "backdrop_blur": "blur(10px)",
+      "color_interpolation": "oklch",
+      "easing": "cubic-bezier(0.3, 0, 0.7, 1)",
+      "glow_intensity": 0.55,
+      "transmission": 0.6,
+      "roughness": 0.3,
+      "metalness": 0.25,
+      "threejs_core": "dodecahedron",
+      "threejs_wireframe": false,
+      "gradient_type": "horizon-fade"
+    },
+    "rebel": {
+      "border_radius_scale": "ultra-sharp",
+      "radius_values": { "sm": "2px", "md": "4px", "lg": "8px" },
+      "backdrop_blur": "blur(2px)",
+      "color_interpolation": "srgb",
+      "easing": "cubic-bezier(0.7, 0, 1, 0.5)",
+      "glow_intensity": 1.0,
+      "transmission": 0.5,
+      "roughness": 0.25,
+      "metalness": 0.6,
+      "threejs_core": "icosahedron",
+      "threejs_wireframe": true,
+      "gradient_type": "disruptive-glitch"
+    },
+    "creator": {
+      "border_radius_scale": "balanced",
+      "radius_values": { "sm": "8px", "md": "16px", "lg": "26px" },
+      "backdrop_blur": "blur(12px)",
+      "color_interpolation": "oklch",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1.1)",
+      "glow_intensity": 0.7,
+      "transmission": 0.65,
+      "roughness": 0.35,
+      "metalness": 0.3,
+      "threejs_core": "torus_knot",
+      "threejs_wireframe": false,
+      "gradient_type": "generative-blend"
+    },
+    "sage": {
+      "border_radius_scale": "subtle",
+      "radius_values": { "sm": "4px", "md": "8px", "lg": "14px" },
+      "backdrop_blur": "blur(10px)",
+      "color_interpolation": "oklch",
+      "easing": "cubic-bezier(0.5, 0, 0.3, 1)",
+      "glow_intensity": 0.35,
+      "transmission": 0.2,
+      "roughness": 0.7,
+      "metalness": 0.1,
+      "threejs_core": "icosahedron",
+      "threejs_wireframe": true,
+      "gradient_type": "academic-muted"
+    },
+    "innocent": {
+      "border_radius_scale": "soft-round",
+      "radius_values": { "sm": "16px", "md": "26px", "lg": "40px" },
+      "backdrop_blur": "blur(4px)",
+      "color_interpolation": "oklch",
+      "easing": "ease-out",
+      "glow_intensity": 0.3,
+      "transmission": 0.1,
+      "roughness": 0.85,
+      "metalness": 0.02,
+      "threejs_core": "sphere",
+      "threejs_wireframe": false,
+      "gradient_type": "pastel-air"
+    }
+  },
+
+  "live_preview_commands": {
+    "description": "Команды, которые выполняются в реальном времени при выборе ответа в диагностике. Каждая команда = мгновенное изменение одной CSS-переменной на :root или параметра Three.js.",
+    "execution_order": [
+      "1. Применить vector_delta к текущему userVector",
+      "2. Вычислить промежуточный архетип через getRankings()",
+      "3. Интерполировать CSS-переменные между текущим значением и целевым",
+      "4. Обновить Three.js материал и геометрию",
+      "5. Запустить easing-анимацию перехода (300ms)"
+    ],
+    "interpolation": {
+      "type": "lerp",
+      "duration_ms": 300,
+      "css_properties": "Все переменные на :root интерполируются через CSS transition",
+      "threejs_properties": "Интерполируются через requestAnimationFrame с easing"
+    }
+  },
+
+  "extended_css_variables": {
+    "description": "Расширенные CSS-переменные, которые необходимо добавить в :root для полной поддержки системы.",
+    "new_variables": [
+      {
+        "name": "--backdrop-blur",
+        "default": "blur(8px)",
+        "type": "filter",
+        "applies_to": ".bg-glass, .panel, .modal",
+        "note": "Заменяет ручное указание blur в background. Динамически меняется через Pivot."
+      },
+      {
+        "name": "--grid-opacity",
+        "default": "0.06",
+        "type": "number",
+        "applies_to": "canvas grid lines",
+        "note": "Прозрачность сетки на поле архетипов."
+      },
+      {
+        "name": "--transmission",
+        "default": "0.5",
+        "type": "number [0,1]",
+        "applies_to": "glass layers",
+        "note": "Коэффициент пропускания света через стеклянные панели."
+      },
+      {
+        "name": "--surface-roughness",
+        "default": "0.4",
+        "type": "number [0,1]",
+        "applies_to": "panel surfaces",
+        "note": "Шероховатость поверхности: 0 = глянец, 1 = матовый."
+      },
+      {
+        "name": "--specular-intensity",
+        "default": "0.5",
+        "type": "number [0,1]",
+        "applies_to": "highlights",
+        "note": "Интенсивность бликов на стеклянных поверхностях."
+      },
+      {
+        "name": "--spring-tension",
+        "default": "200",
+        "type": "number",
+        "applies_to": "all spring animations",
+        "note": "Жёсткость пружины для физических анимаций."
+      },
+      {
+        "name": "--spring-friction",
+        "default": "20",
+        "type": "number",
+        "applies_to": "all spring animations",
+        "note": "Трение пружины (затухание)."
+      },
+      {
+        "name": "--spring-mass",
+        "default": "1",
+        "type": "number",
+        "applies_to": "all spring animations",
+        "note": "Масса для инерционных анимаций."
+      },
+      {
+        "name": "--heading-weight",
+        "default": "500",
+        "type": "number",
+        "applies_to": "h1, h2, h3",
+        "note": "Динамический вес заголовков."
+      },
+      {
+        "name": "--heading-letter-spacing",
+        "default": "0em",
+        "type": "length",
+        "applies_to": "h1, h2, h3",
+        "note": "Межбуквенное расстояние заголовков."
+      },
+      {
+        "name": "--saturation-boost",
+        "default": "1.0",
+        "type": "number",
+        "applies_to": "all accent colors",
+        "note": "Множитель насыщенности для акцентных цветов."
+      },
+      {
+        "name": "--contrast-multiplier",
+        "default": "1.0",
+        "type": "number",
+        "applies_to": "text and borders",
+        "note": "Множитель контраста текста и границ."
+      }
+    ]
+  },
+
+  "threejs_bindings": {
+    "description": "Переменные, управляющие Three.js сценой (3D-ядро бренда).",
+    "properties": {
+      "core_geometry": {
+        "type": "enum",
+        "values": ["icosahedron", "sphere", "torus_knot", "dodecahedron", "metaball", "box"],
+        "default": "icosahedron",
+        "effect": "Базовая форма 3D-ядра в центре поля"
+      },
+      "wireframe": {
+        "type": "boolean",
+        "default": false,
+        "effect": "Каркасный режим отображения геометрии"
+      },
+      "subdivision": {
+        "type": "integer [0,4]",
+        "default": 1,
+        "effect": "Уровень подразделения геометрии (0 = острые грани, 4 = почти сфера)"
+      },
+      "material_type": {
+        "type": "enum",
+        "values": ["MeshStandardMaterial", "MeshPhysicalMaterial", "MeshToonMaterial"],
+        "default": "MeshPhysicalMaterial",
+        "effect": "Тип материала Three.js"
+      },
+      "roughness": {
+        "type": "number [0,1]",
+        "default": 0.4,
+        "effect": "Шероховатость поверхности 3D-ядра"
+      },
+      "metalness": {
+        "type": "number [0,1]",
+        "default": 0.2,
+        "effect": "Металличность поверхности"
+      },
+      "glow_intensity": {
+        "type": "number [0,2]",
+        "default": 0.6,
+        "effect": "Интенсивность свечения вокруг ядра"
+      },
+      "particle_density": {
+        "type": "integer [0,300]",
+        "default": 80,
+        "effect": "Количество частиц в ореоле"
+      },
+      "rotation_speed": {
+        "type": "number",
+        "default": 0.3,
+        "effect": "Скорость авто-вращения ядра (rad/s)"
+      },
+      "camera_distance": {
+        "type": "number",
+        "default": 5.5,
+        "effect": "Дистанция камеры до ядра"
+      },
+      "fov": {
+        "type": "number [20,80]",
+        "default": 45,
+        "effect": "Угол обзора камеры (низкий = телевик, высокий = широкий угол)"
+      },
+      "metaball": {
+        "type": "boolean",
+        "default": false,
+        "effect": "Режим метабола (текучая органическая форма)"
+      }
+    }
+  }
+}

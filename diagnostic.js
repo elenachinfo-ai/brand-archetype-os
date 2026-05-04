@@ -1,7 +1,7 @@
-// ==================== HOLOGRAPHIC QUEST v3 ====================
+// ==================== HOLOGRAPHIC QUEST v4 ====================
 // Dashboard-native: questions in left panel, canvas always visible,
 // right panel shows progress. "Next" button after each answer.
-// Integrated into the existing dashboard structure.
+// v4: Live CSS interpolation — each answer instantly transforms the UI.
 
 const HolographicQuest = {
   _active: false,
@@ -10,6 +10,7 @@ const HolographicQuest = {
   _selectedIdx: -1,
   _onComplete: null,
   _helpEl: null,
+  _cssTransitionTimer: null,
 
   // Saved panel states for restore
   _savedLeftHTML: "",
@@ -24,25 +25,68 @@ const HolographicQuest = {
           icon: "⚔️",
           label: "Победа",
           text: "Достигать, быть первыми",
-          delta: { control: +8, energy: +10, focus: +4, method: 0 },
+          delta: { control: 8, energy: 10, focus: 4, method: 0 },
+          css_commands: {
+            "--radius-sm": "6px",
+            "--radius-md": "10px",
+            "--radius-lg": "16px",
+            "--transition-fast": "0.22s cubic-bezier(0.4,0,0.6,1)",
+            "--transition-normal": "0.45s cubic-bezier(0.4,0,0.6,1)",
+            "--glow-strong": "rgba(231,76,60,0.8)",
+            "--backdrop-blur": "blur(6px)",
+            easing: "cubic-bezier(0.4,0,0.6,1)",
+          },
         },
         {
           icon: "✨",
           label: "Магия",
           text: "Трансформировать, вдохновлять",
-          delta: { control: 0, energy: +8, focus: +2, method: +8 },
+          delta: { control: 0, energy: 8, focus: 2, method: 8 },
+          css_commands: {
+            "--radius-sm": "12px",
+            "--radius-md": "22px",
+            "--radius-lg": "36px",
+            "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.2)",
+            "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.2)",
+            "--glow-strong": "rgba(155,89,182,0.8)",
+            "--backdrop-blur": "blur(14px)",
+            "--grid-opacity": "0.04",
+            easing: "cubic-bezier(0.4,0,0.2,1.2)",
+          },
         },
         {
           icon: "👑",
           label: "Порядок",
           text: "Управлять, строить системы",
-          delta: { control: +10, energy: -2, focus: +8, method: +6 },
+          delta: { control: 10, energy: -2, focus: 8, method: 6 },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "12px",
+            "--transition-fast": "0.3s cubic-bezier(0.6,0,0.4,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.6,0,0.4,1)",
+            "--glow-strong": "rgba(243,156,18,0.85)",
+            "--backdrop-blur": "blur(8px)",
+            "--grid-opacity": "0.1",
+            easing: "cubic-bezier(0.6,0,0.4,1)",
+          },
         },
         {
           icon: "🤲",
           label: "Забота",
           text: "Поддерживать, делать жизнь лучше",
-          delta: { control: -4, energy: -6, focus: +2, method: +4 },
+          delta: { control: -4, energy: -6, focus: 2, method: 4 },
+          css_commands: {
+            "--radius-sm": "14px",
+            "--radius-md": "24px",
+            "--radius-lg": "38px",
+            "--transition-fast": "0.35s ease-out",
+            "--transition-normal": "0.7s ease-out",
+            "--glow-strong": "rgba(39,174,96,0.7)",
+            "--backdrop-blur": "blur(4px)",
+            "--grid-opacity": "0.03",
+            easing: "ease-out",
+          },
         },
       ],
     },
@@ -54,25 +98,63 @@ const HolographicQuest = {
           icon: "🎉",
           label: "Восторг",
           text: "Радость, удивление, лёгкость",
-          delta: { control: -4, energy: +10, focus: -6, method: -2 },
+          delta: { control: -4, energy: 10, focus: -6, method: -2 },
+          css_commands: {
+            "--radius-sm": "12px",
+            "--radius-md": "20px",
+            "--radius-lg": "30px",
+            "--transition-fast": "0.2s cubic-bezier(0.2,1.2,0.6,1)",
+            "--transition-normal": "0.4s cubic-bezier(0.2,1.2,0.6,1)",
+            "--glow-strong": "rgba(255,152,0,0.8)",
+            easing: "cubic-bezier(0.2,1.2,0.6,1)",
+          },
         },
         {
           icon: "🏠",
           label: "Доверие",
           text: "Спокойствие, «как дома»",
-          delta: { control: +2, energy: -4, focus: 0, method: 0 },
+          delta: { control: 2, energy: -4, focus: 0, method: 0 },
+          css_commands: {
+            "--radius-sm": "8px",
+            "--radius-md": "14px",
+            "--radius-lg": "20px",
+            "--transition-fast": "0.25s ease",
+            "--transition-normal": "0.5s ease",
+            "--glow-strong": "rgba(121,85,72,0.6)",
+            easing: "ease",
+          },
         },
         {
           icon: "💋",
           label: "Страсть",
           text: "Желание, эстетическое наслаждение",
-          delta: { control: -2, energy: +6, focus: -2, method: +4 },
+          delta: { control: -2, energy: 6, focus: -2, method: 4 },
+          css_commands: {
+            "--radius-sm": "16px",
+            "--radius-md": "28px",
+            "--radius-lg": "44px",
+            "--transition-fast": "0.3s cubic-bezier(0.3,0,0.5,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.3,0,0.5,1)",
+            "--glow-strong": "rgba(233,30,99,0.8)",
+            "--backdrop-blur": "blur(18px)",
+            easing: "cubic-bezier(0.3,0,0.5,1)",
+          },
         },
         {
           icon: "📚",
           label: "Уважение",
           text: "Ясность, уверенность в экспертизе",
-          delta: { control: +6, energy: -6, focus: +8, method: +6 },
+          delta: { control: 6, energy: -6, focus: 8, method: 6 },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "14px",
+            "--transition-fast": "0.35s cubic-bezier(0.5,0,0.3,1)",
+            "--transition-normal": "0.7s cubic-bezier(0.5,0,0.3,1)",
+            "--glow-strong": "rgba(96,125,139,0.7)",
+            "--backdrop-blur": "blur(10px)",
+            easing: "cubic-bezier(0.5,0,0.3,1)",
+          },
         },
       ],
     },
@@ -84,25 +166,64 @@ const HolographicQuest = {
           icon: "🔥",
           label: "Вызов",
           text: "Прямо, смело, без фильтров",
-          delta: { control: -6, energy: +8, focus: -4, method: -6 },
+          delta: { control: -6, energy: 8, focus: -4, method: -6 },
+          css_commands: {
+            "--radius-sm": "2px",
+            "--radius-md": "4px",
+            "--radius-lg": "8px",
+            "--transition-fast": "0.15s cubic-bezier(0.7,0,1,0.5)",
+            "--transition-normal": "0.3s cubic-bezier(0.7,0,1,0.5)",
+            "--glow-strong": "rgba(255,87,34,0.9)",
+            "--backdrop-blur": "blur(2px)",
+            easing: "cubic-bezier(0.7,0,1,0.5)",
+          },
         },
         {
           icon: "🎨",
           label: "Творчество",
           text: "Вдохновляюще, с воображением",
-          delta: { control: 0, energy: +4, focus: +4, method: +6 },
+          delta: { control: 0, energy: 4, focus: 4, method: 6 },
+          css_commands: {
+            "--radius-sm": "8px",
+            "--radius-md": "16px",
+            "--radius-lg": "26px",
+            "--transition-fast": "0.25s cubic-bezier(0.4,0,0.2,1.1)",
+            "--transition-normal": "0.5s cubic-bezier(0.4,0,0.2,1.1)",
+            "--glow-strong": "rgba(103,58,183,0.8)",
+            "--backdrop-blur": "blur(12px)",
+            easing: "cubic-bezier(0.4,0,0.2,1.1)",
+          },
         },
         {
           icon: "🤝",
           label: "Честность",
           text: "Просто, без прикрас и пафоса",
           delta: { control: 0, energy: -2, focus: -2, method: 0 },
+          css_commands: {
+            "--radius-sm": "8px",
+            "--radius-md": "14px",
+            "--radius-lg": "20px",
+            "--transition-fast": "0.25s ease",
+            "--transition-normal": "0.5s ease",
+            "--glow-strong": "rgba(121,85,72,0.45)",
+            easing: "ease",
+          },
         },
         {
           icon: "🥂",
           label: "Престиж",
           text: "Элегантно, с чувством превосходства",
-          delta: { control: +8, energy: 0, focus: +2, method: +4 },
+          delta: { control: 8, energy: 0, focus: 2, method: 4 },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "12px",
+            "--transition-fast": "0.3s cubic-bezier(0.6,0,0.4,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.6,0,0.4,1)",
+            "--glow-strong": "rgba(243,156,18,0.85)",
+            "--heading-weight": "600",
+            easing: "cubic-bezier(0.6,0,0.4,1)",
+          },
         },
       ],
     },
@@ -114,25 +235,66 @@ const HolographicQuest = {
           icon: "🧭",
           label: "Свободу",
           text: "Приключения, новые горизонты",
-          delta: { control: -4, energy: +6, focus: -6, method: 0 },
+          delta: { control: -4, energy: 6, focus: -6, method: 0 },
+          css_commands: {
+            "--radius-sm": "10px",
+            "--radius-md": "18px",
+            "--radius-lg": "28px",
+            "--transition-fast": "0.28s cubic-bezier(0.3,0,0.7,1)",
+            "--transition-normal": "0.55s cubic-bezier(0.3,0,0.7,1)",
+            "--glow-strong": "rgba(0,188,212,0.75)",
+            "--backdrop-blur": "blur(10px)",
+            easing: "cubic-bezier(0.3,0,0.7,1)",
+          },
         },
         {
           icon: "🔍",
           label: "Истину",
           text: "Знания, понимание, мудрость",
-          delta: { control: +4, energy: -8, focus: +10, method: +6 },
+          delta: { control: 4, energy: -8, focus: 10, method: 6 },
+          css_commands: {
+            "--radius-sm": "4px",
+            "--radius-md": "8px",
+            "--radius-lg": "14px",
+            "--transition-fast": "0.35s cubic-bezier(0.5,0,0.3,1)",
+            "--transition-normal": "0.7s cubic-bezier(0.5,0,0.3,1)",
+            "--glow-strong": "rgba(96,125,139,0.55)",
+            "--backdrop-blur": "blur(12px)",
+            "--grid-opacity": "0.08",
+            easing: "cubic-bezier(0.5,0,0.3,1)",
+          },
         },
         {
           icon: "🛡️",
           label: "Безопасность",
           text: "Заботу, тепло и защиту",
-          delta: { control: +2, energy: -6, focus: 0, method: +4 },
+          delta: { control: 2, energy: -6, focus: 0, method: 4 },
+          css_commands: {
+            "--radius-sm": "14px",
+            "--radius-md": "24px",
+            "--radius-lg": "38px",
+            "--transition-fast": "0.35s ease-out",
+            "--transition-normal": "0.7s ease-out",
+            "--glow-strong": "rgba(39,174,96,0.5)",
+            "--backdrop-blur": "blur(4px)",
+            easing: "ease-out",
+          },
         },
         {
           icon: "🏆",
           label: "Признание",
           text: "Статус, уважение, достижения",
-          delta: { control: +8, energy: +6, focus: +4, method: 0 },
+          delta: { control: 8, energy: 6, focus: 4, method: 0 },
+          css_commands: {
+            "--radius-sm": "6px",
+            "--radius-md": "10px",
+            "--radius-lg": "16px",
+            "--transition-fast": "0.22s cubic-bezier(0.4,0,0.6,1)",
+            "--transition-normal": "0.45s cubic-bezier(0.4,0,0.6,1)",
+            "--glow-strong": "rgba(231,76,60,0.8)",
+            "--heading-weight": "700",
+            easing: "cubic-bezier(0.4,0,0.6,1)",
+          },
         },
       ],
     },
@@ -144,25 +306,68 @@ const HolographicQuest = {
           icon: "🔮",
           label: "Инновация",
           text: "Магический — преображает реальность",
-          delta: { control: 0, energy: +6, focus: +4, method: +8 },
+          delta: { control: 0, energy: 6, focus: 4, method: 8 },
+          css_commands: {
+            "--radius-sm": "12px",
+            "--radius-md": "22px",
+            "--radius-lg": "36px",
+            "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.2)",
+            "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.2)",
+            "--glow-strong": "rgba(155,89,182,0.85)",
+            "--backdrop-blur": "blur(16px)",
+            "--grid-opacity": "0.05",
+            easing: "cubic-bezier(0.4,0,0.2,1.2)",
+          },
         },
         {
           icon: "⚙️",
           label: "Надёжность",
           text: "Качественный, проверенный временем",
-          delta: { control: +4, energy: -4, focus: 0, method: +2 },
+          delta: { control: 4, energy: -4, focus: 0, method: 2 },
+          css_commands: {
+            "--radius-sm": "6px",
+            "--radius-md": "10px",
+            "--radius-lg": "14px",
+            "--transition-fast": "0.25s ease",
+            "--transition-normal": "0.5s ease",
+            "--glow-strong": "rgba(96,125,139,0.4)",
+            "--backdrop-blur": "blur(6px)",
+            easing: "ease",
+          },
         },
         {
           icon: "💥",
           label: "Дерзость",
           text: "Ломает правила и стандарты",
-          delta: { control: -8, energy: +10, focus: -4, method: -4 },
+          delta: { control: -8, energy: 10, focus: -4, method: -4 },
+          css_commands: {
+            "--radius-sm": "2px",
+            "--radius-md": "4px",
+            "--radius-lg": "8px",
+            "--transition-fast": "0.15s cubic-bezier(0.7,0,1,0.5)",
+            "--transition-normal": "0.3s cubic-bezier(0.7,0,1,0.5)",
+            "--glow-strong": "rgba(255,87,34,1.0)",
+            "--backdrop-blur": "blur(2px)",
+            "--grid-opacity": "0.12",
+            easing: "cubic-bezier(0.7,0,1,0.5)",
+          },
         },
         {
           icon: "💎",
           label: "Красота",
           text: "Чувственный — им хочется обладать",
-          delta: { control: +2, energy: +4, focus: -2, method: +6 },
+          delta: { control: 2, energy: 4, focus: -2, method: 6 },
+          css_commands: {
+            "--radius-sm": "16px",
+            "--radius-md": "28px",
+            "--radius-lg": "44px",
+            "--transition-fast": "0.3s cubic-bezier(0.3,0,0.5,1)",
+            "--transition-normal": "0.6s cubic-bezier(0.3,0,0.5,1)",
+            "--glow-strong": "rgba(233,30,99,0.75)",
+            "--backdrop-blur": "blur(18px)",
+            "--transmission": "0.8",
+            easing: "cubic-bezier(0.3,0,0.5,1)",
+          },
         },
       ],
     },
@@ -174,28 +379,65 @@ const HolographicQuest = {
       label: "Глубокий ритм",
       desc: "Низкие частоты — уверенность",
       icon: "🅵",
-      delta: { control: +6, energy: -2, focus: +4, method: +4 },
+      delta: { control: 6, energy: -2, focus: 4, method: 4 },
+      css_commands: {
+        "--radius-sm": "4px",
+        "--radius-md": "8px",
+        "--radius-lg": "14px",
+        "--transition-fast": "0.3s cubic-bezier(0.6,0,0.4,1)",
+        "--transition-normal": "0.6s cubic-bezier(0.6,0,0.4,1)",
+        "--glow-strong": "rgba(accent,0.65)",
+        easing: "cubic-bezier(0.6,0,0.4,1)",
+      },
     },
     {
       id: "dynamic",
       label: "Динамичный пульс",
       desc: "Быстрый темп — энергия, драйв",
       icon: "🅼",
-      delta: { control: -2, energy: +10, focus: -2, method: 0 },
+      delta: { control: -2, energy: 10, focus: -2, method: 0 },
+      css_commands: {
+        "--radius-sm": "2px",
+        "--radius-md": "4px",
+        "--radius-lg": "8px",
+        "--transition-fast": "0.15s cubic-bezier(0.7,0,1,0.5)",
+        "--transition-normal": "0.3s cubic-bezier(0.7,0,1,0.5)",
+        "--glow-strong": "rgba(accent,0.9)",
+        easing: "cubic-bezier(0.7,0,1,0.5)",
+      },
     },
     {
       id: "harmonic",
       label: "Гармоничный поток",
       desc: "Плавные волны — забота, комфорт",
       icon: "🅻",
-      delta: { control: +2, energy: -6, focus: 0, method: +2 },
+      delta: { control: 2, energy: -6, focus: 0, method: 2 },
+      css_commands: {
+        "--radius-sm": "14px",
+        "--radius-md": "24px",
+        "--radius-lg": "38px",
+        "--transition-fast": "0.35s ease-out",
+        "--transition-normal": "0.7s ease-out",
+        "--glow-strong": "rgba(accent,0.4)",
+        easing: "ease-out",
+      },
     },
     {
       id: "crystal",
       label: "Кристальный звон",
       desc: "Высокие тона — инновации, магия",
       icon: "🅷",
-      delta: { control: 0, energy: +4, focus: +6, method: +8 },
+      delta: { control: 0, energy: 4, focus: 6, method: 8 },
+      css_commands: {
+        "--radius-sm": "12px",
+        "--radius-md": "22px",
+        "--radius-lg": "36px",
+        "--transition-fast": "0.3s cubic-bezier(0.4,0,0.2,1.2)",
+        "--transition-normal": "0.6s cubic-bezier(0.4,0,0.2,1.2)",
+        "--glow-strong": "rgba(accent,0.8)",
+        "--backdrop-blur": "blur(14px)",
+        easing: "cubic-bezier(0.4,0,0.2,1.2)",
+      },
     },
   ],
 
@@ -276,6 +518,7 @@ const HolographicQuest = {
         <strong>Как это работает</strong>
         <p>Вы отвечаете на 6 вопросов о бренде + выбираете звуковую волну.</p>
         <p>Каждый ответ сдвигает точку на голографическом поле — видно, как определяется архетип.</p>
+        <p>Интерфейс трансформируется в реальном времени: цвета, скругления, анимации.</p>
         <p>В конце — детальный разбор с рекомендациями для сайта.</p>
         <button class="quest-help-close">Понятно</button>
       </div>
@@ -442,13 +685,65 @@ const HolographicQuest = {
     `;
   },
 
+  // ==================== LIVE CSS INTERPOLATION (v4) ====================
+  /** Interpolates CSS variables on :root toward target values with smooth 350ms transition. */
+  _applyLiveCSS(cssCommands) {
+    if (!cssCommands || typeof cssCommands !== "object") return;
+    var root = document.documentElement;
+    var keys = Object.keys(cssCommands).filter(function (k) {
+      return k.indexOf("--") === 0;
+    });
+    if (keys.length === 0) return;
+
+    // Enable smooth transition
+    root.style.transition = "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)";
+
+    // Apply each CSS custom property
+    keys.forEach(function (key) {
+      root.style.setProperty(key, cssCommands[key]);
+    });
+
+    // Easing override
+    if (cssCommands.easing) {
+      root.style.setProperty(
+        "--transition-fast",
+        "0.22s " + cssCommands.easing,
+      );
+      root.style.setProperty(
+        "--transition-normal",
+        "0.45s " + cssCommands.easing,
+      );
+    }
+
+    // Clean up
+    var self = this;
+    clearTimeout(this._cssTransitionTimer);
+    this._cssTransitionTimer = setTimeout(function () {
+      root.style.transition = "";
+    }, 380);
+
+    // Mirror to Three.js canvas if pivot active
+    if (typeof window !== "undefined" && window.__pivotCanvas) {
+      var cc = window.__pivotCanvas;
+      if (cssCommands["--glow-strong"])
+        cc.dotGlow = cssCommands["--glow-strong"];
+      if (cssCommands["--grid-opacity"])
+        cc.grid = cssCommands["--grid-opacity"];
+    }
+
+    console.log(
+      "%c[LiveCSS] " + keys.length + " vars → UI",
+      "color: #a5d6a7; font-size: 11px;",
+    );
+  },
+
   // ==================== SELECT ANSWER ====================
   _selectAnswer(idx) {
-    if (this._selectedIdx >= 0) return; // already selected
+    if (this._selectedIdx >= 0) return;
     this._selectedIdx = idx;
 
     // Highlight selected, dim others
-    document.querySelectorAll(".quest-answer-card").forEach((card, i) => {
+    document.querySelectorAll(".quest-answer-card").forEach(function (card, i) {
       if (i === idx) {
         card.classList.add("selected");
       } else {
@@ -458,29 +753,43 @@ const HolographicQuest = {
     });
 
     // Enable next button
-    const nextBtn = document.getElementById("quest-next-btn");
+    var nextBtn = document.getElementById("quest-next-btn");
     if (nextBtn) {
       nextBtn.disabled = false;
       nextBtn.textContent = "Далее →";
-      nextBtn.addEventListener("click", () => this._advance(), { once: true });
+      nextBtn.addEventListener(
+        "click",
+        function () {
+          this._advance();
+        }.bind(this),
+        { once: true },
+      );
     }
 
-    // Apply delta to vector
-    let delta = null,
-      label = "";
+    // Resolve answer
+    var delta = null,
+      label = "",
+      cssCommands = null;
     if (this._step <= 5) {
-      const a = this.questions[this._step - 1].answers[idx];
+      var a = this.questions[this._step - 1].answers[idx];
       delta = a.delta;
       label = a.label;
+      cssCommands = a.css_commands || null;
     } else if (this._step === 6) {
-      const a = this.soundWaves[idx];
+      var a = this.soundWaves[idx];
       delta = a.delta;
       label = a.label;
+      cssCommands = a.css_commands || null;
     }
 
     if (delta) {
-      this._answers.push({ step: this._step, idx, label, delta });
-      ["control", "energy", "focus", "method"].forEach((d) => {
+      this._answers.push({
+        step: this._step,
+        idx: idx,
+        label: label,
+        delta: delta,
+      });
+      ["control", "energy", "focus", "method"].forEach(function (d) {
         if (typeof userVector !== "undefined") {
           userVector[d] = Math.max(0, Math.min(100, userVector[d] + delta[d]));
         }
@@ -489,8 +798,11 @@ const HolographicQuest = {
         updateBrandPositionFromVector();
       if (typeof updateAll === "function") updateAll();
 
-      // Update right panel live
-      const right = document.getElementById("panel-output");
+      // ---- LIVE CSS PREVIEW (ArchetypeOS v4) ----
+      if (cssCommands) this._applyLiveCSS(cssCommands);
+
+      // Update right panel
+      var right = document.getElementById("panel-output");
       if (right) this._renderRightPanel(right, 7);
     }
   },
@@ -569,5 +881,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     const already = document.getElementById("quest-start-overlay");
     if (!already) HolographicQuest.showStartScreen();
-  }, 1200);
+  }, 800);
 });
