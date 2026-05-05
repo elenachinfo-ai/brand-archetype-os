@@ -379,7 +379,7 @@ body {
     grid-area: field;
     border-left: 1px solid var(--border-mid);
     position: relative;
-    background: var(--bg-graphite);
+    background: radial-gradient(ellipse at center, #060c1e 0%, #020510 100%);
     overflow: hidden;
     cursor: crosshair;
     min-height: 300px;
@@ -387,6 +387,7 @@ body {
 
 #field-canvas {
     position: absolute;
+    filter: brightness(1.1);
     top: 0;
     left: 0;
     width: 100%;
@@ -1487,7 +1488,7 @@ body {
     width: min(560px, 92vw);
     max-height: 85vh;
     overflow-y: auto;
-    background: var(--bg-graphite);
+    background: radial-gradient(ellipse at center, #060c1e 0%, #020510 100%);
     border: 1px solid var(--border-mid);
     border-radius: var(--radius-lg);
     padding: 36px 28px 28px;
@@ -1956,7 +1957,7 @@ body {
     backdrop-filter: blur(4px);
 }
 .quest-help-inner {
-    background: var(--bg-graphite);
+    background: radial-gradient(ellipse at center, #060c1e 0%, #020510 100%);
     border: 1px solid var(--border-mid);
     border-radius: var(--radius-lg);
     padding: 28px;
