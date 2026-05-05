@@ -1,354 +1,396 @@
-// ArchetypeOS Diagnostic v4.1 — minimal, clean
-var HolographicQuest = {
-  _active: false,
-  _step: 0,
-  _answers: [],
-  _selectedIdx: -1,
-  _onComplete: null,
-  _savedLeftHTML: "",
-  _savedRightHTML: "",
+// ArchetypeOS Diagnostic v5 — 12 tracks × 4 statements × 1-5 scale
+// No popups. Everything in left panel. Right panel = live visualization.
 
-  questions: [
+var HolographicQuest = {
+  _scores: {}, // { archetypeId: [score1, score2, score3, score4] }
+  _activeTrack: null, // which archetype track is expanded
+  _savedLeft: "",
+  _savedRight: "",
+
+  // 12 archetypes, 4 statements each
+  tracks: [
     {
-      id: "market_position",
-      title: "Как ваш бренд занимает рынок?",
-      answers: [
-        {
-          icon: "◈",
-          label: "Доминирование",
-          text: "Мы задаём стандарты",
-          delta: { control: 12, energy: 4, focus: 8, method: 2 },
-        },
-        {
-          icon: "◈",
-          label: "Инновация",
-          text: "Создаём новое",
-          delta: { control: 0, energy: 8, focus: 4, method: 10 },
-        },
-        {
-          icon: "◈",
-          label: "Сервис",
-          text: "Точка доверия",
-          delta: { control: 4, energy: -4, focus: 2, method: 6 },
-        },
-        {
-          icon: "◈",
-          label: "Вызов",
-          text: "Ломаем правила",
-          delta: { control: -6, energy: 10, focus: -4, method: -4 },
-        },
+      id: "hero",
+      name: "Герой",
+      icon: "⚔️",
+      color: "#b87060",
+      statements: [
+        "Мы действуем решительно и достигаем целей",
+        "Наша команда видит себя победителями",
+        "Мы берёмся за сложные задачи и побеждаем",
+        "Клиенты чувствуют себя сильнее с нами",
       ],
     },
     {
-      id: "client_relationship",
-      title: "Как клиент чувствует ваш бренд?",
-      answers: [
-        {
-          icon: "◈",
-          label: "На равных",
-          text: "Партнёры, честный диалог",
-          delta: { control: 0, energy: 0, focus: 0, method: 2 },
-        },
-        {
-          icon: "◈",
-          label: "Снизу вверх",
-          text: "Мы — авторитет",
-          delta: { control: 10, energy: -2, focus: 8, method: 4 },
-        },
-        {
-          icon: "◈",
-          label: "Объятия",
-          text: "Семья, тепло, забота",
-          delta: { control: 0, energy: -6, focus: 2, method: 4 },
-        },
-        {
-          icon: "◈",
-          label: "Восхищение",
-          text: "Объект желания",
-          delta: { control: 2, energy: 6, focus: -2, method: 6 },
-        },
+      id: "magician",
+      name: "Маг",
+      icon: "✨",
+      color: "#a090b8",
+      statements: [
+        "Мы трансформируем реальность клиентов",
+        "Инновации — наша суперсила",
+        "Чудеса случаются благодаря нашей работе",
+        "Люди приходят к нам за преображением",
       ],
     },
     {
-      id: "decision_logic",
-      title: "Как клиент принимает решение?",
-      answers: [
-        {
-          icon: "◈",
-          label: "Мгновенно",
-          text: "Увидел — купил",
-          delta: { control: -4, energy: 10, focus: -6, method: -2 },
-        },
-        {
-          icon: "◈",
-          label: "Аналитически",
-          text: "Изучил — сравнил",
-          delta: { control: 8, energy: -8, focus: 10, method: 8 },
-        },
-        {
-          icon: "◈",
-          label: "Через доверие",
-          text: "Проверил репутацию",
-          delta: { control: 4, energy: -4, focus: 2, method: 4 },
-        },
-        {
-          icon: "◈",
-          label: "Через историю",
-          text: "Вдохновился",
-          delta: { control: 0, energy: 4, focus: 0, method: 6 },
-        },
+      id: "ruler",
+      name: "Правитель",
+      icon: "👑",
+      color: "#c4a87c",
+      statements: [
+        "Мы устанавливаем стандарты в отрасли",
+        "Порядок и структура — основа успеха",
+        "Клиенты доверяют нашему авторитету",
+        "Контроль качества — наш приоритет",
       ],
     },
     {
-      id: "value_anchor",
-      title: "За что клиент платит вам деньги?",
-      answers: [
-        {
-          icon: "◈",
-          label: "За власть",
-          text: "Контроль и порядок",
-          delta: { control: 10, energy: 2, focus: 6, method: 4 },
-        },
-        {
-          icon: "◈",
-          label: "За трансформацию",
-          text: "Стать другим",
-          delta: { control: 0, energy: 8, focus: 4, method: 8 },
-        },
-        {
-          icon: "◈",
-          label: "За красоту",
-          text: "Эстетика и статус",
-          delta: { control: 4, energy: 4, focus: 0, method: 6 },
-        },
-        {
-          icon: "◈",
-          label: "За правду",
-          text: "Знания и ясность",
-          delta: { control: 6, energy: -6, focus: 8, method: 6 },
-        },
+      id: "caregiver",
+      name: "Заботливый",
+      icon: "🤲",
+      color: "#8aaa8a",
+      statements: [
+        "Забота о клиентах — наша главная ценность",
+        "Мы создаём безопасное пространство",
+        "Наша команда поддерживает друг друга",
+        "Клиенты чувствуют себя защищёнными",
       ],
     },
     {
-      id: "brand_voice",
-      title: "Как звучит голос вашего бренда?",
-      answers: [
-        {
-          icon: "◈",
-          label: "Тихо и веско",
-          text: "Нас слышат потому что мы правы",
-          delta: { control: 8, energy: -6, focus: 8, method: 4 },
-        },
-        {
-          icon: "◈",
-          label: "Громко и дерзко",
-          text: "Голос перемен",
-          delta: { control: -4, energy: 12, focus: -2, method: -4 },
-        },
-        {
-          icon: "◈",
-          label: "Тепло и душевно",
-          text: "С нами комфортно",
-          delta: { control: 2, energy: -4, focus: 0, method: 2 },
-        },
-        {
-          icon: "◈",
-          label: "Остроумно и легко",
-          text: "Мы — праздник",
-          delta: { control: -2, energy: 8, focus: -4, method: 0 },
-        },
+      id: "lover",
+      name: "Эстет",
+      icon: "💋",
+      color: "#c48090",
+      statements: [
+        "Красота и эстетика в каждой детали",
+        "Мы создаём эмоциональную связь",
+        "Наши продукты дарят наслаждение",
+        "Клиенты влюбляются в наш бренд",
+      ],
+    },
+    {
+      id: "jester",
+      name: "Шут",
+      icon: "🎉",
+      color: "#c89860",
+      statements: [
+        "Мы приносим радость и лёгкость",
+        "Юмор и игра — часть нашей культуры",
+        "Скука — наш главный враг",
+        "Клиенты улыбаются, взаимодействуя с нами",
+      ],
+    },
+    {
+      id: "everyman",
+      name: "Свой",
+      icon: "🤝",
+      color: "#a09080",
+      statements: [
+        "Мы честны и понятны без прикрас",
+        "Каждый клиент — часть нашего сообщества",
+        "Простота и доступность — наши принципы",
+        "Мы не строим из себя элиту",
+      ],
+    },
+    {
+      id: "explorer",
+      name: "Исследователь",
+      icon: "🧭",
+      color: "#7aaa9a",
+      statements: [
+        "Мы открываем новые горизонты",
+        "Свобода и приключения ведут нас",
+        "Рутина нам противопоказана",
+        "Клиенты отправляются с нами в путь",
+      ],
+    },
+    {
+      id: "rebel",
+      name: "Бунтарь",
+      icon: "🔥",
+      color: "#c87050",
+      statements: [
+        "Правила созданы чтобы их нарушать",
+        "Мы бросаем вызов статус-кво",
+        "Смелость и дерзость — наши инструменты",
+        "Клиенты чувствуют свободу с нами",
+      ],
+    },
+    {
+      id: "creator",
+      name: "Творец",
+      icon: "🎨",
+      color: "#8878a8",
+      statements: [
+        "Творчество лежит в основе всего",
+        "Мы создаём уникальные продукты",
+        "Самовыражение — ключ к успеху",
+        "Клиенты вдохновляются нашими идеями",
+      ],
+    },
+    {
+      id: "sage",
+      name: "Мудрец",
+      icon: "📚",
+      color: "#8898a0",
+      statements: [
+        "Знания и экспертиза — наша валюта",
+        "Мы исследуем, анализируем, понимаем",
+        "Истина важнее мнений",
+        "Клиенты приходят к нам за мудростью",
+      ],
+    },
+    {
+      id: "innocent",
+      name: "Невинный",
+      icon: "🌿",
+      color: "#a0b898",
+      statements: [
+        "Чистота и простота — наша философия",
+        "Мы верим в лучшее в людях",
+        "Оптимизм и надежда ведут нас",
+        "Клиенты чувствуют свет и радость",
       ],
     },
   ],
 
-    showStartScreen: function(onComplete) { this.start(onComplete); },
-
-
-
-  showWelcome: function() {
+  // ==================== INIT ====================
+  init: function () {
     var left = document.getElementById("panel-controllers");
     if (!left) return;
-    left.innerHTML = "<div style='text-align:center;padding:50px 20px;'>" +
-      "<div style='font-size:40px;margin-bottom:14px;'>◈</div>" +
-      "<h2 style='font-weight:300;font-size:18px;color:var(--text-primary);margin:0 0 8px;'>ArchetypeOS</h2>" +
-      "<p style='font-size:11px;color:var(--text-tertiary);letter-spacing:0.1em;margin:0 0 16px;'>BRAND DNA DIAGNOSTIC</p>" +
-      "<p style='font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0 0 24px;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
-      "<button id='welcome-start-btn' style='padding:12px 36px;background:var(--accent-blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
-    "</div>";
-    document.getElementById("welcome-start-btn").onclick = function() {
-      HolographicQuest.showStartScreen();
-    };
+    this._savedLeft = left.innerHTML;
+
+    // Reset scores
+    this._scores = {};
+    for (var i = 0; i < this.tracks.length; i++) {
+      this._scores[this.tracks[i].id] = [0, 0, 0, 0];
+    }
+
+    this._renderTracks();
   },
 
-  start: function (onComplete) {
-    this._active = true;
-    this._step = 1;
-    this._answers = [];
-    this._selectedIdx = -1;
-    this._onComplete = onComplete || null;
+  // ==================== RENDER ALL TRACKS ====================
+  _renderTracks: function () {
     var left = document.getElementById("panel-controllers");
-    var right = document.getElementById("panel-output");
-    if (left) this._savedLeftHTML = left.innerHTML;
-    if (right) this._savedRightHTML = right.innerHTML;
-    var statusEl = document.getElementById("hud-status-text");
-    if (statusEl) statusEl.textContent = "Шаг 1/5";
-    this._renderStep();
-  },
+    if (!left) return;
 
-  _renderStep: function () {
-    this._selectedIdx = -1;
-    var left = document.getElementById("panel-controllers");
-    var right = document.getElementById("panel-output");
-    if (!left || !right) return;
-    var statusEl = document.getElementById("hud-status-text");
-    var totalSteps = 5;
+    var totalAnswered = this._countAnswered();
+    var totalQuestions = 48;
+    var progress = Math.round((totalAnswered / totalQuestions) * 100);
 
-    if (this._step <= 5) {
-      var q = this.questions[this._step - 1];
-      if (statusEl)
-        statusEl.textContent = "Вопрос " + this._step + "/" + totalSteps;
-
-      var answersHTML = "";
-      for (var i = 0; i < q.answers.length; i++) {
-        var a = q.answers[i];
-        answersHTML +=
-          "<div class='quest-answer-card' data-idx='" +
-          i +
-          "' id='quest-ans-" +
-          i +
-          "'>" +
-          "<span class='quest-ans-icon'>" +
-          a.icon +
-          "</span>" +
-          "<div class='quest-ans-content'>" +
-          "<span class='quest-ans-label'>" +
-          a.label +
-          "</span>" +
-          "<span class='quest-ans-text'>" +
-          a.text +
-          "</span>" +
-          "</div>" +
-          "</div>";
-      }
-
-      this._renderRightPanel(right, totalSteps);
-    }
-  },
-
-_renderRightPanel: function (right, total) {
-    var r = typeof getRankings === "function" ? getRankings() : null;
-    var primaryName = r ? r.primary.nameRu : "—";
-    var primaryColor = r ? r.primary.color : "var(--accent-blue)";
-    var dims = ["control", "energy", "focus", "method"];
-    var labels = { control: "Контроль", energy: "Энергия", focus: "Фокус", method: "Метод" };
-
-    var barsHTML = "";
-    for (var i = 0; i < dims.length; i++) {
-      var d = dims[i];
-      var val = typeof userVector !== "undefined" ? userVector[d] : 50;
-      barsHTML += "<div class='quest-vector-row'>" +
-        "<span class='quest-vector-label'>" + labels[d] + "</span>" +
-        "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" + val + "%;background:" + primaryColor + ";'></div></div>" +
-        "<span class='quest-vector-val'>" + val + "</span></div>";
-    }
-
-    var stepsHTML = "";
-    for (var s = 0; s < total; s++) {
-      var done = s + 1 <= this._step ? " done" : "";
-      var current = s + 1 === this._step ? " current" : "";
-      var mark = s + 1 <= this._step ? "✓" : (s + 1);
-      stepsHTML += "<div class='quest-step-dot" + done + current + "'>" + mark + "</div>";
-    }
-
-    right.innerHTML =
-      "<div class='output-header'>АРХЕТИП</div>" +
-      "<div class='quest-right-card' style='border-color:" + primaryColor + "44;'>" +
-        "<div class='quest-right-archetype' style='color:" + primaryColor + "'>" + primaryName + "</div>" +
-        "<div class='quest-right-sub'>определяется...</div>" +
+    var html =
+      "<div class='quest-panel-header'>АРХЕТИПЫ БРЕНДА</div>" +
+      "<div style='display:flex;align-items:center;gap:8px;margin-bottom:4px;'>" +
+      "<div style='flex:1;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;'>" +
+      "<div style='height:100%;width:" +
+      progress +
+      "%;background:var(--accent-blue);border-radius:2px;transition:width 0.3s;'></div>" +
       "</div>" +
-      "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" +
-      barsHTML +
-      "<div class='quest-right-section-title'>ШАГИ</div>" +
-      "<div class='quest-right-steps'>" + stepsHTML + "</div>";
-  },
+      "<span style='font-size:10px;color:var(--text-tertiary);'>" +
+      totalAnswered +
+      "/48</span>" +
+      "</div>";
 
-  _selectAnswer: function (idx) {
-    if (this._selectedIdx >= 0) return;
-    this._selectedIdx = idx;
-
-    var cards = document.querySelectorAll(".quest-answer-card");
-    for (var i = 0; i < cards.length; i++) {
-      if (i === idx) {
-        cards[i].classList.add("selected");
-      } else {
-        cards[i].style.opacity = "0.35";
-        cards[i].style.pointerEvents = "none";
+    // Render tracks
+    html +=
+      "<div style='display:flex;flex-direction:column;gap:4px;margin-top:8px;'>";
+    for (var i = 0; i < this.tracks.length; i++) {
+      var t = this.tracks[i];
+      var scores = this._scores[t.id];
+      var answered = 0;
+      for (var j = 0; j < 4; j++) {
+        if (scores[j] > 0) answered++;
       }
-    }
 
-    var nextBtn = document.getElementById("quest-next-btn");
-    if (nextBtn) {
-      nextBtn.disabled = false;
-      nextBtn.textContent = "Далее →";
-      var self = this;
-      nextBtn.onclick = function () {
-        self._advance();
+      var isExpanded = this._activeTrack === t.id;
+      var trackStyle = isExpanded
+        ? "background:rgba(255,255,255,0.04);border:1px solid " +
+          t.color +
+          "44;"
+        : "background:rgba(255,255,255,0.02);border:1px solid transparent;";
+
+      html +=
+        "<div class='track-row' data-track='" +
+        t.id +
+        "' style='" +
+        trackStyle +
+        "border-radius:8px;padding:8px 10px;cursor:pointer;transition:all 0.2s;'>" +
+        // Track header
+        "<div style='display:flex;align-items:center;gap:8px;'>" +
+        "<span style='font-size:16px;width:24px;text-align:center;'>" +
+        t.icon +
+        "</span>" +
+        "<span style='flex:1;font-size:12px;font-weight:500;color:var(--text-primary);'>" +
+        t.name +
+        "</span>" +
+        "<span style='font-size:10px;color:" +
+        t.color +
+        ";'>" +
+        (answered === 4 ? "✓" : answered + "/4") +
+        "</span>" +
+        "</div>";
+
+      // Expanded: show statements with 1-5 dots
+      if (isExpanded) {
+        html +=
+          "<div style='margin-top:8px;display:flex;flex-direction:column;gap:6px;'>";
+        for (var s = 0; s < 4; s++) {
+          html +=
+            "<div style='display:flex;align-items:center;gap:8px;'>" +
+            "<span style='flex:1;font-size:11px;color:var(--text-secondary);line-height:1.4;'>" +
+            t.statements[s] +
+            "</span>" +
+            "<div style='display:flex;gap:3px;'>";
+          for (var r = 1; r <= 5; r++) {
+            var active = scores[s] >= r;
+            html +=
+              "<span class='score-dot' data-track='" +
+              t.id +
+              "' data-statement='" +
+              s +
+              "' data-value='" +
+              r +
+              "' " +
+              "style='width:16px;height:16px;border-radius:50%;border:1px solid " +
+              t.color +
+              "44;" +
+              (active
+                ? "background:" + t.color + ";"
+                : "background:transparent;") +
+              "cursor:pointer;display:inline-block;'></span>";
+          }
+          html += "</div></div>";
+        }
+        html += "</div>";
+      }
+
+      html += "</div>";
+    }
+    html += "</div>";
+
+    // Submit button
+    html +=
+      "<button id='submit-diag-btn' style='margin-top:12px;width:100%;padding:12px;background:var(--accent-blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;" +
+      (totalAnswered < 4 ? "opacity:0.4;pointer-events:none;" : "") +
+      "'>Показать результат (" +
+      totalAnswered +
+      "/48)</button>";
+
+    left.innerHTML = html;
+
+    // Bind events
+    var self = this;
+    var tracks = document.querySelectorAll(".track-row");
+    for (var i = 0; i < tracks.length; i++) {
+      tracks[i].onclick = function (e) {
+        // Don't toggle if clicking a score dot
+        if (e.target.classList.contains("score-dot")) return;
+        var trackId = this.getAttribute("data-track");
+        self._activeTrack = self._activeTrack === trackId ? null : trackId;
+        self._renderTracks();
       };
     }
 
-    var a = this.questions[this._step - 1].answers[idx];
-    var delta = a.delta;
-    var label = a.label;
+    // Bind score dots
+    var dots = document.querySelectorAll(".score-dot");
+    for (var d = 0; d < dots.length; d++) {
+      dots[d].onclick = function (e) {
+        e.stopPropagation();
+        var trackId = this.getAttribute("data-track");
+        var stmt = parseInt(this.getAttribute("data-statement"));
+        var val = parseInt(this.getAttribute("data-value"));
 
-    if (delta) {
-      this._answers.push({
-        step: this._step,
-        idx: idx,
-        label: label,
-        delta: delta,
-      });
-      var dims = ["control", "energy", "focus", "method"];
-      for (var i = 0; i < dims.length; i++) {
-        var d = dims[i];
-        if (typeof userVector !== "undefined") {
-          userVector[d] = Math.max(0, Math.min(100, userVector[d] + delta[d]));
+        // If clicking the same value, deselect
+        if (self._scores[trackId][stmt] === val) {
+          self._scores[trackId][stmt] = 0;
+        } else {
+          self._scores[trackId][stmt] = val;
+        }
+
+        self._renderTracks();
+        self._updateVisualization();
+      };
+    }
+
+    // Submit
+    var submitBtn = document.getElementById("submit-diag-btn");
+    if (submitBtn) {
+      submitBtn.onclick = function () {
+        self._finish();
+      };
+    }
+  },
+
+  _countAnswered: function () {
+    var count = 0;
+    for (var id in this._scores) {
+      for (var i = 0; i < 4; i++) {
+        if (this._scores[id][i] > 0) count++;
+      }
+    }
+    return count;
+  },
+
+  _updateVisualization: function () {
+    // Convert scores to vector
+    var vector = { control: 50, energy: 50, focus: 50, method: 50 };
+
+    // Map each track's score sum to vector dimensions
+    var weights = {
+      hero: { control: 2, energy: 3, focus: 2, method: 0 },
+      magician: { control: 0, energy: 2, focus: 2, method: 3 },
+      ruler: { control: 3, energy: 0, focus: 2, method: 1 },
+      caregiver: { control: 1, energy: -1, focus: 1, method: 2 },
+      lover: { control: 0, energy: 2, focus: 0, method: 2 },
+      jester: { control: -1, energy: 3, focus: -1, method: 0 },
+      everyman: { control: 0, energy: 0, focus: 0, method: 1 },
+      explorer: { control: -1, energy: 2, focus: -1, method: 1 },
+      rebel: { control: -2, energy: 3, focus: -2, method: -1 },
+      creator: { control: 0, energy: 1, focus: 2, method: 2 },
+      sage: { control: 2, energy: -2, focus: 3, method: 1 },
+      innocent: { control: -1, energy: -1, focus: -1, method: 1 },
+    };
+
+    var d = ["control", "energy", "focus", "method"];
+    for (var id in this._scores) {
+      var sum = 0;
+      for (var i = 0; i < 4; i++) {
+        sum += this._scores[id][i];
+      }
+      // Normalize: max sum is 20, map to ±30 influence
+      var influence = (sum / 20) * 30;
+      if (weights[id]) {
+        for (var j = 0; j < d.length; j++) {
+          vector[d[j]] += weights[id][d[j]] * influence * 0.3;
         }
       }
-      if (typeof updateBrandPositionFromVector === "function")
-        updateBrandPositionFromVector();
-      if (typeof updateAll === "function") updateAll();
-
-      var right = document.getElementById("panel-output");
-      if (right) this._renderRightPanel(right, 5);
     }
-  },
 
-  _advance: function () {
-    if (this._step >= 5) {
-      this._finish();
-      return;
+    // Clamp
+    for (var k = 0; k < d.length; k++) {
+      vector[d[k]] = Math.max(5, Math.min(95, Math.round(vector[d[k]])));
     }
-    this._step++;
-    this._renderStep();
-  },
 
-  _finish: function () {
-    var self = this;
-    this._active = false;
-    var statusEl = document.getElementById("hud-status-text");
-    if (statusEl) statusEl.textContent = "Готово";
-
-    // Use the already-accumulated userVector (same as what right panel shows)
-    var finalVector = { control: 50, energy: 50, focus: 50, method: 50 };
+    // Update global
     if (typeof userVector !== "undefined") {
-      finalVector.control = userVector.control;
-      finalVector.energy = userVector.energy;
-      finalVector.focus = userVector.focus;
-      finalVector.method = userVector.method;
+      userVector.control = vector.control;
+      userVector.energy = vector.energy;
+      userVector.focus = vector.focus;
+      userVector.method = vector.method;
     }
     if (typeof updateBrandPositionFromVector === "function")
       updateBrandPositionFromVector();
     if (typeof updateAll === "function") updateAll();
+  },
+
+  _finish: function () {
+    var self = this;
+    var left = document.getElementById("panel-controllers");
+    var right = document.getElementById("panel-output");
+
+    // Calculate final vector
+    this._updateVisualization();
 
     var primary = null;
     if (typeof getRankings === "function") {
@@ -356,62 +398,81 @@ _renderRightPanel: function (right, total) {
       if (r) primary = r.primary;
     }
 
-    // Show result in LEFT panel (replaces test)
-    var left = document.getElementById("panel-controllers");
     if (left && primary) {
       var color = primary.color || "#c4a87c";
       var dims = ["control", "energy", "focus", "method"];
-      var labels = { control: "Контроль", energy: "Энергия", focus: "Фокус", method: "Метод" };
+      var labels = {
+        control: "Контроль",
+        energy: "Энергия",
+        focus: "Фокус",
+        method: "Метод",
+      };
       var vecHTML = "";
       for (var i = 0; i < dims.length; i++) {
-        var d = dims[i];
-        var v = finalVector[d] || 50;
-        vecHTML += "<div class='quest-vector-row'><span class='quest-vector-label'>" + labels[d] + "</span>" +
-          "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" + v + "%;background:" + color + ";'></div></div>" +
-          "<span class='quest-vector-val'>" + v + "</span></div>";
+        var dv = dims[i];
+        var v = typeof userVector !== "undefined" ? userVector[dv] : 50;
+        vecHTML +=
+          "<div class='quest-vector-row'><span class='quest-vector-label'>" +
+          labels[dv] +
+          "</span>" +
+          "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" +
+          v +
+          "%;background:" +
+          color +
+          ";'></div></div>" +
+          "<span class='quest-vector-val'>" +
+          v +
+          "</span></div>";
       }
-      // Store result data for the Brand Passport button
-      self._lastResult = { primary: primary, vector: finalVector };
+
       left.innerHTML =
-        "<div class='quest-panel-header'>РЕЗУЛЬТАТ ДИАГНОСТИКИ</div>" +
-        "<div class='quest-right-card' style='border-color:" + color + "44;'>" +
-          "<div class='quest-right-archetype' style='color:" + color + ";font-size:22px;'>" + primary.nameRu + "</div>" +
-          "<div class='quest-right-sub'>" + (primary.behavior_model || "") + "</div>" +
+        "<div class='quest-panel-header'>РЕЗУЛЬТАТ</div>" +
+        "<div class='quest-right-card' style='border-color:" +
+        color +
+        "44;text-align:center;padding:20px;'>" +
+        "<div style='font-size:40px;margin-bottom:8px;'>" +
+        (
+          (function(tracks, id) { for (var i = 0; i < tracks.length; i++) { if (tracks[i].id === id) return tracks[i]; } return { icon: '◈' }; })(this.tracks, primary.id)
+            return t.id === primary.id;
+          }) || { icon: "◈" }
+        ).icon +
         "</div>" +
-        "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" + vecHTML +
-        "<p style='font-size:11px;color:var(--text-secondary);margin-top:8px;'>" + (primary.ui_rules ? primary.ui_rules.visual : "") + "</p>" +
-        "<button class='quest-next-btn' style='margin-top:12px;' id='result-show-passport'>Открыть Brand Passport</button>";
+        "<div class='quest-right-archetype' style='color:" +
+        color +
+        ";font-size:22px;'>" +
+        primary.nameRu +
+        "</div>" +
+        "<div class='quest-right-sub'>" +
+        (primary.behavior_model || "") +
+        "</div>" +
+        "</div>" +
+        "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" +
+        vecHTML +
+        "<button class='quest-next-btn' style='margin-top:12px;' id='restart-btn'>← Пройти заново</button>" +
+        "<button class='quest-next-btn' style='margin-top:8px;background:var(--accent-blue);color:#fff;' id='show-passport-btn'>Открыть Brand Passport</button>";
+
+      document.getElementById("restart-btn").onclick = function () {
+        HolographicQuest.init();
+      };
+      document.getElementById("show-passport-btn").onclick = function () {
+        if (typeof ArchetypeResult !== "undefined" && primary) {
+          var finalVector = {
+            control:
+              typeof userVector !== "undefined" ? userVector.control : 50,
+            energy: typeof userVector !== "undefined" ? userVector.energy : 50,
+            focus: typeof userVector !== "undefined" ? userVector.focus : 50,
+            method: typeof userVector !== "undefined" ? userVector.method : 50,
+          };
+          ArchetypeResult.show(primary, finalVector, []);
+        }
+      };
     }
-
-    // Bind Brand Passport button
-    setTimeout(function() {
-      var btn = document.getElementById("result-show-passport");
-      if (btn && self._lastResult) {
-        btn.onclick = function() {
-          if (typeof ArchetypeResult !== "undefined") {
-            var r = self._lastResult;
-            ArchetypeResult.show(r.primary, r.vector, self._answers);
-          }
-        };
-      }
-    }, 50);
-
-    // Restore right panel
-    var right = document.getElementById("panel-output");
-    if (right && this._savedRightHTML) right.innerHTML = this._savedRightHTML;
-
-    // Force canvas redraw
-    setTimeout(function () {
-      if (typeof updateAll === "function") updateAll();
-      if (typeof initJogDials === "function") initJogDials();
-      if (typeof initPresets === "function") initPresets();
-    }, 100);
-
-    var self = this;
-    if (self._onComplete) self._onComplete(finalVector, primary);
-
-    console.log("[HoloQuest] Done: " + (primary ? primary.nameRu : "---"));
   },
 };
 
-document.addEventListener("DOMContentLoaded", function() { setTimeout(function() { HolographicQuest.showWelcome(); }, 400); });
+// Auto-show
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+    HolographicQuest.init();
+  }, 400);
+});
