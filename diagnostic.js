@@ -378,7 +378,7 @@ var HolographicQuest = {
   },
 
   // ==================== RESULT ====================
-  _renderResult: function (left) {
+    _renderResult: function (left) {
     this._updateVisualization();
     var best = this._getBest();
     if (!best) return;
@@ -386,89 +386,68 @@ var HolographicQuest = {
     var p = best.primary;
     var c = p.color;
     var icon = best.icon;
+    var totalAns = this._countAll();
+    var maxAns = 96;
+
+    var accuracyNote = "";
+    if (totalAns < 24) accuracyNote = "Low accuracy — answer more questions for reliable results";
+    else if (totalAns < 48) accuracyNote = "Medium accuracy — we recommend answering at least half";
+    else if (totalAns < 72) accuracyNote = "Good accuracy — result is close to real brand profile";
+    else accuracyNote = "High accuracy — brand DNA profile is reliably determined";
 
     var top3 = this._getTop3();
     var t3html = "";
     for (var i = 0; i < top3.length; i++) {
-      t3html +=
-        "<div style='display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03);'>" +
-        "<span style='font-size:12px;color:" +
-        top3[i].color +
-        ";font-weight:500;'>" +
-        (i + 1) +
-        ".</span>" +
-        "<span style='flex:1;font-size:15px;color:var(--text-primary);'>" +
-        top3[i].nameRu +
-        "</span>" +
-        "<span style='font-size:11px;color:var(--text-tertiary);'>" +
-        top3[i].sum +
-        "/40</span></div>";
+      t3html += "<div style='display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);'>" +
+        "<span style='font-size:14px;color:" + top3[i].color + ";font-weight:600;min-width:20px;'>" + (i+1) + "</span>" +
+        "<span style='flex:1;font-size:15px;color:var(--text-primary);font-weight:400;'>" + top3[i].nameRu + "</span>" +
+        "<span style='font-size:12px;color:var(--text-tertiary);'>" + top3[i].sum + "/40</span></div>";
     }
 
-    var dims = ["control", "energy", "focus", "method"];
-    var labs = {
-      control: "Контроль",
-      energy: "Энергия",
-      focus: "Фокус",
-      method: "Метод",
-    };
+    var dims = ["control","energy","focus","method"];
+    var labs = { control:"Control", energy:"Energy", focus:"Focus", method:"Method" };
     var vhtml = "";
     for (var v = 0; v < dims.length; v++) {
       var dv = dims[v];
-      var val = typeof userVector !== "undefined" ? userVector[dv] : 50;
-      vhtml +=
-        "<div style='display:flex;align-items:center;gap:8px;margin-bottom:4px;'>" +
-        "<span style='font-size:11px;color:var(--text-secondary);width:60px;'>" +
-        labs[dv] +
-        "</span>" +
-        "<div style='flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;'>" +
-        "<div style='height:100%;width:" +
-        val +
-        "%;background:" +
-        c +
-        ";border-radius:2px;'></div></div>" +
-        "<span style='font-size:11px;color:var(--text-primary);width:24px;text-align:right;'>" +
-        val +
-        "</span></div>";
+      var val = (typeof userVector !== "undefined") ? userVector[dv] : 50;
+      vhtml += "<div style='display:flex;align-items:center;gap:10px;margin-bottom:5px;'>" +
+        "<span style='font-size:12px;color:var(--text-secondary);width:70px;font-weight:400;'>" + labs[dv] + "</span>" +
+        "<div style='flex:1;height:5px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;'>" +
+          "<div style='height:100%;width:" + val + "%;background:" + c + ";border-radius:3px;box-shadow:0 0 8px " + c + "44;'></div></div>" +
+        "<span style='font-size:12px;color:var(--text-primary);font-weight:500;min-width:28px;text-align:right;'>" + val + "</span></div>";
     }
 
     left.innerHTML =
-      "<div style='padding:24px 20px;'>" +
-      "<div class='quest-panel-header' style='margin-bottom:16px;'>РЕЗУЛЬТАТ</div>" +
-      "<div style='text-align:center;padding:20px;border:1px solid " +
-      c +
-      "44;border-radius:16px;margin-bottom:16px;'>" +
-      "<div style='font-size:40px;margin-bottom:8px;'>" +
-      icon +
-      "</div>" +
-      "<div style='font-size:24px;font-weight:300;color:" +
-      c +
-      ";margin-bottom:6px;'>" +
-      p.nameRu +
-      "</div>" +
-      "<div style='font-size:11px;color:var(--text-tertiary);'>" +
-      (p.behavior_model || "") +
-      "</div>" +
-      "</div>" +
-      "<div class='quest-right-section-title'>ТОП-3 АРХЕТИПА</div>" +
-      t3html +
-      "<div class='quest-right-section-title' style='margin-top:16px;'>4D-ВЕКТОР</div>" +
-      vhtml +
-      "<button id='dl-btn' style='width:100%;padding:15px;margin-top:16px;background:var(--accent-blue);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;'>📥 Скачать Brand Passport</button>" +
-      "<a href='https://t.me/Elenach_com' target='_blank' style='display:block;width:100%;padding:13px;margin-top:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border-mid);border-radius:10px;color:var(--text-secondary);font-family:inherit;font-size:14px;text-align:center;text-decoration:none;'>💬 Консультация @Elenach_com</a>" +
-      "<button id='restart-btn' style='width:100%;padding:10px;margin-top:8px;background:transparent;border:none;color:var(--text-tertiary);font-family:inherit;font-size:12px;cursor:pointer;'>← Пройти заново</button>" +
+      "<div style='padding:20px;'>" +
+        "<div style='text-align:center;padding:28px 20px 20px;border:1px solid " + c + "33;border-radius:20px;margin-bottom:16px;background:linear-gradient(180deg, " + c + "10 0%, transparent 100%);position:relative;overflow:hidden;'>" +
+          "<div style='position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:0.2em;color:var(--text-tertiary);'>ARCHEYPEOS</div>" +
+          "<div style='font-size:52px;margin:8px 0 12px;filter:drop-shadow(0 0 20px " + c + "44);'>" + icon + "</div>" +
+          "<div style='font-size:26px;font-weight:200;color:" + c + ";letter-spacing:-0.01em;margin-bottom:6px;'>" + p.nameRu + "</div>" +
+          "<div style='font-size:11px;color:var(--text-tertiary);letter-spacing:0.05em;margin-bottom:4px;'>" + (p.behavior_model || "") + "</div>" +
+          "<div style='margin-top:12px;display:inline-block;padding:6px 14px;border-radius:20px;background:" + c + "18;border:1px solid " + c + "33;font-size:11px;color:" + c + ";" + totalAns + " / " + maxAns + " answered</div>" +
+        "</div>" +
+        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--text-tertiary);line-height:1.5;text-align:center;'>" + accuracyNote + "</div>" +
+        "<div style='font-size:9px;font-weight:600;letter-spacing:0.12em;color:var(--text-tertiary);margin-bottom:6px;text-transform:uppercase;'>TOP-3 ARCHETYPES</div>" +
+        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:12px;padding:4px 14px;margin-bottom:16px;'>" + t3html + "</div>" +
+        "<div style='font-size:9px;font-weight:600;letter-spacing:0.12em;color:var(--text-tertiary);margin-bottom:6px;text-transform:uppercase;'>4D BRAND VECTOR</div>" +
+        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:12px;padding:12px 14px;margin-bottom:16px;'>" + vhtml + "</div>" +
+        "<button id='dl-btn' style='width:100%;padding:15px;background:" + c + ";color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:6px;'>Download Brand Passport</button>" +
+        "<a href='https://t.me/Elenach_com' target='_blank' style='display:block;width:100%;padding:13px;background:rgba(255,255,255,0.03);border:1px solid var(--border-mid);border-radius:10px;color:var(--text-secondary);font-family:inherit;font-size:14px;text-align:center;text-decoration:none;margin-bottom:6px;'>@Elenach_com</a>" +
+        "<a href='https://archetypeos.ru' target='_blank' style='display:block;width:100%;padding:13px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-tertiary);font-family:inherit;font-size:13px;text-align:center;text-decoration:none;margin-bottom:6px;'>archetypeos.ru</a>" +
+        "<button id='restart-btn' style='width:100%;padding:10px;background:transparent;border:none;color:var(--text-tertiary);font-family:inherit;font-size:12px;cursor:pointer;'>Restart</button>" +
       "</div>";
 
     var self = this;
-    document.getElementById("restart-btn").onclick = function () {
-      HolographicQuest.init();
-    };
-    document.getElementById("dl-btn").onclick = function () {
-      self._download(p, top3);
-    };
+    document.getElementById("restart-btn").onclick = function() { HolographicQuest.init(); };
+    document.getElementById("dl-btn").onclick = function() { self._download(p, top3, totalAns, maxAns); };
+  },  _countAll: function() {
+    var cnt = 0;
+    for (var id in this._scores) {
+      for (var i = 0; i < 8; i++) { if (this._scores[id][i] > 0) cnt++; }
+    }
+    return cnt;
   },
 
-  // ==================== HELPERS ====================
   _getBest: function () {
     var bestId = null,
       bestSum = -1;
@@ -563,7 +542,7 @@ var HolographicQuest = {
     if (typeof updateAll === "function") updateAll();
   },
 
-  _download: function (primary, top3) {
+  _download: function (primary, top3, totalAns, maxAns) {
     var c = primary.color;
     var recs = {
       hero: {
