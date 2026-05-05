@@ -313,12 +313,12 @@ var HolographicQuest = {
     html += "</div>";
 
     // Navigation
-    html += "<div style='display:flex;gap:8px;padding:16px 20px;'>";
+    html += "<div style='display:flex;gap:8px;padding:16px 20px;position:sticky;bottom:0;background:var(--bg-panel);border-top:1px solid var(--border-subtle);z-index:5;'>";
     if (this._page > 1) {
       html +=
         "<button id='prev-btn' style='flex:1;padding:14px;background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle);border-radius:8px;color:var(--text-secondary);font-family:inherit;font-size:14px;cursor:pointer;'>← Назад</button>";
     }
-    var canProceed = totalAnswered >= 4;
+    var canProceed = true;
     html +=
       "<button id='next-btn' style='flex:1;padding:14px;border-radius:8px;font-family:inherit;font-size:14px;cursor:" +
       (canProceed ? "pointer" : "default") +
