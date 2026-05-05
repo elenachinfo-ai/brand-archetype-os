@@ -435,11 +435,7 @@ var HolographicQuest = {
         color +
         "44;text-align:center;padding:20px;'>" +
         "<div style='font-size:40px;margin-bottom:8px;'>" +
-        (
-          (function(tracks, id) { for (var i = 0; i < tracks.length; i++) { if (tracks[i].id === id) return tracks[i]; } return { icon: '◈' }; })(this.tracks, primary.id)
-            return t.id === primary.id;
-          }) || { icon: "◈" }
-        ).icon +
+        (function(tracks, id) { for (var i = 0; i < tracks.length; i++) { if (tracks[i].id === id) return tracks[i].icon; } return '◈'; })(this.tracks, primary.id) +
         "</div>" +
         "<div class='quest-right-archetype' style='color:" +
         color +
