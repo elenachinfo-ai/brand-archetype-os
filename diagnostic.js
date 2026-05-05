@@ -231,43 +231,11 @@ var HolographicQuest = {
           "</div>";
       }
 
-      // Store result data for the Brand Passport button
-      self._lastResult = { primary: primary, vector: finalVector };
-      left.innerHTML =
-        "<div class='quest-panel-header'>АРХЕТИП БРЕНДА</div>" +
-        "<div class='quest-question-block'>" +
-        "<div class='quest-q-num'>Шаг " +
-        this._step +
-        " из " +
-        totalSteps +
-        "</div>" +
-        "<div class='quest-q-title'>" +
-        q.title +
-        "</div>" +
-        "<div class='quest-q-bar'><div class='quest-q-bar-fill' style='width:" +
-        (this._step / totalSteps) * 100 +
-        "%'></div></div>" +
-        "<div class='quest-answers-list' id='quest-answers-list'>" +
-        answersHTML +
-        "</div>" +
-        "<button class='quest-next-btn' id='quest-next-btn' disabled>Выберите вариант ↑</button>" +
-        "</div>";
-
-      var self = this;
-      var cards = document.querySelectorAll(".quest-answer-card");
-      for (var j = 0; j < cards.length; j++) {
-        (function (idx) {
-          cards[j].addEventListener("click", function () {
-            self._selectAnswer(idx);
-          });
-        })(j);
-      }
-
       this._renderRightPanel(right, totalSteps);
     }
   },
 
-  _renderRightPanel: function (right, total) {
+_renderRightPanel: function (right, total) {
     var r = typeof getRankings === "function" ? getRankings() : null;
     var primaryName = r ? r.primary.nameRu : "—";
     var primaryColor = r ? r.primary.color : "var(--accent-blue)";
