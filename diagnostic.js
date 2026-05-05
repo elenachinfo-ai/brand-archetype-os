@@ -257,7 +257,7 @@ var HolographicQuest = {
       "</div>";
 
     // Statements
-    html += "<div style='padding:0 20px;'>";
+    html += "<div style='padding:0 20px 70px;'>";
     for (var i = 0; i < allStmts.length; i++) {
       var stmt = allStmts[i];
       var score = this._scores[stmt.trackId][stmt.index];
