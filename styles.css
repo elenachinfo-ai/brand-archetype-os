@@ -189,7 +189,7 @@ body {
         "controllers field"
         "output      field";
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr auto;
     flex: 1;
     height: calc(100vh - 48px);
     overflow: hidden;
