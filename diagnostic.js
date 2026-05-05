@@ -181,22 +181,40 @@ var HolographicQuest = {
   },
 
   // ==================== INTRO ====================
-      _renderIntro: function (left) {
+        _renderIntro: function (left) {
     left.innerHTML =
-      "<div style='padding:28px 24px;'>" +
-        "<div style='font-size:10px;font-weight:600;letter-spacing:0.15em;color:var(--accent-blue);margin-bottom:10px;'>ARCHEYPEOS</div>" +
-        "<h2 style='font-weight:300;font-size:22px;color:var(--text-primary);margin:0 0 6px;letter-spacing:-0.01em;'>Brand DNA Diagnostic</h2>" +
-        "<p style='font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 16px;'>Система определения архетипа бренда через 96 поведенческих утверждений. Алгоритм анализирует ответы и строит карту ДНК вашего бренда в реальном времени.</p>" +
-        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;padding:14px;margin-bottom:14px;'>" +
-          "<p style='font-size:11px;color:var(--text-tertiary);line-height:1.6;margin:0 0 8px;'><strong style='color:var(--text-primary);'>Зачем проходить:</strong> чтобы понять какой архетип управляет восприятием бренда и как использовать это в дизайне и коммуникации.</p>" +
-          "<p style='font-size:11px;color:var(--text-tertiary);line-height:1.6;margin:0;'><strong style='color:var(--text-primary);'>Как:</strong> 4 страницы по 24 утверждения. Оценивайте от 1 (почти никогда) до 5 (почти всегда). Справа — живая карта архетипов.</p>" +
+      "<div style='padding:24px 22px;'>" +
+        "<div style='font-size:10px;font-weight:600;letter-spacing:0.15em;color:var(--accent-blue);margin-bottom:8px;'>ARCHEYPEOS</div>" +
+        "<h2 style='font-weight:300;font-size:22px;color:var(--text-primary);margin:0 0 4px;letter-spacing:-0.01em;'>ДНК вашего бренда</h2>" +
+        "<p style='font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 14px;'>12 архетипов • 96 утверждений • 4 страницы<br>Алгоритм строит карту бренда в реальном времени</p>" +
+        // Benefits
+        "<div style='display:flex;flex-direction:column;gap:8px;margin-bottom:14px;'>" +
+          "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
+            "<span style='font-size:18px;flex-shrink:0;'>🎯</span>" +
+            "<div><span style='font-size:12px;color:var(--text-primary);font-weight:500;'>Узнайте архетип</span><br><span style='font-size:11px;color:var(--text-tertiary);'>Какой из 12 архетипов управляет восприятием</span></div>" +
+          "</div>" +
+          "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
+            "<span style='font-size:18px;flex-shrink:0;'>🎨</span>" +
+            "<div><span style='font-size:12px;color:var(--text-primary);font-weight:500;'>Получите дизайн-код</span><br><span style='font-size:11px;color:var(--text-tertiary);'>Типографика, цвета, анимация под ваш архетип</span></div>" +
+          "</div>" +
+          "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
+            "<span style='font-size:18px;flex-shrink:0;'>📈</span>" +
+            "<div><span style='font-size:12px;color:var(--text-primary);font-weight:500;'>Усильте позиционирование</span><br><span style='font-size:11px;color:var(--text-tertiary);'>Бренд который знает себя — стоит дороже</span></div>" +
+          "</div>" +
         "</div>" +
-        "<div style='display:flex;align-items:center;gap:6px;margin-bottom:16px;'>" +
-          "<span style='font-size:10px;color:var(--text-tertiary);'>①</span><span style='font-size:10px;color:var(--text-tertiary);'>②</span><span style='font-size:10px;color:var(--text-tertiary);'>③</span><span style='font-size:10px;color:var(--accent-blue);'>④</span><span style='font-size:10px;color:var(--accent-blue);font-weight:600;'>⑤</span>" +
-          "<span style='font-size:10px;color:var(--text-tertiary);margin-left:4px;'>Никогда → Всегда</span>" +
+        // Scale
+        "<div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding:8px 12px;background:rgba(255,255,255,0.02);border-radius:8px;'>" +
+          "<span style='font-size:10px;color:var(--text-tertiary);'>① Никогда</span>" +
+          "<span style='font-size:10px;color:var(--text-tertiary);'>②</span>" +
+          "<span style='font-size:10px;color:var(--text-tertiary);'>③</span>" +
+          "<span style='font-size:10px;color:var(--accent-blue);'>④</span>" +
+          "<span style='font-size:10px;color:var(--accent-blue);font-weight:600;'>⑤ Всегда</span>" +
         "</div>" +
-        "<button id='start-btn' style='width:100%;padding:16px;background:var(--accent-blue);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
-        "<p style='font-size:10px;color:var(--text-tertiary);margin-top:10px;text-align:center;'>~5–7 минут • 96 утверждений • Бесплатно</p>" +
+        // CTAs in a row
+        "<div style='display:flex;gap:8px;margin-bottom:0;'>" +
+          "<button id='start-btn' style='flex:1;padding:14px;background:var(--accent-blue);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
+        "</div>" +
+        "<p style='font-size:10px;color:var(--text-tertiary);margin-top:8px;text-align:center;'>~5–7 минут • Бесплатно • Без регистрации</p>" +
       "</div>";
     document.getElementById("start-btn").onclick = function () {
       HolographicQuest._page = 1;

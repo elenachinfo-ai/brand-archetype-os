@@ -520,6 +520,7 @@ body {
         box-shadow 0.5s ease;
 }
 
+#panel-output { flex-direction: row; flex-wrap: nowrap; gap: 8px; align-items: stretch; }
 .output-card-primary {
     border-color: var(--border-mid);
 }
