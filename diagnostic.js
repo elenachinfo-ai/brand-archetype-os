@@ -1,519 +1,472 @@
-// ArchetypeOS Diagnostic v6 — 96 statements, Likert 1-5, professional UX
-// Reference: brandarchetypes.com/questionnaire/
+// ArchetypeOS v7 — Cosmic Swipe Diagnostic
+// Tinder-style cards + star map visualization
 var HolographicQuest = {
-  _scores: {},
-  _page: 0, // 0=intro, 1-4=pages, 5=result
-  _pages: [
+  _step: 0, // 0=intro, 1-48=questions, 49=result
+  _scores: {}, // {trackId: [0,0,0,0]}
+  _cards: [], // all 48 question cards
+  _selVal: 0, // currently selected value
+  _selIdx: -1, // currently selected track index for expanded card
+
+  // 12 archetypes × 4 statements
+  tracks: [
     {
-      title: "Действие и Влияние",
-      desc: "Как бренд проявляет себя на рынке",
-      tracks: ["hero", "ruler", "rebel", "magician"],
+      id: "hero",
+      name: "Герой",
+      icon: "⚔️",
+      c: "#ff6b6b",
+      q: [
+        "Действуем решительно",
+        "Видим себя победителями",
+        "Берёмся за сложные задачи",
+        "Клиенты чувствуют силу с нами",
+      ],
     },
     {
-      title: "Структура и Порядок",
-      desc: "Как бренд организует процессы",
-      tracks: ["ruler", "sage", "creator", "everyman"],
+      id: "ruler",
+      name: "Правитель",
+      icon: "👑",
+      c: "#ffd700",
+      q: [
+        "Устанавливаем стандарты",
+        "Порядок — основа успеха",
+        "Клиенты доверяют авторитету",
+        "Контроль качества — приоритет",
+      ],
     },
     {
-      title: "Связь и Эмоции",
-      desc: "Как бренд строит отношения",
-      tracks: ["caregiver", "lover", "jester", "innocent"],
+      id: "magician",
+      name: "Маг",
+      icon: "✨",
+      c: "#b8a0ff",
+      q: [
+        "Трансформируем реальность",
+        "Инновации — суперсила",
+        "Чудеса случаются",
+        "Клиенты приходят за преображением",
+      ],
     },
     {
-      title: "Свобода и Творчество",
-      desc: "Как бренд исследует и создаёт",
-      tracks: ["explorer", "rebel", "creator", "magician"],
+      id: "caregiver",
+      name: "Заботливый",
+      icon: "🤲",
+      c: "#4aff9e",
+      q: [
+        "Забота — главная ценность",
+        "Создаём безопасность",
+        "Поддерживаем друг друга",
+        "Клиенты защищены",
+      ],
+    },
+    {
+      id: "lover",
+      name: "Эстет",
+      icon: "💋",
+      c: "#ff79c6",
+      q: [
+        "Красота в каждой детали",
+        "Эмоциональная связь",
+        "Продукты дарят наслаждение",
+        "В наш бренд влюбляются",
+      ],
+    },
+    {
+      id: "jester",
+      name: "Шут",
+      icon: "🎉",
+      c: "#ffb86c",
+      q: [
+        "Приносим радость",
+        "Юмор — часть культуры",
+        "Скука — враг",
+        "Клиенты улыбаются",
+      ],
+    },
+    {
+      id: "everyman",
+      name: "Свой",
+      icon: "🤝",
+      c: "#8899aa",
+      q: [
+        "Честны без прикрас",
+        "Клиент — часть сообщества",
+        "Простота и доступность",
+        "Не строим элиту",
+      ],
+    },
+    {
+      id: "explorer",
+      name: "Исследователь",
+      icon: "🧭",
+      c: "#45e6d0",
+      q: [
+        "Открываем горизонты",
+        "Свобода ведёт нас",
+        "Рутина противопоказана",
+        "Клиенты в пути с нами",
+      ],
+    },
+    {
+      id: "rebel",
+      name: "Бунтарь",
+      icon: "🔥",
+      c: "#ff5555",
+      q: [
+        "Правила чтобы нарушать",
+        "Бросаем вызов статус-кво",
+        "Смелость — инструмент",
+        "Клиенты чувствуют свободу",
+      ],
+    },
+    {
+      id: "creator",
+      name: "Творец",
+      icon: "🎨",
+      c: "#9d7cd8",
+      q: [
+        "Творчество в основе",
+        "Создаём уникальное",
+        "Самовыражение — ключ",
+        "Клиенты вдохновляются",
+      ],
+    },
+    {
+      id: "sage",
+      name: "Мудрец",
+      icon: "📚",
+      c: "#7ec8e3",
+      q: [
+        "Знания — валюта",
+        "Исследуем и понимаем",
+        "Истина важнее мнений",
+        "Клиенты за мудростью",
+      ],
+    },
+    {
+      id: "innocent",
+      name: "Невинный",
+      icon: "🌿",
+      c: "#a8e6cf",
+      q: [
+        "Чистота — философия",
+        "Верим в лучшее",
+        "Оптимизм ведёт",
+        "Клиенты чувствуют свет",
+      ],
     },
   ],
-  // All 96 statements — 12 archetypes × 8 statements each
-  statements: {
-    hero: [
-      "Правила не созданы чтобы их нарушать",
-      "Индивидуальность клиентов — ключ к процессам",
-      "Информация — это сила",
-      "Мы стремимся быть надёжными",
-      "Нестандартное мышление ценится",
-      "Ценность строится через сбор информации",
-      "Безопасность команды важна",
-      "Независимое мышление имеет ценность",
-    ],
-    ruler: [
-      "Продуктивность имеет высокую ценность",
-      "Мы действуем как катализатор перемен",
-      "Наша команда — победители",
-      "Обычное мышление не для нас",
-      "Чудеса случаются",
-      "Победный настрой ведёт к успеху",
-      "Независимость и индивидуальность важны",
-      "Мы гордимся тем что меняем жизни",
-    ],
-    caregiver: [
-      "Дружелюбие и соседство важны",
-      "Мы создаём атмосферу заботы",
-      "Эмоциональный интеллект важен для команды",
-      "Мозговой штурм — это весело и безопасно",
-      "Справедливость — ключ к успеху",
-      "Страсть к продуктам жизненно важна",
-      "Люди должны наслаждаться жизнью",
-      "Наша команда — casual и без претензий",
-    ],
-    lover: [
-      "Мы заботливы и поддерживаем",
-      "Креативность во всём что мы делаем",
-      "Наша сила позволяет доминировать на рынке",
-      "Наша суть — служить клиентам",
-      "Красивый дизайн имеет высокую ценность",
-      "Нас уважают в индустрии",
-      "У нас есть системы заботы о клиентах",
-      "Самовыражение важно для команды",
-    ],
-    jester: [
-      "У людей есть дикая сторона",
-      "Уникальность нашего имиджа — наша гордость",
-      "В жизни и бизнесе есть магия",
-      "Наша команда процветает на достижении целей",
-      "Мы процветаем на больших рисках",
-      "Наши системы гибкие и отзывчивые",
-      "Мы гордимся духом соперничества",
-      "Революционные идеи исходят из нашего ядра",
-    ],
-    everyman: [
-      "Мы видим клиентов как друзей и семью",
-      "Быть необычным — это нормально",
-      "Наши качества: предсказуемость и стабильность",
-      "Наша команда эмоционально увлечена продуктом",
-      "Большинству компаний стоит расслабиться",
-      "Сильная этика ведёт к успеху",
-      "Романтика важна для полноты жизни",
-      "Бизнес может быть весёлым и успешным",
-    ],
-    explorer: [
-      "Исследования ведут к открытиям",
-      "Системы должны быть простыми для понимания",
-      "Мы поощряем клиентов находить свой путь",
-      "Мы поддерживаем постоянное обучение",
-      "Мы даём ясные системы сотрудникам и клиентам",
-      "Мы помогаем людям чувствовать себя уникальными",
-      "Экспертиза критична для успеха",
-      "Простые семейные ценности важны",
-    ],
-    rebel: [
-      "Смелость в нашем ядре",
-      "Мы создали простые для понимания системы",
-      "Эмоциональный интеллект важен для команды",
-      "Мозговой штурм — весело и безопасно",
-      "Справедливость к клиентам и команде — ключ",
-      "Страсть к продуктам жизненно важна",
-      "Люди должны наслаждаться жизнью",
-      "Наша команда — без претензий",
-    ],
-    creator: [
-      "Мы ценим креативность во всём",
-      "Наша сила позволяет нам доминировать",
-      "Наша суть — служить клиентам",
-      "Красивый дизайн продуктов имеет ценность",
-      "Нас уважают и признают в индустрии",
-      "У нас есть системы заботы о клиентах",
-      "Самовыражение важно для здоровой команды",
-      "Наша команда задаёт новые направления",
-    ],
-    sage: [
-      "Знания и образование — наши ценности",
-      "Люди с духом приключений вдохновляют",
-      "Мы гордимся продуманными системами",
-      "Мы ассоциируемся с добром и чистотой",
-      "Нетворкинг жизненно важен",
-      "Наш опыт и мудрость — важные активы",
-      "Хаос в бизнесе нужно избегать",
-      "Мы награждаем первопроходцев",
-    ],
-    innocent: [
-      "Надёжность во всём",
-      "Клиенты должны чувствовать себя особенными",
-      "Наша команда — бесстрашные мыслители",
-      "Мы избегаем жаргона и говорим понятно",
-      "Наши клиенты — особенные люди",
-      "Рабочее место полно энергии и веселья",
-      "Смелость в нашем ядре",
-      "Мы построили понятные системы",
-    ],
-    magician: [
-      "Чудеса могут случаться",
-      "Победный настрой ведёт к успеху",
-      "Независимость и индивидуальность важны",
-      "Мы гордимся трансформацией жизней клиентов",
-      "Наша команда встречает все вызовы",
-      "Радикальные идеи оживляют команду",
-      "Будущее полно безграничных возможностей",
-      "Эффективность критична для команды",
-    ],
-  },
 
   init: function () {
     this._scores = {};
-    var ids = [
-      "hero",
-      "ruler",
-      "caregiver",
-      "lover",
-      "jester",
-      "everyman",
-      "explorer",
-      "rebel",
-      "creator",
-      "sage",
-      "innocent",
-      "magician",
-    ];
-    for (var i = 0; i < ids.length; i++) {
-      this._scores[ids[i]] = [0, 0, 0, 0, 0, 0, 0, 0];
+    for (var i = 0; i < this.tracks.length; i++) {
+      this._scores[this.tracks[i].id] = [0, 0, 0, 0];
     }
-    this._page = 0;
+    this._cards = [];
+    for (var t = 0; t < this.tracks.length; t++) {
+      for (var q = 0; q < 4; q++) {
+        this._cards.push({ trackIdx: t, qIdx: q });
+      }
+    }
+    this._step = 0;
+    this._selVal = 0;
     this._render();
   },
 
   _render: function () {
     var left = document.getElementById("panel-controllers");
     if (!left) return;
-    if (this._page === 0) this._renderIntro(left);
-    else if (this._page <= 4) this._renderPage(left);
+    if (this._step === 0) this._renderIntro(left);
+    else if (this._step <= 48) this._renderCard(left);
     else this._renderResult(left);
   },
 
-  // ==================== INTRO ====================
-        _renderIntro: function (left) {
+  // ==================== INTRO (COSMIC) ====================
+  _renderIntro: function (left) {
     left.innerHTML =
-      "<div style='padding:24px 22px;'>" +
-        "<div style='font-size:10px;font-weight:600;letter-spacing:0.15em;color:var(--accent-blue);margin-bottom:8px;'>ARCHEYPEOS</div>" +
-        "<h2 style='font-weight:300;font-size:22px;color:var(--text-primary);margin:0 0 4px;letter-spacing:-0.01em;'>ДНК вашего бренда</h2>" +
-        "<p style='font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0 0 14px;'>12 архетипов • 96 утверждений • 4 страницы<br>Алгоритм строит карту бренда в реальном времени</p>" +
-        // Benefits
-        "<div style='display:flex;flex-direction:column;gap:8px;margin-bottom:14px;'>" +
-          "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
-            "<span style='font-size:18px;flex-shrink:0;'>🎯</span>" +
-            "<div><span style='font-size:12px;color:var(--text-primary);font-weight:500;'>Узнайте архетип</span><br><span style='font-size:11px;color:var(--text-tertiary);'>Какой из 12 архетипов управляет восприятием</span></div>" +
-          "</div>" +
-          "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
-            "<span style='font-size:18px;flex-shrink:0;'>🎨</span>" +
-            "<div><span style='font-size:12px;color:var(--text-primary);font-weight:500;'>Получите дизайн-код</span><br><span style='font-size:11px;color:var(--text-tertiary);'>Типографика, цвета, анимация под ваш архетип</span></div>" +
-          "</div>" +
-          "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
-            "<span style='font-size:18px;flex-shrink:0;'>📈</span>" +
-            "<div><span style='font-size:12px;color:var(--text-primary);font-weight:500;'>Усильте позиционирование</span><br><span style='font-size:11px;color:var(--text-tertiary);'>Бренд который знает себя — стоит дороже</span></div>" +
-          "</div>" +
-        "</div>" +
-        // Scale
-        "<div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding:8px 12px;background:rgba(255,255,255,0.02);border-radius:8px;'>" +
-          "<span style='font-size:10px;color:var(--text-tertiary);'>① Никогда</span>" +
-          "<span style='font-size:10px;color:var(--text-tertiary);'>②</span>" +
-          "<span style='font-size:10px;color:var(--text-tertiary);'>③</span>" +
-          "<span style='font-size:10px;color:var(--accent-blue);'>④</span>" +
-          "<span style='font-size:10px;color:var(--accent-blue);font-weight:600;'>⑤ Всегда</span>" +
-        "</div>" +
-        // CTAs in a row
-        "<div style='display:flex;gap:8px;margin-bottom:0;'>" +
-          "<button id='start-btn' style='flex:1;padding:14px;background:var(--accent-blue);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
-        "</div>" +
-        "<p style='font-size:10px;color:var(--text-tertiary);margin-top:8px;text-align:center;'>~5–7 минут • Бесплатно • Без регистрации</p>" +
+      "<div style='text-align:center;padding:40px 20px;display:flex;flex-direction:column;height:100%;justify-content:center;'>" +
+      "<div style='font-size:8px;letter-spacing:0.3em;color:var(--accent-blue);margin-bottom:12px;'>ARCHEYPEOS COSMIC</div>" +
+      "<div style='font-size:48px;margin-bottom:8px;filter:drop-shadow(0 0 20px var(--accent-blue));'>◈</div>" +
+      "<h2 style='font-weight:200;font-size:24px;color:var(--text-primary);margin:0 0 4px;'>Brand DNA Scan</h2>" +
+      "<p style='font-size:12px;color:var(--text-secondary);margin:0 0 20px;'>48 карточек • 12 архетипов • Свайп-интерфейс</p>" +
+      "<div style='background:rgba(110,231,255,0.04);border:1px solid rgba(110,231,255,0.12);border-radius:12px;padding:14px;margin-bottom:16px;text-align:left;'>" +
+      "<p style='font-size:11px;color:var(--text-secondary);margin:0 0 6px;'><span style='color:var(--accent-blue);'>◄</span> Свайп влево — не согласен</p>" +
+      "<p style='font-size:11px;color:var(--text-secondary);margin:0;'><span style='color:var(--accent-blue);'>►</span> Свайп вправо — согласен</p>" +
+      "</div>" +
+      "<button id='start-btn' style='width:100%;padding:16px;background:transparent;color:var(--accent-blue);border:1px solid var(--accent-blue);border-radius:10px;font-family:inherit;font-size:15px;font-weight:400;cursor:pointer;letter-spacing:0.05em;'>INITIATE SCAN</button>" +
       "</div>";
     document.getElementById("start-btn").onclick = function () {
-      HolographicQuest._page = 1;
+      HolographicQuest._step = 1;
       HolographicQuest._render();
     };
-  },  _renderPage: function (left) {
-    var page = this._pages[this._page - 1];
-    var allStmts = [];
-    for (var t = 0; t < page.tracks.length; t++) {
-      var tid = page.tracks[t];
-      var stmts = this.statements[tid];
-      for (var s = 0; s < stmts.length; s++) {
-        allStmts.push({ trackId: tid, index: s, text: stmts[s] });
-      }
-    }
+  },
 
-    var totalAnswered = 0;
-    for (var i = 0; i < allStmts.length; i++) {
-      if (this._scores[allStmts[i].trackId][allStmts[i].index] > 0)
-        totalAnswered++;
-    }
-    var total = allStmts.length;
-    var progress = total > 0 ? Math.round((totalAnswered / total) * 100) : 0;
+  // ==================== SWIPE CARD ====================
+  _renderCard: function (left) {
+    var cardIdx = this._step - 1;
+    var card = this._cards[cardIdx];
+    var track = this.tracks[card.trackIdx];
+    var qText = track.q[card.qIdx];
+    var prevScore = this._scores[track.id][card.qIdx];
+    var progress = Math.round((cardIdx / 48) * 100);
+    var color = track.c;
 
-    var html = "";
-    // Header
-    html +=
-      "<div style='padding:20px 20px 0;'>" +
-      "<div style='display:flex;align-items:center;gap:8px;margin-bottom:6px;'>" +
-      "<span style='font-size:10px;font-weight:600;letter-spacing:0.12em;color:var(--accent-blue);'>СТРАНИЦА " +
-      this._page +
-      "/4</span>" +
-      "<span style='margin-left:auto;font-size:10px;color:var(--text-tertiary);'>" +
-      totalAnswered +
-      "/" +
-      total +
+    left.innerHTML =
+      "<div style='display:flex;flex-direction:column;height:100%;padding:16px 20px;'>" +
+      // Progress
+      "<div style='display:flex;align-items:center;gap:8px;margin-bottom:4px;'>" +
+      "<span style='font-size:9px;letter-spacing:0.15em;color:var(--accent-blue);'>CARD " +
+      this._step +
+      "/48</span>" +
+      "<div style='flex:1;height:1px;background:rgba(110,231,255,0.12);'><div style='height:100%;width:" +
+      progress +
+      "%;background:var(--accent-blue);box-shadow:0 0 4px var(--accent-blue);'></div></div>" +
+      "<span style='font-size:9px;color:var(--text-tertiary);'>" +
+      progress +
+      "%</span>" +
+      "</div>" +
+      // Archetype label
+      "<div style='display:flex;align-items:center;gap:6px;margin-bottom:8px;'>" +
+      "<span style='font-size:18px;'>" +
+      track.icon +
+      "</span>" +
+      "<span style='font-size:10px;color:" +
+      color +
+      ";letter-spacing:0.08em;'>" +
+      track.name.toUpperCase() +
       "</span>" +
       "</div>" +
-      "<h3 style='font-weight:300;font-size:18px;color:var(--text-primary);margin:0 0 4px;'>" +
-      page.title +
-      "</h3>" +
-      "<p style='font-size:12px;color:var(--text-tertiary);margin:0 0 10px;'>" +
-      page.desc +
+      // Question card
+      "<div style='flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;margin-bottom:12px;'>" +
+      "<p style='font-size:20px;color:var(--text-primary);line-height:1.4;font-weight:300;max-width:320px;'>" +
+      qText +
       "</p>" +
-      "<div style='height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-bottom:4px;'>" +
-      "<div style='height:100%;width:" +
-      progress +
-      "%;background:var(--accent-blue);border-radius:1px;transition:width 0.3s;'></div>" +
       "</div>" +
-      "<div style='display:flex;justify-content:space-between;font-size:9px;color:var(--text-tertiary);padding:2px 0 12px;'>" +
-      "<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>" +
+      // Score display (current)
+      "<div style='text-align:center;margin-bottom:10px;'>" +
+      "<span style='font-size:10px;color:var(--text-tertiary);letter-spacing:0.1em;'>" +
+      (prevScore > 0 ? "SCORE: " + prevScore + "/5" : "TAP TO RATE") +
+      "</span>" +
+      "</div>" +
+      // Rating dots (big, tappable)
+      "<div style='display:flex;justify-content:center;gap:14px;margin-bottom:12px;'>";
+    for (var r = 1; r <= 5; r++) {
+      var active = prevScore === r;
+      left.innerHTML +=
+        "<span class='rate-dot' data-val='" +
+        r +
+        "' style='width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;" +
+        "border:1px solid " +
+        (active ? color : "rgba(110,231,255,0.2)") +
+        ";" +
+        "background:" +
+        (active ? color : "transparent") +
+        ";" +
+        "color:" +
+        (active ? "#020510" : "var(--text-tertiary)") +
+        ";" +
+        "font-size:18px;font-weight:" +
+        (active ? "600" : "300") +
+        ";'>" +
+        r +
+        "</span>";
+    }
+    left.innerHTML +=
+      "</div>" +
+      // Nav buttons
+      "<div style='display:flex;gap:8px;'>" +
+      (this._step > 1
+        ? "<button id='prev-btn' style='flex:1;padding:12px;background:transparent;border:1px solid rgba(110,231,255,0.15);border-radius:8px;color:var(--text-secondary);font-family:inherit;font-size:13px;cursor:pointer;'>← PREV</button>"
+        : "") +
+      "<button id='next-btn' style='flex:1;padding:12px;background:transparent;border:1px solid var(--accent-blue);border-radius:8px;color:var(--accent-blue);font-family:inherit;font-size:13px;cursor:pointer;'>" +
+      (this._step === 48 ? "RESULTS →" : "NEXT →") +
+      "</button>" +
       "</div>" +
       "</div>";
 
-    // Statements
-    html += "<div style='padding:0 20px 70px;'>";
-    for (var i = 0; i < allStmts.length; i++) {
-      var stmt = allStmts[i];
-      var score = this._scores[stmt.trackId][stmt.index];
-      // Find track color
-      var tcolor = "#c4a87c";
-      for (var tt = 0; tt < page.tracks.length; tt++) {
-        if (page.tracks[tt] === stmt.trackId) {
-          // Find in our tracks array
-          if (typeof archetypes !== "undefined") {
-            for (var aa = 0; aa < archetypes.length; aa++) {
-              if (archetypes[aa].id === stmt.trackId) {
-                tcolor = archetypes[aa].color;
-                break;
-              }
-            }
-          }
-          break;
-        }
-      }
-
-      html +=
-        "<div style='display:flex;align-items:center;gap:10px;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.04);' + (i % 2 === 0 ? 'background:rgba(255,255,255,0.015);' : '') + '>" +
-        "<span style='flex:1;font-size:15px;color:var(--text-primary);line-height:1.4;'>" +
-        stmt.text +
-        "</span>" +
-        "<div style='display:flex;gap:6px;flex-shrink:0;'>";
-      for (var r = 1; r <= 5; r++) {
-        var active = score === r;
-        html +=
-          "<span class='score-btn' data-track='" +
-          stmt.trackId +
-          "' data-idx='" +
-          stmt.index +
-          "' data-val='" +
-          r +
-          "' " +
-          "style='width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;" +
-          "border:1px solid " +
-          (active ? tcolor : "rgba(255,255,255,0.1)") +
-          ";" +
-          "background:" +
-          (active ? tcolor : "transparent") +
-          ";" +
-          "color:" +
-          (active ? "#fff" : "var(--text-tertiary)") +
-          ";" +
-          "font-size:12px;cursor:pointer;transition:all 0.15s;'>" +
-          r +
-          "</span>";
-      }
-      html += "</div></div>";
-    }
-    html += "</div>";
-
-    // Navigation
-    html += "<div style='display:flex;gap:8px;padding:16px 20px;position:sticky;bottom:0;background:var(--bg-panel);border-top:1px solid var(--border-subtle);z-index:5;'>";
-    if (this._page > 1) {
-      html +=
-        "<button id='prev-btn' style='flex:1;padding:14px;background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle);border-radius:8px;color:var(--text-secondary);font-family:inherit;font-size:14px;cursor:pointer;'>← Назад</button>";
-    }
-    var canProceed = true;
-    html +=
-      "<button id='next-btn' style='flex:1;padding:14px;border-radius:8px;font-family:inherit;font-size:14px;cursor:" +
-      (canProceed ? "pointer" : "default") +
-      ";" +
-      "background:" +
-      (canProceed ? "var(--accent-blue)" : "rgba(255,255,255,0.03)") +
-      ";" +
-      "color:" +
-      (canProceed ? "#fff" : "var(--text-tertiary)") +
-      ";" +
-      "border:1px solid " +
-      (canProceed ? "var(--accent-blue)" : "var(--border-subtle)") +
-      ";'>" +
-      (this._page === 4 ? "Результат →" : "Далее →") +
-      "</button>";
-    html += "</div>";
-
-    left.innerHTML = html;
-
-    // Bind score buttons
+    // Bind
     var self = this;
-    var btns = left.querySelectorAll(".score-btn");
-    for (var b = 0; b < btns.length; b++) {
-      btns[b].onclick = function (e) {
+    var dots = left.querySelectorAll(".rate-dot");
+    for (var d = 0; d < dots.length; d++) {
+      dots[d].onclick = function (e) {
         e.stopPropagation();
-        var tid = this.getAttribute("data-track");
-        var idx = parseInt(this.getAttribute("data-idx"));
         var val = parseInt(this.getAttribute("data-val"));
-        if (self._scores[tid][idx] === val) {
-          self._scores[tid][idx] = 0;
+        var cIdx = self._step - 1;
+        var crd = self._cards[cIdx];
+        if (self._scores[crd.trackIdx] === undefined)
+          self._scores[crd.trackIdx] = [0, 0, 0, 0];
+        // Toggle: if same value, deselect
+        if (self._scores[crd.trackIdx][crd.qIdx] === val) {
+          self._scores[crd.trackIdx][crd.qIdx] = 0;
         } else {
-          self._scores[tid][idx] = val;
+          self._scores[crd.trackIdx][crd.qIdx] = val;
         }
+        self._updateVector();
         self._render();
-        self._updateVisualization();
       };
     }
-
-    // Navigation
     var prev = document.getElementById("prev-btn");
     if (prev)
       prev.onclick = function () {
-        self._page--;
+        self._step--;
         self._render();
       };
     var next = document.getElementById("next-btn");
-    if (next && canProceed)
+    if (next)
       next.onclick = function () {
-        if (self._page >= 4) {
-          self._page = 5;
+        if (self._step >= 48) {
+          self._step = 49;
           self._render();
         } else {
-          self._page++;
+          self._step++;
           self._render();
         }
       };
   },
 
   // ==================== RESULT ====================
-    _renderResult: function (left) {
-    this._updateVisualization();
+  _renderResult: function (left) {
+    this._updateVector();
     var best = this._getBest();
     if (!best) return;
-
     var p = best.primary;
     var c = p.color;
     var icon = best.icon;
     var totalAns = this._countAll();
-    var maxAns = 96;
-
-    var accuracyNote = "";
-    if (totalAns < 24) accuracyNote = "Low accuracy — answer more questions for reliable results";
-    else if (totalAns < 48) accuracyNote = "Medium accuracy — we recommend answering at least half";
-    else if (totalAns < 72) accuracyNote = "Good accuracy — result is close to real brand profile";
-    else accuracyNote = "High accuracy — brand DNA profile is reliably determined";
 
     var top3 = this._getTop3();
     var t3html = "";
     for (var i = 0; i < top3.length; i++) {
-      t3html += "<div style='display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);'>" +
-        "<span style='font-size:14px;color:" + top3[i].color + ";font-weight:600;min-width:20px;'>" + (i+1) + "</span>" +
-        "<span style='flex:1;font-size:15px;color:var(--text-primary);font-weight:400;'>" + top3[i].nameRu + "</span>" +
-        "<span style='font-size:12px;color:var(--text-tertiary);'>" + top3[i].sum + "/40</span></div>";
-    }
-
-    var dims = ["control","energy","focus","method"];
-    var labs = { control:"Control", energy:"Energy", focus:"Focus", method:"Method" };
-    var vhtml = "";
-    for (var v = 0; v < dims.length; v++) {
-      var dv = dims[v];
-      var val = (typeof userVector !== "undefined") ? userVector[dv] : 50;
-      vhtml += "<div style='display:flex;align-items:center;gap:10px;margin-bottom:5px;'>" +
-        "<span style='font-size:12px;color:var(--text-secondary);width:70px;font-weight:400;'>" + labs[dv] + "</span>" +
-        "<div style='flex:1;height:5px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;'>" +
-          "<div style='height:100%;width:" + val + "%;background:" + c + ";border-radius:3px;box-shadow:0 0 8px " + c + "44;'></div></div>" +
-        "<span style='font-size:12px;color:var(--text-primary);font-weight:500;min-width:28px;text-align:right;'>" + val + "</span></div>";
+      t3html +=
+        "<div style='display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(110,231,255,0.06);'>" +
+        "<span style='font-size:12px;color:" +
+        top3[i].color +
+        ";font-weight:600;'>" +
+        (i + 1) +
+        "</span>" +
+        "<span style='flex:1;font-size:14px;color:var(--text-primary);'>" +
+        top3[i].nameRu +
+        "</span>" +
+        "<span style='font-size:10px;color:var(--text-tertiary);'>" +
+        top3[i].sum +
+        "/20</span></div>";
     }
 
     left.innerHTML =
       "<div style='padding:20px;'>" +
-        "<div style='text-align:center;padding:28px 20px 20px;border:1px solid " + c + "33;border-radius:20px;margin-bottom:16px;background:linear-gradient(180deg, " + c + "10 0%, transparent 100%);position:relative;overflow:hidden;'>" +
-          "<div style='position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:0.2em;color:var(--text-tertiary);'>ARCHEYPEOS</div>" +
-          "<div style='font-size:52px;margin:8px 0 12px;filter:drop-shadow(0 0 20px " + c + "44);'>" + icon + "</div>" +
-          "<div style='font-size:26px;font-weight:200;color:" + c + ";letter-spacing:-0.01em;margin-bottom:6px;'>" + p.nameRu + "</div>" +
-          "<div style='font-size:11px;color:var(--text-tertiary);letter-spacing:0.05em;margin-bottom:4px;'>" + (p.behavior_model || "") + "</div>" +
-          "<div style='margin-top:12px;display:inline-block;padding:6px 14px;border-radius:20px;background:" + c + "18;border:1px solid " + c + "33;font-size:11px;color:" + c + ";" + totalAns + " / " + maxAns + " answered</div>" +
-        "</div>" +
-        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--text-tertiary);line-height:1.5;text-align:center;'>" + accuracyNote + "</div>" +
-        "<div style='font-size:9px;font-weight:600;letter-spacing:0.12em;color:var(--text-tertiary);margin-bottom:6px;text-transform:uppercase;'>TOP-3 ARCHETYPES</div>" +
-        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:12px;padding:4px 14px;margin-bottom:16px;'>" + t3html + "</div>" +
-        "<div style='font-size:9px;font-weight:600;letter-spacing:0.12em;color:var(--text-tertiary);margin-bottom:6px;text-transform:uppercase;'>4D BRAND VECTOR</div>" +
-        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:12px;padding:12px 14px;margin-bottom:16px;'>" + vhtml + "</div>" +
-        "<button id='dl-btn' style='width:100%;padding:15px;background:" + c + ";color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:6px;'>Download Brand Passport</button>" +
-        "<a href='https://t.me/Elenach_com' target='_blank' style='display:block;width:100%;padding:13px;background:rgba(255,255,255,0.03);border:1px solid var(--border-mid);border-radius:10px;color:var(--text-secondary);font-family:inherit;font-size:14px;text-align:center;text-decoration:none;margin-bottom:6px;'>@Elenach_com</a>" +
-        "<a href='https://elenach.com' target='_blank' style='display:block;width:100%;padding:13px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-tertiary);font-family:inherit;font-size:13px;text-align:center;text-decoration:none;margin-bottom:6px;'>elenach.com</a>" +
-        "<button id='restart-btn' style='width:100%;padding:10px;background:transparent;border:none;color:var(--text-tertiary);font-family:inherit;font-size:12px;cursor:pointer;'>Restart</button>" +
+      "<div style='text-align:center;padding:24px 16px;border:1px solid " +
+      c +
+      "33;border-radius:16px;margin-bottom:14px;background:linear-gradient(180deg," +
+      c +
+      "08,transparent);'>" +
+      "<div style='font-size:8px;letter-spacing:0.3em;color:var(--text-tertiary);margin-bottom:10px;'>SCAN COMPLETE</div>" +
+      "<div style='font-size:48px;margin-bottom:10px;filter:drop-shadow(0 0 20px " +
+      c +
+      "44);'>" +
+      icon +
+      "</div>" +
+      "<div style='font-size:24px;font-weight:200;color:" +
+      c +
+      ";letter-spacing:-0.01em;'>" +
+      p.nameRu +
+      "</div>" +
+      "<div style='font-size:10px;color:var(--text-tertiary);margin-top:6px;'>" +
+      (p.behavior_model || "") +
+      "</div>" +
+      "<div style='margin-top:10px;font-size:10px;color:var(--accent-blue);'>" +
+      totalAns +
+      "/48 answered</div>" +
+      "</div>" +
+      "<div style='font-size:8px;letter-spacing:0.15em;color:var(--text-tertiary);margin-bottom:4px;'>TOP-3</div>" +
+      "<div style='background:rgba(110,231,255,0.03);border:1px solid rgba(110,231,255,0.08);border-radius:10px;padding:4px 12px;margin-bottom:14px;'>" +
+      t3html +
+      "</div>" +
+      "<button id='dl-btn' style='width:100%;padding:14px;background:" +
+      c +
+      ";color:#020510;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:6px;'>DOWNLOAD BRAND PASSPORT</button>" +
+      "<a href='https://t.me/Elenach_com' target='_blank' style='display:block;width:100%;padding:12px;border:1px solid rgba(110,231,255,0.12);border-radius:10px;color:var(--text-secondary);text-align:center;text-decoration:none;font-size:13px;margin-bottom:6px;'>@Elenach_com</a>" +
+      "<a href='https://elenach.com' target='_blank' style='display:block;width:100%;padding:10px;color:var(--text-tertiary);text-align:center;text-decoration:none;font-size:11px;'>elenach.com</a>" +
+      "<button id='restart-btn' style='width:100%;padding:10px;background:transparent;border:none;color:var(--text-tertiary);font-size:11px;cursor:pointer;margin-top:4px;'>← RESTART</button>" +
       "</div>";
-
     var self = this;
-    document.getElementById("restart-btn").onclick = function() { HolographicQuest.init(); };
-    document.getElementById("dl-btn").onclick = function() { self._download(p, top3, totalAns, maxAns); };
-  },  _countAll: function() {
-    var cnt = 0;
-    for (var id in this._scores) {
-      for (var i = 0; i < 8; i++) { if (this._scores[id][i] > 0) cnt++; }
-    }
-    return cnt;
+    document.getElementById("restart-btn").onclick = function () {
+      HolographicQuest.init();
+    };
+    document.getElementById("dl-btn").onclick = function () {
+      self._download(p, top3, totalAns);
+    };
   },
 
+  // ==================== HELPERS ====================
+  _countAll: function () {
+    var c = 0;
+    for (var i = 0; i < this.tracks.length; i++) {
+      var s = this._scores[this.tracks[i].id];
+      for (var j = 0; j < 4; j++) {
+        if (s[j] > 0) c++;
+      }
+    }
+    return c;
+  },
   _getBest: function () {
     var bestId = null,
       bestSum = -1;
-    for (var id in this._scores) {
-      var sum = 0;
-      for (var i = 0; i < 8; i++) sum += this._scores[id][i];
+    for (var i = 0; i < this.tracks.length; i++) {
+      var id = this.tracks[i].id,
+        s = this._scores[id],
+        sum = 0;
+      for (var j = 0; j < 4; j++) sum += s[j];
       if (sum > bestSum) {
         bestSum = sum;
         bestId = id;
       }
     }
     if (!bestId) return null;
-    var primary = null,
+    var p = null,
       icon = "◈";
     if (typeof archetypes !== "undefined") {
       for (var a = 0; a < archetypes.length; a++) {
         if (archetypes[a].id === bestId) {
-          primary = archetypes[a];
+          p = archetypes[a];
           break;
         }
       }
     }
-    return { primary: primary, icon: icon, sum: bestSum };
-  },
-
-  _getTop3: function () {
-    var ranked = [];
-    for (var id in this._scores) {
-      var s = 0;
-      for (var i = 0; i < 8; i++) s += this._scores[id][i];
-      ranked.push({ id: id, sum: s });
+    for (var t = 0; t < this.tracks.length; t++) {
+      if (this.tracks[t].id === bestId) {
+        icon = this.tracks[t].icon;
+        break;
+      }
     }
-    ranked.sort(function (a, b) {
+    return { primary: p, icon: icon };
+  },
+  _getTop3: function () {
+    var r = [];
+    for (var i = 0; i < this.tracks.length; i++) {
+      var id = this.tracks[i].id,
+        s = this._scores[id],
+        sum = 0;
+      for (var j = 0; j < 4; j++) sum += s[j];
+      r.push({ id: id, sum: sum });
+    }
+    r.sort(function (a, b) {
       return b.sum - a.sum;
     });
-    var r = [];
-    for (var i = 0; i < 3 && i < ranked.length; i++) {
+    var res = [];
+    for (var k = 0; k < 3 && k < r.length; k++) {
       var arch = null;
       if (typeof archetypes !== "undefined") {
         for (var a = 0; a < archetypes.length; a++) {
-          if (archetypes[a].id === ranked[i].id) {
+          if (archetypes[a].id === r[k].id) {
             arch = archetypes[a];
             break;
           }
         }
       }
       if (arch)
-        r.push({ nameRu: arch.nameRu, color: arch.color, sum: ranked[i].sum });
+        res.push({ nameRu: arch.nameRu, color: arch.color, sum: r[k].sum });
     }
-    return r;
+    return res;
   },
-
-  _updateVisualization: function () {
+  _updateVector: function () {
     var v = { control: 50, energy: 50, focus: 50, method: 50 };
     var w = {
       hero: { c: 2, e: 3, f: 2, m: 0 },
@@ -529,10 +482,12 @@ var HolographicQuest = {
       innocent: { c: -1, e: -1, f: -1, m: 1 },
       magician: { c: 0, e: 2, f: 2, m: 3 },
     };
-    for (var id in this._scores) {
-      var sum = 0;
-      for (var i = 0; i < 8; i++) sum += this._scores[id][i];
-      var inf = (sum / 40) * 30;
+    for (var i = 0; i < this.tracks.length; i++) {
+      var id = this.tracks[i].id,
+        s = this._scores[id],
+        sum = 0;
+      for (var j = 0; j < 4; j++) sum += s[j];
+      var inf = (sum / 20) * 30;
       if (w[id]) {
         v.control += w[id].c * inf * 0.3;
         v.energy += w[id].e * inf * 0.3;
@@ -554,112 +509,65 @@ var HolographicQuest = {
       updateBrandPositionFromVector();
     if (typeof updateAll === "function") updateAll();
   },
-
-  _download: function (primary, top3, totalAns, maxAns) {
-    var c = primary.color;
-    var recs = {
-      hero: {
-        do: "Резкие контрасты • Чёткие CTA • Соцдоказательства",
-        dont: "Размытость • Длинные формы • Пассив",
-      },
-      ruler: {
-        do: "Симметрия • Золото • Иерархия",
-        dont: "Асимметрия • Демократичность • Эмоции",
-      },
-      caregiver: {
-        do: "Органика • Тепло • Поддержка",
-        dont: "Холод • Агрессия • Игнор accessibility",
-      },
-      lover: {
-        do: "Чувственность • Насыщенность • Тактильность",
-        dont: "Безликость • Грубость • Спешка",
-      },
-      jester: {
-        do: "Неожиданность • Яркость • Игра",
-        dont: "Скука • Формальность • Шутки ради шуток",
-      },
-      everyman: {
-        do: "Честность • Интуитивность • Фото людей",
-        dont: "Элитарность • Глянец • Сложность",
-      },
-      explorer: {
-        do: "Простор • Природа • Навигация",
-        dont: "Теснота • Ограничения • Индустрия",
-      },
-      rebel: {
-        do: "Асимметрия • Контраст • Провокация",
-        dont: "Традиция • Нейтральность • Осторожность",
-      },
-      creator: {
-        do: "Свобода • Кастомизация • Вдохновение",
-        dont: "Рамки • Шаблоны • Скудость",
-      },
-      sage: {
-        do: "Структура • Данные • Аналитика",
-        dont: "Манипуляции • Поверхность • Крик",
-      },
-      innocent: {
-        do: "Пастель • Простота • Позитив",
-        dont: "Тьма • Сложность • Цинизм",
-      },
-      magician: {
-        do: "Градиенты • Reveal • Метафоры",
-        dont: "Плоскость • Шаблоны • Объяснения",
-      },
-    };
-    var r = recs[primary.id] || { do: "Аутентичность", dont: "Хаос" };
+  _download: function (p, top3, totalAns) {
+    var c = p.color;
     var html =
-      "<!doctype html><html lang='ru'><head><meta charset='UTF-8'><title>Brand Passport — " +
-      primary.nameRu +
+      "<!doctype html><html lang=ru><head><meta charset=UTF-8><title>Brand Passport — " +
+      p.nameRu +
       "</title>" +
-      "<style>body{font-family:Manrope,Inter,sans-serif;background:#0a0a0e;color:#e8e6e0;max-width:640px;margin:0 auto;padding:48px 24px;}" +
-      "h1{font-weight:300;font-size:32px;color:" +
+      "<style>body{font-family:Inter,Manrope,sans-serif;background:#020510;color:#e0f0ff;max-width:640px;margin:0 auto;padding:48px 24px;}" +
+      "h1{font-weight:200;font-size:32px;color:" +
       c +
-      ";margin:0 0 4px;}h2{font-weight:300;font-size:18px;color:#9a9890;margin:0 0 28px;}" +
-      "h3{font-weight:500;font-size:11px;letter-spacing:0.12em;color:#6a6860;margin:32px 0 10px;text-transform:uppercase;}" +
+      ";margin:0 0 4px;}h2{font-weight:300;font-size:16px;color:#8090b0;margin:0 0 8px;}" +
+      "h3{font-weight:500;font-size:10px;letter-spacing:0.15em;color:#506080;margin:32px 0 10px;}" +
       ".badge{display:inline-block;padding:6px 16px;border:1px solid " +
       c +
-      "44;border-radius:20px;font-size:10px;color:" +
+      "44;border-radius:20px;font-size:9px;color:" +
       c +
-      ";letter-spacing:0.1em;margin-bottom:16px;}" +
-      ".card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;margin-bottom:14px;}" +
-      "p{font-size:14px;color:#9a9890;line-height:1.8;margin:0 0 10px;}li{font-size:14px;color:#9a9890;line-height:1.7;}" +
-      ".footer{font-size:10px;color:#6a6860;margin-top:40px;text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);}" +
+      ";letter-spacing:0.15em;margin-bottom:16px;}" +
+      ".card{background:rgba(110,231,255,0.03);border:1px solid rgba(110,231,255,0.08);border-radius:14px;padding:20px;margin-bottom:14px;}" +
+      "p{font-size:14px;color:#8090b0;line-height:1.8;margin:0 0 10px;}" +
+      ".footer{font-size:10px;color:#506080;margin-top:40px;text-align:center;padding-top:20px;border-top:1px solid rgba(110,231,255,0.08);}" +
       "a{color:" +
       c +
       ";}</style></head><body>" +
-      "<div class='badge'>BRAND DNA PASSPORT</div><h1>" +
-      primary.nameRu +
+      "<div class=badge>BRAND DNA PASSPORT</div><h1>" +
+      p.nameRu +
       "</h1><h2>" +
-      (primary.behavior_model || "") +
+      (p.behavior_model || "") +
       "</h2>" +
-      "<h3>Психологический профиль</h3><div class='card'><p>" +
-      (primary.ux_rules ? primary.ux_rules.behavior : "") +
-      "</p></div>" +
-      "<h3>Дизайн-рекомендации</h3><div class='card'><p><strong>Типографика:</strong> " +
-      (primary.ui_rules ? primary.ui_rules.typography : "") +
+      "<p style=font-size:12px;color:#506080;>" +
+      totalAns +
+      "/48 questions answered</p>" +
+      "<h3>DESIGN TOKENS</h3><div class=card><p><strong>Typography:</strong> " +
+      (p.ui_rules ? p.ui_rules.typography : "") +
       "</p>" +
-      "<p><strong>Структура:</strong> " +
-      (primary.ux_rules ? primary.ux_rules.structure : "") +
+      "<p><strong>Structure:</strong> " +
+      (p.ux_rules ? p.ux_rules.structure : "") +
       "</p>" +
-      "<p><strong>Анимация:</strong> " +
-      (primary.ui_rules ? primary.ui_rules.motion : "") +
+      "<p><strong>Motion:</strong> " +
+      (p.ui_rules ? p.ui_rules.motion : "") +
       "</p>" +
-      "<p><strong>Стиль:</strong> " +
-      (primary.ui_rules ? primary.ui_rules.visual : "") +
+      "<p><strong>Visual:</strong> " +
+      (p.ui_rules ? p.ui_rules.visual : "") +
       "</p></div>" +
-      "<h3>Усиливает архетип</h3><div class='card'><p>" +
-      r.do +
-      "</p></div>" +
-      "<h3>Ослабляет архетип</h3><div class='card'><p>" +
-      r.dont +
-      "</p></div>" +
-      "<div style='text-align:center;margin:30px 0 20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);'><a href='https://archetypeos.ru' style='font-size:22px;font-weight:200;color:#c4a87c;text-decoration:none;letter-spacing:0.04em;'>archetypeos.ru</a></div><div class='footer'>ArchetypeOS • Elena Charlesworth<br><a href='https://t.me/Elenach_com'>@Elenach_com</a></div></body></html>";
+      "<h3>TOP-3</h3><div class=card>";
+    for (var i = 0; i < top3.length; i++)
+      html +=
+        "<p>" +
+        (i + 1) +
+        ". " +
+        top3[i].nameRu +
+        " (" +
+        top3[i].sum +
+        "/20)</p>";
+    html +=
+      "</div><div class=footer>ArchetypeOS · Elena Charlesworth<br><a href=https://t.me/Elenach_com>@Elenach_com</a> · <a href=https://elenach.com>elenach.com</a></div></body></html>";
     var b = new Blob([html], { type: "text/html" });
     var u = URL.createObjectURL(b);
     var a = document.createElement("a");
     a.href = u;
-    a.download = "Brand_Passport_" + primary.nameRu + ".html";
+    a.download = "Brand_Passport_" + p.nameRu + ".html";
     a.click();
     setTimeout(function () {
       URL.revokeObjectURL(u);
