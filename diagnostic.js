@@ -161,31 +161,22 @@ var HolographicQuest = {
     },
   ],
 
-  showStartScreen: function (onComplete) {
-    var ex = document.getElementById("quest-start-overlay");
-    if (ex) ex.remove();
-    var overlay = document.createElement("div");
-    overlay.id = "quest-start-overlay";
-    overlay.className = "quest-start-overlay";
-    overlay.innerHTML =
-      "<div class='quest-start-backdrop'></div>" +
-      "<div class='quest-start-card'>" +
-      "<div class='quest-start-icon'>◈</div>" +
-      "<h1 class='quest-start-title'>ArchetypeOS</h1>" +
-      "<p class='quest-start-subtitle'>Brand DNA Diagnostic Engine</p>" +
-      "<p class='quest-start-desc'>Система проектирования восприятия бренда.<br>12 архетипов. 10 лет экспертизы.</p>" +
-      "<div class='quest-start-principles'><span>Тихая роскошь</span><span>•</span><span>Воздух в кадре</span><span>•</span><span>Пастельная палитра</span></div>" +
-      "<button class='quest-start-btn' id='quest-start-btn'><span>→</span> Определить архетип бренда</button>" +
-      "<p class='quest-start-hint'>Elena Charlesworth</p>" +
-      "</div>";
-    document.body.appendChild(overlay);
-    var self = this;
-    document.getElementById("quest-start-btn").onclick = function () {
-      overlay.style.opacity = "0";
-      setTimeout(function () {
-        if (overlay.parentNode) overlay.remove();
-      }, 300);
-      self.start(onComplete);
+    showStartScreen: function(onComplete) { this.start(onComplete); },
+
+
+
+  showWelcome: function() {
+    var left = document.getElementById("panel-controllers");
+    if (!left) return;
+    left.innerHTML = "<div style='text-align:center;padding:50px 20px;'>" +
+      "<div style='font-size:40px;margin-bottom:14px;'>◈</div>" +
+      "<h2 style='font-weight:300;font-size:18px;color:var(--text-primary);margin:0 0 8px;'>ArchetypeOS</h2>" +
+      "<p style='font-size:11px;color:var(--text-tertiary);letter-spacing:0.1em;margin:0 0 16px;'>BRAND DNA DIAGNOSTIC</p>" +
+      "<p style='font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0 0 24px;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
+      "<button id='welcome-start-btn' style='padding:12px 36px;background:var(--accent-blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
+    "</div>";
+    document.getElementById("welcome-start-btn").onclick = function() {
+      HolographicQuest.showStartScreen();
     };
   },
 
@@ -453,28 +444,6 @@ var HolographicQuest = {
 
     console.log("[HoloQuest] Done: " + (primary ? primary.nameRu : "---"));
   },
-};  // Direct start - no popup. Button is in left panel via init().
-  showStartScreen: function(onComplete) {
-    this.start(onComplete);
-  },
+};
 
-  // Show welcome screen in left panel
-  showWelcome: function() {
-    var left = document.getElementById("panel-controllers");
-    if (!left) return;
-    left.innerHTML = "";
-    var d = document.createElement("div");
-    d.style.cssText = "text-align:center;padding:50px 20px;";
-    d.innerHTML = "<div style='font-size:40px;margin-bottom:14px;'>◈</div>" +
-      "<h2 style='font-weight:300;font-size:18px;color:var(--text-primary);margin:0 0 8px;'>ArchetypeOS</h2>" +
-      "<p style='font-size:11px;color:var(--text-tertiary);letter-spacing:0.1em;margin:0 0 16px;'>BRAND DNA DIAGNOSTIC</p>" +
-      "<p style='font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0 0 24px;'>12 архетипов. 5 вопросов.<br>Тихая роскошь. Воздух в кадре.</p>" +
-      "<button id='welcome-start-btn' style='padding:12px 36px;background:var(--accent-blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;'>Начать диагностику</button>";
-    left.appendChild(d);
-    document.getElementById("welcome-start-btn").onclick = function() {
-      HolographicQuest.showStartScreen();
-    };
-  },
-
-// Auto-show welcome
 document.addEventListener("DOMContentLoaded", function() { setTimeout(function() { HolographicQuest.showWelcome(); }, 400); });
