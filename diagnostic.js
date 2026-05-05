@@ -641,7 +641,7 @@ var HolographicQuest = {
       "<h3>Ослабляет архетип</h3><div class='card'><p>" +
       r.dont +
       "</p></div>" +
-      "<div class='footer'>ArchetypeOS • Elena Charlesworth<br><a href='https://t.me/Elenach_com'>@Elenach_com</a></div></body></html>";
+      "<div style='text-align:center;margin:30px 0 20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);'><a href='https://archetypeos.ru' style='font-size:22px;font-weight:200;color:#c4a87c;text-decoration:none;letter-spacing:0.04em;'>archetypeos.ru</a></div><div class='footer'>ArchetypeOS • Elena Charlesworth<br><a href='https://t.me/Elenach_com'>@Elenach_com</a></div></body></html>";
     var b = new Blob([html], { type: "text/html" });
     var u = URL.createObjectURL(b);
     var a = document.createElement("a");
