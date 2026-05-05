@@ -1,32 +1,32 @@
 /* ==================== ROOT VARIABLES — Quiet Luxury ==================== */
 :root {
     /* ---- Background depths (warm deep, not cold tech) ---- */
-    --bg-deep: #0a0a0e;
-    --bg-graphite: #141318;
-    --bg-panel: #111014;
-    --bg-glass: rgba(18, 17, 22, 0.7);
-    --bg-glass-strong: rgba(22, 21, 28, 0.88);
+    --bg-deep: #020510;
+    --bg-graphite: #060c1e;
+    --bg-panel: #080c1e;
+    --bg-glass: rgba(8,12,30,0.85);
+    --bg-glass-strong: rgba(12,16,36,0.92);
 
     /* ---- Borders (softer, warmer) ---- */
-    --border-subtle: rgba(255, 255, 255, 0.05);
-    --border-mid: rgba(255, 255, 255, 0.08);
+    --border-subtle: rgba(110,231,255,0.08);
+    --border-mid: rgba(110,231,255,0.15);
 
     /* ---- Text (warm white, not cold) ---- */
-    --text-primary: #e8e6e0;
-    --text-secondary: #9a9890;
-    --text-tertiary: #6a6860;
+    --text-primary: #e0f0ff;
+    --text-secondary: #8090b0;
+    --text-tertiary: #506080;
 
     /* ---- Accent colors (quiet luxury: gold, beige, sage) ---- */
-    --accent-blue: #c4a87c;
-    --accent-beige: #c8bda8;
-    --accent-green: #9aaa9a;
+    --accent-blue: #6ee7ff;
+    --accent-beige: #b8a0ff;
+    --accent-green: #4aff9e;
     --accent-blue-dim: rgba(196, 168, 124, 0.14);
     --accent-beige-dim: rgba(200, 189, 168, 0.14);
     --accent-green-dim: rgba(154, 170, 154, 0.14);
 
     /* ---- Glow (soft, warm, never harsh) ---- */
-    --glow-blue: rgba(196, 168, 124, 0.3);
-    --glow-strong: rgba(196, 168, 124, 0.5);
+    --glow-blue: rgba(110,231,255,0.3);
+    --glow-strong: rgba(110,231,255,0.5);
 
     /* ---- Border radius (generous, editorial) ---- */
     --radius-sm: 8px;
