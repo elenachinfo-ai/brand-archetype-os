@@ -538,9 +538,11 @@ function updateAll() {
   var el = document.getElementById("output-conflict-name");
   if (el) el.textContent =
     r.conflict.nameRu;
-  const conflictDot = document.getElementById("output-conflict-dot");
-  conflictDot.style.background = r.conflict.color;
-  conflictDot.style.boxShadow = `0 0 8px ${r.conflict.color}`;
+  var conflictDot = document.getElementById("output-conflict-dot");
+  if (conflictDot) {
+    conflictDot.style.background = r.conflict.color;
+    conflictDot.style.boxShadow = "0 0 8px " + r.conflict.color;
+  }
 
   // Rules
   var el = document.getElementById("rule-typography");
