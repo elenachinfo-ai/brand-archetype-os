@@ -157,8 +157,9 @@ var HolographicQuest = {
 
   // ==================== INIT ====================
   init: function () {
+    try {
     var left = document.getElementById("panel-controllers");
-    if (!left) return;
+    if (!left) { alert('panel-controllers not found'); return; }
     this._savedLeft = left.innerHTML;
 
     // Reset scores
@@ -168,10 +169,12 @@ var HolographicQuest = {
     }
 
     this._renderTracks();
+    } catch(e) { alert("init error: " + e.message); }
   },
 
   // ==================== RENDER ALL TRACKS ====================
   _renderTracks: function () {
+    try {
     var left = document.getElementById("panel-controllers");
     if (!left) return;
 
@@ -320,6 +323,7 @@ var HolographicQuest = {
         self._finish();
       };
     }
+    } catch(e) { alert("_renderTracks error: " + e.message); }
   },
 
   _countAnswered: function () {
