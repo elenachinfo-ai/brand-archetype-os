@@ -207,7 +207,8 @@ body {
     flex-direction: column;
     padding: 18px 20px;
     gap: 10px;
-    overflow: visible;
+    overflow-y: auto;
+    overflow-x: hidden;
     z-index: 10;
 }
 
