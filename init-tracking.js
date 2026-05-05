@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     Tracker.ctaAppeared();
 
     // ---- Archetype lock → PIVOT UI ----
-    Interpreter.onLock((archetype) => {
+    // Disabled: only lock when diagnostic completes
+    /* Interpreter.onLock((archetype) => {
       console.log(
         `%c[Engine] 🎯 ARCHETYPE LOCKED: ${archetype.nameRu}`,
         "color: #a5d6a7; font-size: 14px;",
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ---- EXECUTE THE PIVOT ----
       Pivot.execute(archetype.id);
+    }); */
     });
 
     // ---- Every tick: update signal bars ----
