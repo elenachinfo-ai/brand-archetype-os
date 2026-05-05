@@ -391,83 +391,101 @@ var HolographicQuest = {
   _finish: function () {
     var self = this;
     var left = document.getElementById("panel-controllers");
-    var right = document.getElementById("panel-output");
+    if (!left) return;
 
-    // Calculate final vector
+    // Calculate which archetype has the highest total score
+    var bestId = null;
+    var bestSum = 0;
+    for (var id in this._scores) {
+      var sum = 0;
+      for (var i = 0; i < 4; i++) { sum += this._scores[id][i]; }
+      if (sum > bestSum) { bestSum = sum; bestId = id; }
+    }
+
+    // Find archetype data
+    var primary = null;
+    if (typeof archetypes !== "undefined") {
+      for (var a = 0; a < archetypes.length; a++) {
+        if (archetypes[a].id === bestId) { primary = archetypes[a]; break; }
+      }
+    }
+
+    // Find track data for icon
+    var trackIcon = "◈";
+    for (var t = 0; t < this.tracks.length; t++) {
+      if (this.tracks[t].id === bestId) { trackIcon = this.tracks[t].icon; break; }
+    }
+
+    if (!primary) { left.innerHTML = "<p>Пройдите больше утверждений для точного результата</p>"; return; }
+
+    var color = primary.color || "#c4a87c";
+
+    // Update vector for visualization
     this._updateVisualization();
 
-    var primary = null;
-    if (typeof getRankings === "function") {
-      var r = getRankings();
-      if (r) primary = r.primary;
+    var dims = ["control", "energy", "focus", "method"];
+    var labels = { control: "Контроль", energy: "Энергия", focus: "Фокус", method: "Метод" };
+    var vecHTML = "";
+    for (var i = 0; i < dims.length; i++) {
+      var dv = dims[i];
+      var v = typeof userVector !== "undefined" ? userVector[dv] : 50;
+      vecHTML += "<div class='quest-vector-row'><span class='quest-vector-label'>" + labels[dv] + "</span>" +
+        "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" + v + "%;background:" + color + ";'></div></div>" +
+        "<span class='quest-vector-val'>" + v + "</span></div>";
     }
 
-    if (left && primary) {
-      var color = primary.color || "#c4a87c";
-      var dims = ["control", "energy", "focus", "method"];
-      var labels = {
-        control: "Контроль",
-        energy: "Энергия",
-        focus: "Фокус",
-        method: "Метод",
-      };
-      var vecHTML = "";
-      for (var i = 0; i < dims.length; i++) {
-        var dv = dims[i];
-        var v = typeof userVector !== "undefined" ? userVector[dv] : 50;
-        vecHTML +=
-          "<div class='quest-vector-row'><span class='quest-vector-label'>" +
-          labels[dv] +
-          "</span>" +
-          "<div class='quest-vector-track'><div class='quest-vector-fill' style='width:" +
-          v +
-          "%;background:" +
-          color +
-          ";'></div></div>" +
-          "<span class='quest-vector-val'>" +
-          v +
-          "</span></div>";
-      }
+    // Collect top 3 archetypes
+    var ranked = [];
+    for (var id2 in this._scores) {
+      var s = 0;
+      for (var j = 0; j < 4; j++) { s += this._scores[id2][j]; }
+      ranked.push({ id: id2, sum: s });
+    }
+    ranked.sort(function(a, b) { return b.sum - a.sum; });
 
-      left.innerHTML =
-        "<div class='quest-panel-header'>РЕЗУЛЬТАТ</div>" +
-        "<div class='quest-right-card' style='border-color:" +
-        color +
-        "44;text-align:center;padding:20px;'>" +
-        "<div style='font-size:40px;margin-bottom:8px;'>" +
-        (function(tracks, id) { for (var i = 0; i < tracks.length; i++) { if (tracks[i].id === id) return tracks[i].icon; } return '◈'; })(this.tracks, primary.id) +
-        "</div>" +
-        "<div class='quest-right-archetype' style='color:" +
-        color +
-        ";font-size:22px;'>" +
-        primary.nameRu +
-        "</div>" +
-        "<div class='quest-right-sub'>" +
-        (primary.behavior_model || "") +
-        "</div>" +
-        "</div>" +
-        "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" +
-        vecHTML +
-        "<button class='quest-next-btn' style='margin-top:12px;' id='restart-btn'>← Пройти заново</button>" +
-        "<button class='quest-next-btn' style='margin-top:8px;background:var(--accent-blue);color:#fff;' id='show-passport-btn'>Открыть Brand Passport</button>";
-
-      document.getElementById("restart-btn").onclick = function () {
-        HolographicQuest.init();
-      };
-      document.getElementById("show-passport-btn").onclick = function () {
-        if (typeof ArchetypeResult !== "undefined" && primary) {
-          var finalVector = {
-            control:
-              typeof userVector !== "undefined" ? userVector.control : 50,
-            energy: typeof userVector !== "undefined" ? userVector.energy : 50,
-            focus: typeof userVector !== "undefined" ? userVector.focus : 50,
-            method: typeof userVector !== "undefined" ? userVector.method : 50,
-          };
-          ArchetypeResult.show(primary, finalVector, []);
+    var top3html = "";
+    for (var r = 0; r < 3 && r < ranked.length; r++) {
+      var archData = null;
+      if (typeof archetypes !== "undefined") {
+        for (var aa = 0; aa < archetypes.length; aa++) {
+          if (archetypes[aa].id === ranked[r].id) { archData = archetypes[aa]; break; }
         }
-      };
+      }
+      if (archData) {
+        top3html += "<div style='display:flex;align-items:center;gap:8px;padding:6px 0;'>" +
+          "<span style='font-size:11px;color:" + archData.color + ";'>" + (r+1) + ".</span>" +
+          "<span style='font-size:12px;color:var(--text-primary);'>" + archData.nameRu + "</span>" +
+          "<span style='font-size:10px;color:var(--text-tertiary);margin-left:auto;'>" + ranked[r].sum + "/20</span>" +
+          "</div>";
+      }
     }
-  },
+
+    left.innerHTML =
+      "<div class='quest-panel-header'>РЕЗУЛЬТАТ</div>" +
+      "<div class='quest-right-card' style='border-color:" + color + "44;text-align:center;padding:20px;'>" +
+        "<div style='font-size:40px;margin-bottom:8px;'>" + trackIcon + "</div>" +
+        "<div class='quest-right-archetype' style='color:" + color + ";font-size:22px;'>" + primary.nameRu + "</div>" +
+        "<div class='quest-right-sub'>" + (primary.behavior_model || "") + "</div>" +
+      "</div>" +
+      "<div class='quest-right-section-title'>ТОП-3 АРХЕТИПА</div>" + top3html +
+      "<div class='quest-right-section-title'>4D-ВЕКТОР</div>" + vecHTML +
+      "<button class='quest-next-btn' style='margin-top:12px;' id='restart-btn'>← Пройти заново</button>" +
+      "<button class='quest-next-btn' style='margin-top:8px;background:var(--accent-blue);color:#fff;' id='show-passport-btn'>Открыть Brand Passport</button>";
+
+    document.getElementById("restart-btn").onclick = function() { HolographicQuest.init(); };
+    document.getElementById("show-passport-btn").onclick = function() {
+      if (typeof ArchetypeResult !== "undefined") {
+        var fv = { control: 50, energy: 50, focus: 50, method: 50 };
+        if (typeof userVector !== "undefined") {
+          fv.control = userVector.control;
+          fv.energy = userVector.energy;
+          fv.focus = userVector.focus;
+          fv.method = userVector.method;
+        }
+        ArchetypeResult.show(primary, fv, []);
+      }
+    };
+  },  },
 };
 
 // Auto-show
