@@ -279,7 +279,7 @@ var HolographicQuest = {
       }
 
       html +=
-        "<div style='display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);'>" +
+        "<div style='display:flex;align-items:center;gap:10px;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.04);' + (i % 2 === 0 ? 'background:rgba(255,255,255,0.015);' : '') + '>" +
         "<span style='flex:1;font-size:15px;color:var(--text-primary);line-height:1.4;'>" +
         stmt.text +
         "</span>" +
@@ -433,7 +433,7 @@ var HolographicQuest = {
         "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:12px;padding:12px 14px;margin-bottom:16px;'>" + vhtml + "</div>" +
         "<button id='dl-btn' style='width:100%;padding:15px;background:" + c + ";color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:6px;'>Download Brand Passport</button>" +
         "<a href='https://t.me/Elenach_com' target='_blank' style='display:block;width:100%;padding:13px;background:rgba(255,255,255,0.03);border:1px solid var(--border-mid);border-radius:10px;color:var(--text-secondary);font-family:inherit;font-size:14px;text-align:center;text-decoration:none;margin-bottom:6px;'>@Elenach_com</a>" +
-        "<a href='https://archetypeos.ru' target='_blank' style='display:block;width:100%;padding:13px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-tertiary);font-family:inherit;font-size:13px;text-align:center;text-decoration:none;margin-bottom:6px;'>archetypeos.ru</a>" +
+        "<a href='https://elenach.com' target='_blank' style='display:block;width:100%;padding:13px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;color:var(--text-tertiary);font-family:inherit;font-size:13px;text-align:center;text-decoration:none;margin-bottom:6px;'>elenach.com</a>" +
         "<button id='restart-btn' style='width:100%;padding:10px;background:transparent;border:none;color:var(--text-tertiary);font-family:inherit;font-size:12px;cursor:pointer;'>Restart</button>" +
       "</div>";
 
