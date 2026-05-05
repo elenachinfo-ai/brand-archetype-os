@@ -475,7 +475,8 @@ body {
 .panel-output {
     grid-area: output;
     width: auto;
-    max-height: 80px;
+    min-height: 90px;
+    max-height: 130px;
     border-top: 1px solid var(--border-mid);
     background: transparent;
     border-left: 1px solid var(--border-subtle);
