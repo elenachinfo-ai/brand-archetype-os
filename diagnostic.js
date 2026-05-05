@@ -181,33 +181,30 @@ var HolographicQuest = {
   },
 
   // ==================== INTRO ====================
-  _renderIntro: function (left) {
+    _renderIntro: function (left) {
     left.innerHTML =
-      "<div style='padding:32px 24px;'>" +
-      "<div style='font-size:11px;font-weight:600;letter-spacing:0.15em;color:var(--accent-blue);margin-bottom:16px;'>ARCHEYPEOS</div>" +
-      "<h2 style='font-weight:300;font-size:22px;color:var(--text-primary);margin:0 0 8px;line-height:1.3;'>Диагностика ДНК бренда</h2>" +
-      "<p style='font-size:15px;color:var(--text-secondary);line-height:1.6;margin:0 0 24px;'>96 утверждений • 12 архетипов • 4 страницы</p>" +
-      "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:12px;padding:16px;margin-bottom:20px;'>" +
-      "<p style='font-size:13px;color:var(--text-secondary);line-height:1.7;margin:0 0 12px;'>Оцените каждое утверждение по шкале от 1 до 5:</p>" +
-      "<div style='display:flex;flex-direction:column;gap:6px;'>" +
-      "<div style='display:flex;align-items:center;gap:8px;'><span style='width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:inline-block;'></span><span style='font-size:13px;color:var(--text-tertiary);'>1 — Почти никогда</span></div>" +
-      "<div style='display:flex;align-items:center;gap:8px;'><span style='width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);display:inline-block;'></span><span style='font-size:13px;color:var(--text-tertiary);'>2 — Редко</span></div>" +
-      "<div style='display:flex;align-items:center;gap:8px;'><span style='width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.25);display:inline-block;'></span><span style='font-size:13px;color:var(--text-tertiary);'>3 — Иногда</span></div>" +
-      "<div style='display:flex;align-items:center;gap:8px;'><span style='width:16px;height:16px;border-radius:50%;background:var(--accent-blue);opacity:0.6;border:1px solid var(--accent-blue);display:inline-block;'></span><span style='font-size:13px;color:var(--text-tertiary);'>4 — Обычно</span></div>" +
-      "<div style='display:flex;align-items:center;gap:8px;'><span style='width:16px;height:16px;border-radius:50%;background:var(--accent-blue);border:1px solid var(--accent-blue);display:inline-block;'></span><span style='font-size:13px;color:var(--text-tertiary);'>5 — Почти всегда</span></div>" +
-      "</div>" +
-      "</div>" +
-      "<p style='font-size:12px;color:var(--text-tertiary);line-height:1.7;margin:0 0 20px;'>Важно: низкие оценки — это нормально. Широкий разброс ответов помогает точнее определить архетип. Если большинство ответов 4–5, вернитесь и проверьте — возможно, вы слишком строги к себе.</p>" +
-      "<button id='start-btn' style='width:100%;padding:16px;background:var(--accent-blue);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
+      "<div style='padding:24px 20px;display:flex;flex-direction:column;height:100%;justify-content:center;'>" +
+        "<div style='font-size:10px;font-weight:600;letter-spacing:0.15em;color:var(--accent-blue);margin-bottom:8px;'>ARCHEYPEOS</div>" +
+        "<h2 style='font-weight:300;font-size:20px;color:var(--text-primary);margin:0 0 4px;'>Диагностика бренда</h2>" +
+        "<p style='font-size:13px;color:var(--text-secondary);margin:0 0 12px;'>96 утверждений • 12 архетипов • 4 страницы</p>" +
+        "<div style='background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;padding:12px 14px;margin-bottom:12px;'>" +
+          "<p style='font-size:12px;color:var(--text-secondary);margin:0 0 8px;'>Шкала оценки: 1=Никогда → 5=Всегда</p>" +
+          "<div style='display:flex;gap:8px;justify-content:center;'>" +
+            "<span style='font-size:10px;color:var(--text-tertiary);'>①</span>" +
+            "<span style='font-size:10px;color:var(--text-tertiary);'>②</span>" +
+            "<span style='font-size:10px;color:var(--text-tertiary);'>③</span>" +
+            "<span style='font-size:10px;color:var(--accent-blue);'>④</span>" +
+            "<span style='font-size:10px;color:var(--accent-blue);font-weight:600;'>⑤</span>" +
+          "</div>" +
+        "</div>" +
+        "<p style='font-size:11px;color:var(--text-tertiary);line-height:1.5;margin:0 0 16px;'>Низкие оценки — норма. Широкий разброс даёт точный результат.</p>" +
+        "<button id='start-btn' style='width:100%;padding:16px;background:var(--accent-blue);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;'>Начать диагностику</button>" +
       "</div>";
     document.getElementById("start-btn").onclick = function () {
       HolographicQuest._page = 1;
       HolographicQuest._render();
     };
-  },
-
-  // ==================== QUESTION PAGE ====================
-  _renderPage: function (left) {
+  },  _renderPage: function (left) {
     var page = this._pages[this._page - 1];
     var allStmts = [];
     for (var t = 0; t < page.tracks.length; t++) {
