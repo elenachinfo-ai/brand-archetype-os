@@ -2222,3 +2222,9 @@ body {
     color: var(--accent-blue);
     box-shadow: 0 0 8px var(--accent-blue-dim);
 }
+
+
+#rate-slider { height: 8px; background: rgba(110,231,255,0.15); border-radius: 4px; outline: none; }
+#rate-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 32px; height: 32px; border-radius: 50%; background: var(--accent-blue); cursor: pointer; border: 2px solid #020510; box-shadow: 0 0 16px var(--accent-blue); }
+#rate-slider::-moz-range-thumb { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-blue); cursor: pointer; border: 2px solid #020510; box-shadow: 0 0 16px var(--accent-blue); }
+#rate-slider::-ms-thumb { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-blue); cursor: pointer; }
