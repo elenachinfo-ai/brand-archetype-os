@@ -1,345 +1,213 @@
-// ArchetypeOS v7.1 — Cosmic Speed Diagnostic
-// Slider + auto-advance + keyboard 1-5
+// ArchetypeOS v8 — 12-карточный экспресс-тест. Один клик = оценка архетипа.
 var HolographicQuest = {
-  _step: 0,
-  _scores: {},
-  _cards: [],
-  _autoAdvance: true,
+  _scores: {}, // {id: 0..5}
+  _result: false,
 
   tracks: [
     {
       id: "hero",
-      name: "Герой",
-      icon: "⚔️",
+      n: "Герой",
+      i: "⚔️",
       c: "#ff6b6b",
-      q: [
-        "Действуем решительно",
-        "Видим себя победителями",
-        "Берёмся за сложные задачи",
-        "Клиенты чувствуют силу с нами",
-      ],
+      q: "Действовать решительно, побеждать, вести за собой",
     },
     {
       id: "ruler",
-      name: "Правитель",
-      icon: "👑",
+      n: "Правитель",
+      i: "👑",
       c: "#ffd700",
-      q: [
-        "Устанавливаем стандарты",
-        "Порядок — основа успеха",
-        "Клиенты доверяют авторитету",
-        "Контроль качества — приоритет",
-      ],
+      q: "Контролировать, управлять, устанавливать стандарты",
     },
     {
       id: "magician",
-      name: "Маг",
-      icon: "✨",
+      n: "Маг",
+      i: "✨",
       c: "#b8a0ff",
-      q: [
-        "Трансформируем реальность",
-        "Инновации — суперсила",
-        "Чудеса случаются",
-        "Клиенты приходят за преображением",
-      ],
+      q: "Трансформировать, удивлять, создавать чудеса",
     },
     {
       id: "caregiver",
-      name: "Заботливый",
-      icon: "🤲",
+      n: "Заботливый",
+      i: "🤲",
       c: "#4aff9e",
-      q: [
-        "Забота — главная ценность",
-        "Создаём безопасность",
-        "Поддерживаем друг друга",
-        "Клиенты защищены",
-      ],
+      q: "Заботиться, защищать, создавать безопасность",
     },
     {
       id: "lover",
-      name: "Эстет",
-      icon: "💋",
+      n: "Эстет",
+      i: "💋",
       c: "#ff79c6",
-      q: [
-        "Красота в каждой детали",
-        "Эмоциональная связь",
-        "Продукты дарят наслаждение",
-        "В наш бренд влюбляются",
-      ],
+      q: "Очаровывать, создавать красоту и близость",
     },
     {
       id: "jester",
-      name: "Шут",
-      icon: "🎉",
+      n: "Шут",
+      i: "🎉",
       c: "#ffb86c",
-      q: [
-        "Приносим радость",
-        "Юмор — часть культуры",
-        "Скука — враг",
-        "Клиенты улыбаются",
-      ],
+      q: "Радовать, развлекать, разрушать скуку",
     },
     {
       id: "everyman",
-      name: "Свой",
-      icon: "🤝",
+      n: "Свой",
+      i: "🤝",
       c: "#8899aa",
-      q: [
-        "Честны без прикрас",
-        "Клиент — часть сообщества",
-        "Простота и доступность",
-        "Не строим элиту",
-      ],
+      q: "Быть честным, простым, своим для всех",
     },
     {
       id: "explorer",
-      name: "Исследователь",
-      icon: "🧭",
+      n: "Исследователь",
+      i: "🧭",
       c: "#45e6d0",
-      q: [
-        "Открываем горизонты",
-        "Свобода ведёт нас",
-        "Рутина противопоказана",
-        "Клиенты в пути с нами",
-      ],
+      q: "Открывать новое, искать свободу и приключения",
     },
     {
       id: "rebel",
-      name: "Бунтарь",
-      icon: "🔥",
+      n: "Бунтарь",
+      i: "🔥",
       c: "#ff5555",
-      q: [
-        "Правила чтобы нарушать",
-        "Бросаем вызов статус-кво",
-        "Смелость — инструмент",
-        "Клиенты чувствуют свободу",
-      ],
+      q: "Ломать правила, бросать вызов, менять мир",
     },
     {
       id: "creator",
-      name: "Творец",
-      icon: "🎨",
+      n: "Творец",
+      i: "🎨",
       c: "#9d7cd8",
-      q: [
-        "Творчество в основе",
-        "Создаём уникальное",
-        "Самовыражение — ключ",
-        "Клиенты вдохновляются",
-      ],
+      q: "Создавать, выражать себя, воплощать идеи",
     },
     {
       id: "sage",
-      name: "Мудрец",
-      icon: "📚",
+      n: "Мудрец",
+      i: "📚",
       c: "#7ec8e3",
-      q: [
-        "Знания — валюта",
-        "Исследуем и понимаем",
-        "Истина важнее мнений",
-        "Клиенты за мудростью",
-      ],
+      q: "Исследовать, понимать, находить истину",
     },
     {
       id: "innocent",
-      name: "Невинный",
-      icon: "🌿",
+      n: "Невинный",
+      i: "🌿",
       c: "#a8e6cf",
-      q: [
-        "Чистота — философия",
-        "Верим в лучшее",
-        "Оптимизм ведёт",
-        "Клиенты чувствуют свет",
-      ],
+      q: "Дарить надежду, чистоту и простую радость",
     },
   ],
 
   init: function () {
     this._scores = {};
-    this._cards = [];
-    for (var i = 0; i < this.tracks.length; i++) {
-      this._scores[this.tracks[i].id] = [0, 0, 0, 0];
-      for (var q = 0; q < 4; q++) this._cards.push({ t: i, q: q });
-    }
-    this._step = 0;
-    document.addEventListener("keydown", this._onKey.bind(this));
+    for (var i = 0; i < this.tracks.length; i++)
+      this._scores[this.tracks[i].id] = 0;
+    this._result = false;
     this._render();
-  },
-
-  _onKey: function (e) {
-    if (this._step < 1 || this._step > 48) return;
-    var k = parseInt(e.key);
-    if (k >= 1 && k <= 5) {
-      var c = this._cards[this._step - 1];
-      this._scores[this.tracks[c.t].id][c.q] = k;
-      this._updateVector();
-      if (this._autoAdvance) {
-        this._step++;
-        this._render();
-      } else this._render();
-    }
-    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-      e.preventDefault();
-      if (e.key === "ArrowRight" && this._step < 48) {
-        this._step++;
-        this._render();
-      }
-      if (e.key === "ArrowLeft" && this._step > 1) {
-        this._step--;
-        this._render();
-      }
-    }
   },
 
   _render: function () {
     var left = document.getElementById("panel-controllers");
     if (!left) return;
-    if (this._step === 0) this._renderIntro(left);
-    else if (this._step <= 48) this._renderCard(left);
-    else this._renderResult(left);
+    if (this._result) return this._renderResult(left);
+    this._renderGrid(left);
   },
 
-  _renderIntro: function (left) {
-    left.innerHTML =
-      "<div style='text-align:center;padding:40px 20px;display:flex;flex-direction:column;height:100%;justify-content:center;'>" +
-      "<div style='font-size:8px;letter-spacing:0.3em;color:var(--accent-blue);margin-bottom:12px;'>ARCHEYPEOS COSMIC</div>" +
-      "<div style='font-size:48px;margin-bottom:8px;filter:drop-shadow(0 0 20px var(--accent-blue));'>◈</div>" +
-      "<h2 style='font-weight:200;font-size:24px;color:var(--text-primary);margin:0 0 4px;'>Brand DNA Scan</h2>" +
-      "<p style='font-size:12px;color:var(--text-secondary);margin:0 0 10px;'>48 карточек • Слайдер • Клавиши 1-5</p>" +
-      "<div style='background:rgba(110,231,255,0.04);border:1px solid rgba(110,231,255,0.12);border-radius:12px;padding:14px;margin-bottom:14px;text-align:left;'>" +
-      "<p style='font-size:11px;color:var(--text-secondary);margin:0 0 4px;'><span style='color:var(--accent-blue);'>◄►</span> Стрелки — навигация</p>" +
-      "<p style='font-size:11px;color:var(--text-secondary);margin:0 0 4px;'><span style='color:var(--accent-blue);'>1-5</span> Клавиши — мгновенная оценка</p>" +
-      "<p style='font-size:11px;color:var(--text-secondary);margin:0;'><span style='color:var(--accent-blue);'>Слайдер</span> — перетащите для оценки</p>" +
-      "</div>" +
-      "<button id='start-btn' style='width:100%;padding:16px;background:transparent;color:var(--accent-blue);border:1px solid var(--accent-blue);border-radius:10px;font-family:inherit;font-size:15px;font-weight:400;cursor:pointer;letter-spacing:0.05em;'>INITIATE SCAN</button>" +
-      "</div>";
-    document.getElementById("start-btn").onclick = function () {
-      HolographicQuest._step = 1;
-      HolographicQuest._render();
-    };
-  },
+  // ==================== GRID OF 12 CARDS ====================
+  _renderGrid: function (left) {
+    var rated = 0;
+    for (var i = 0; i < this.tracks.length; i++)
+      if (this._scores[this.tracks[i].id] > 0) rated++;
 
-  _renderCard: function (left) {
-    var card = this._cards[this._step - 1];
-    var track = this.tracks[card.t];
-    var qText = track.q[card.q];
-    var score = this._scores[track.id][card.q];
-    var progress = Math.round(((this._step - 1) / 48) * 100);
-    var c = track.c;
-
-    left.innerHTML =
-      "<div style='display:flex;flex-direction:column;height:100%;padding:16px 20px;'>" +
-      // Progress
-      "<div style='display:flex;align-items:center;gap:8px;margin-bottom:4px;'>" +
-      "<span style='font-size:9px;letter-spacing:0.15em;color:var(--accent-blue);'>CARD " +
-      this._step +
-      "/48</span>" +
+    var html =
+      "<div style='padding:14px;'>" +
+      "<div style='display:flex;align-items:center;gap:8px;margin-bottom:10px;'>" +
+      "<span style='font-size:9px;letter-spacing:0.15em;color:var(--accent-blue);'>ARCHEYPEOS</span>" +
       "<div style='flex:1;height:1px;background:rgba(110,231,255,0.12);'><div style='height:100%;width:" +
-      progress +
+      (rated / 12) * 100 +
       "%;background:var(--accent-blue);box-shadow:0 0 4px var(--accent-blue);'></div></div>" +
       "<span style='font-size:9px;color:var(--text-tertiary);'>" +
-      progress +
-      "%</span>" +
+      rated +
+      "/12</span>" +
       "</div>" +
-      // Archetype
-      "<div style='display:flex;align-items:center;gap:6px;margin-bottom:12px;'>" +
-      "<span style='font-size:18px;'>" +
-      track.icon +
-      "</span>" +
-      "<span style='font-size:10px;color:" +
-      c +
-      ";letter-spacing:0.08em;'>" +
-      track.name.toUpperCase() +
-      "</span>" +
-      "<label style='margin-left:auto;font-size:9px;color:var(--text-tertiary);display:flex;align-items:center;gap:4px;cursor:pointer;'>" +
-      "<input type='checkbox' id='auto-toggle' " +
-      (this._autoAdvance ? "checked" : "") +
-      " style='accent-color:var(--accent-blue);'> auto</label>" +
+      "<p style='font-size:13px;color:var(--text-secondary);margin:0 0 4px;'>Оцените каждый архетип по шкале от 1 до 5:</p>" +
+      "<p style='font-size:10px;color:var(--text-tertiary);margin:0 0 10px;'>1 — совсем не про вас • 5 — это точно вы</p>" +
+      "<div style='display:flex;flex-direction:column;gap:4px;'>";
+
+    for (var i = 0; i < this.tracks.length; i++) {
+      var t = this.tracks[i];
+      var s = this._scores[t.id];
+      html +=
+        "<div style='display:flex;align-items:center;gap:6px;padding:6px 8px;background:" +
+        (s > 0 ? t.c + "10" : "transparent") +
+        ";border:1px solid " +
+        (s > 0 ? t.c + "22" : "rgba(110,231,255,0.06)") +
+        ";border-radius:8px;transition:all 0.2s;'>" +
+        "<span style='font-size:18px;width:26px;text-align:center;'>" +
+        t.i +
+        "</span>" +
+        "<span style='flex:1;font-size:12px;font-weight:" +
+        (s > 0 ? "500" : "400") +
+        ";color:" +
+        (s > 0 ? t.c : "var(--text-primary)") +
+        ";'>" +
+        t.n +
+        "</span>" +
+        "<span style='font-size:9px;color:var(--text-tertiary);max-width:140px;text-align:right;line-height:1.2;display:none;'>" +
+        t.q +
+        "</span>" +
+        "<div style='display:flex;gap:3px;'>";
+      for (var r = 1; r <= 5; r++) {
+        html +=
+          "<span class='r' data-id='" +
+          t.id +
+          "' data-v='" +
+          r +
+          "' style='width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;font-weight:" +
+          (s === r ? "600" : "400") +
+          ";border:1px solid " +
+          (s === r ? t.c : "rgba(110,231,255,0.15)") +
+          ";background:" +
+          (s === r ? t.c : "transparent") +
+          ";color:" +
+          (s === r ? "#020510" : "var(--text-tertiary)") +
+          ";transition:all 0.1s;'>" +
+          r +
+          "</span>";
+      }
+      html += "</div></div>";
+    }
+    html +=
       "</div>" +
-      // Question
-      "<div style='flex:1;display:flex;align-items:center;justify-content:center;text-align:center;'>" +
-      "<p style='font-size:22px;color:var(--text-primary);line-height:1.4;font-weight:300;max-width:320px;'>" +
-      qText +
-      "</p>" +
-      "</div>" +
-      // Slider area
-      "<div style='margin-bottom:8px;'>" +
-      "<div style='display:flex;justify-content:space-between;font-size:9px;color:var(--text-tertiary);margin-bottom:4px;padding:0 4px;'>" +
-      "<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>" +
-      "</div>" +
-      "<input type='range' id='rate-slider' min='0' max='5' value='" +
-      score +
-      "' step='1' " +
-      "style='width:100%;height:6px;-webkit-appearance:none;appearance:none;background:rgba(110,231,255,0.12);border-radius:3px;outline:none;cursor:pointer;accent-color:" +
-      c +
-      ";'>" +
-      "</div>" +
-      // Score display
-      "<div style='text-align:center;margin-bottom:4px;'>" +
-      "<span style='font-size:" +
-      (score > 0 ? "24px" : "10px") +
+      "<button id='finish-btn' style='width:100%;padding:14px;margin-top:8px;background:" +
+      (rated >= 4 ? "var(--accent-blue)" : "rgba(110,231,255,0.08)") +
       ";color:" +
-      (score > 0 ? c : "var(--text-tertiary)") +
-      ";font-weight:" +
-      (score > 0 ? "300" : "400") +
-      ";letter-spacing:0.05em;'>" +
-      (score > 0 ? score : "DRAG TO RATE") +
-      "</span>" +
-      (score > 0
-        ? "<span style='font-size:14px;color:var(--text-tertiary);'>/5</span>"
-        : "") +
-      "</div>" +
-      // Nav
-      "<div style='display:flex;gap:8px;'>" +
-      (this._step > 1
-        ? "<button id='prev-btn' style='flex:1;padding:10px;background:transparent;border:1px solid rgba(110,231,255,0.15);border-radius:8px;color:var(--text-secondary);font-family:inherit;font-size:12px;cursor:pointer;'>←</button>"
-        : "") +
-      "<button id='next-btn' style='flex:1;padding:10px;background:transparent;border:1px solid var(--accent-blue);border-radius:8px;color:var(--accent-blue);font-family:inherit;font-size:12px;cursor:pointer;'>" +
-      (this._step === 48 ? "RESULTS →" : "NEXT →") +
+      (rated >= 4 ? "#020510" : "var(--text-tertiary)") +
+      ";border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:500;cursor:" +
+      (rated >= 4 ? "pointer" : "default") +
+      ";'>" +
+      (rated >= 4 ? "ПОКАЗАТЬ РЕЗУЛЬТАТ" : "Оцените хотя бы 4 архетипа") +
       "</button>" +
-      "</div>" +
       "</div>";
 
+    left.innerHTML = html;
+
     var self = this;
-    var slider = document.getElementById("rate-slider");
-    if (slider) {
-      // Style the slider track with gradient
-      slider.style.background =
-        "linear-gradient(90deg, rgba(110,231,255,0.08), " + c + ")";
-      slider.oninput = function () {
-        var val = parseInt(this.value);
-        if (val === 0) return; // skip 0 = not rated
-        self._scores[track.id][card.q] = val;
+    var dots = left.querySelectorAll(".r");
+    for (var d = 0; d < dots.length; d++) {
+      dots[d].onclick = function () {
+        var id = this.getAttribute("data-id");
+        var v = parseInt(this.getAttribute("data-v"));
+        if (self._scores[id] === v) {
+          self._scores[id] = 0;
+        } else {
+          self._scores[id] = v;
+        }
         self._updateVector();
-        if (self._autoAdvance && self._step < 48) {
-          self._step++;
-          self._render();
-        } else self._render();
-      };
-    }
-    var auto = document.getElementById("auto-toggle");
-    if (auto)
-      auto.onchange = function () {
-        self._autoAdvance = this.checked;
-      };
-    var prev = document.getElementById("prev-btn");
-    if (prev)
-      prev.onclick = function () {
-        self._step--;
         self._render();
       };
-    var next = document.getElementById("next-btn");
-    if (next)
-      next.onclick = function () {
-        if (self._step >= 48) {
-          self._step = 49;
-          self._render();
-        } else {
-          self._step++;
-          self._render();
-        }
+    }
+    var fb = document.getElementById("finish-btn");
+    if (fb && rated >= 4)
+      fb.onclick = function () {
+        self._result = true;
+        self._render();
       };
   },
 
+  // ==================== RESULT ====================
   _renderResult: function (left) {
     this._updateVector();
     var best = this._getBest();
@@ -363,7 +231,7 @@ var HolographicQuest = {
         "</span>" +
         "<span style='font-size:10px;color:var(--text-tertiary);'>" +
         top3[i].sum +
-        "/20</span></div>";
+        "/5</span></div>";
 
     left.innerHTML =
       "<div style='padding:20px;'>" +
@@ -388,7 +256,7 @@ var HolographicQuest = {
       "</div>" +
       "<div style='margin-top:10px;font-size:10px;color:var(--accent-blue);'>" +
       totalAns +
-      "/48 answered</div>" +
+      "/12 rated</div>" +
       "</div>" +
       "<div style='font-size:8px;letter-spacing:0.15em;color:var(--text-tertiary);margin-bottom:4px;'>TOP-3</div>" +
       "<div style='background:rgba(110,231,255,0.03);border:1px solid rgba(110,231,255,0.08);border-radius:10px;padding:4px 12px;margin-bottom:14px;'>" +
@@ -411,10 +279,8 @@ var HolographicQuest = {
 
   _countAll: function () {
     var c = 0;
-    for (var i = 0; i < this.tracks.length; i++) {
-      var s = this._scores[this.tracks[i].id];
-      for (var j = 0; j < 4; j++) if (s[j] > 0) c++;
-    }
+    for (var i = 0; i < this.tracks.length; i++)
+      if (this._scores[this.tracks[i].id] > 0) c++;
     return c;
   },
   _getBest: function () {
@@ -422,11 +288,9 @@ var HolographicQuest = {
       bs = -1;
     for (var i = 0; i < this.tracks.length; i++) {
       var id = this.tracks[i].id,
-        s = this._scores[id],
-        sum = 0;
-      for (var j = 0; j < 4; j++) sum += s[j];
-      if (sum > bs) {
-        bs = sum;
+        s = this._scores[id];
+      if (s > bs) {
+        bs = s;
         bi = id;
       }
     }
@@ -441,20 +305,15 @@ var HolographicQuest = {
         }
     for (var t = 0; t < this.tracks.length; t++)
       if (this.tracks[t].id === bi) {
-        icon = this.tracks[t].icon;
+        icon = this.tracks[t].i;
         break;
       }
     return { primary: p, icon: icon };
   },
   _getTop3: function () {
     var r = [];
-    for (var i = 0; i < this.tracks.length; i++) {
-      var id = this.tracks[i].id,
-        s = this._scores[id],
-        sum = 0;
-      for (var j = 0; j < 4; j++) sum += s[j];
-      r.push({ id: id, sum: sum });
-    }
+    for (var i = 0; i < this.tracks.length; i++)
+      r.push({ id: this.tracks[i].id, sum: this._scores[this.tracks[i].id] });
     r.sort(function (a, b) {
       return b.sum - a.sum;
     });
@@ -490,10 +349,8 @@ var HolographicQuest = {
     };
     for (var i = 0; i < this.tracks.length; i++) {
       var id = this.tracks[i].id,
-        s = this._scores[id],
-        sum = 0;
-      for (var j = 0; j < 4; j++) sum += s[j];
-      var inf = (sum / 20) * 30;
+        s = this._scores[id];
+      var inf = (s / 5) * 30;
       if (w[id]) {
         v.control += w[id].c * inf * 0.3;
         v.energy += w[id].e * inf * 0.3;
@@ -520,13 +377,13 @@ var HolographicQuest = {
     var html =
       "<!doctype html><html lang=ru><head><meta charset=UTF-8><title>Brand Passport — " +
       p.nameRu +
-      "</title><style>body{font-family:Inter,Manrope,sans-serif;background:#020510;color:#e0f0ff;max-width:640px;margin:0 auto;padding:48px 24px;}h1{font-weight:200;font-size:32px;color:" +
+      "</title><style>body{font-family:Inter,sans-serif;background:#020510;color:#e0f0ff;max-width:640px;margin:0 auto;padding:48px 24px;}h1{font-weight:200;font-size:32px;color:" +
       c +
       ";}h2{font-weight:300;font-size:16px;color:#8090b0;}h3{font-weight:500;font-size:10px;letter-spacing:0.15em;color:#506080;margin:32px 0 10px;}.badge{display:inline-block;padding:6px 16px;border:1px solid " +
       c +
       "44;border-radius:20px;font-size:9px;color:" +
       c +
-      ";letter-spacing:0.15em;margin-bottom:16px;}.card{background:rgba(110,231,255,0.03);border:1px solid rgba(110,231,255,0.08);border-radius:14px;padding:20px;margin-bottom:14px;}p{font-size:14px;color:#8090b0;line-height:1.8;}.footer{font-size:10px;color:#506080;margin-top:40px;text-align:center;padding-top:20px;border-top:1px solid rgba(110,231,255,0.08);}a{color:" +
+      ";letter-spacing:0.15em;}.card{background:rgba(110,231,255,0.03);border:1px solid rgba(110,231,255,0.08);border-radius:14px;padding:20px;margin-bottom:14px;}p{font-size:14px;color:#8090b0;line-height:1.8;}.footer{font-size:10px;color:#506080;margin-top:40px;text-align:center;padding-top:20px;border-top:1px solid rgba(110,231,255,0.08);}a{color:" +
       c +
       ";}</style></head><body><div class=badge>BRAND DNA PASSPORT</div><h1>" +
       p.nameRu +
@@ -534,7 +391,7 @@ var HolographicQuest = {
       (p.behavior_model || "") +
       "</h2><p style=font-size:12px;color:#506080;>" +
       totalAns +
-      "/48 answered</p><h3>DESIGN TOKENS</h3><div class=card><p><strong>Typography:</strong> " +
+      "/12 rated</p><h3>DESIGN TOKENS</h3><div class=card><p><strong>Typography:</strong> " +
       (p.ui_rules ? p.ui_rules.typography : "") +
       "</p><p><strong>Structure:</strong> " +
       (p.ux_rules ? p.ux_rules.structure : "") +
@@ -551,7 +408,7 @@ var HolographicQuest = {
         top3[i].nameRu +
         " (" +
         top3[i].sum +
-        "/20)</p>";
+        "/5)</p>";
     html +=
       "</div><div class=footer>ArchetypeOS · Elena Charlesworth<br><a href=https://t.me/Elenach_com>@Elenach_com</a> · <a href=https://elenach.com>elenach.com</a></div></body></html>";
     var b = new Blob([html], { type: "text/html" });
