@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
     Tracker.init();
     Interpreter.init();
 
+    // ---- Init Quiz Engine ----
+    if (typeof QuizEngine !== "undefined") {
+      QuizEngine.init();
+    }
+
     // ---- Register dashboard panels as attention zones ----
     Tracker.registerSections([
       {
@@ -44,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // ---- EXECUTE THE PIVOT ----
       Pivot.execute(archetype.id);
     }); */
-    });
 
     // ---- Every tick: update signal bars ----
     Interpreter.onUpdate((_vector, _confidence) => {
