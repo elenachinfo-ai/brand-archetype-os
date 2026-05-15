@@ -852,7 +852,32 @@ body {
     }
 }
 
+
+
+/* ==================== MOBILE RESPONSIVE ==================== */
 @media (max-width: 860px) {
+    /* Header */
+    .hud-header {
+        padding: 0 12px;
+    }
+    .hud-logo-text {
+        font-size: 12px;
+    }
+    .hud-status {
+        display: none;
+    }
+    .quiz-launch-btn-header span:last-child {
+        display: none;
+    }
+    .quiz-launch-btn-header {
+        padding: 5px 8px;
+        margin-right: 4px;
+    }
+    .hud-version {
+        display: none;
+    }
+
+    /* Workspace */
     .workspace {
         grid-template-areas:
             "controllers"
@@ -861,24 +886,8 @@ body {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
     }
-    .panel-field {
-        border-left: none;
-        border-top: 1px solid var(--border-mid);
-        min-height: 300px;
-    }
-    .panel-output {
-        width: 100%;
-        min-width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--border-subtle);
-        flex-direction: row;
-        align-items: center;
-        padding: 10px 20px;
-        gap: 16px;
-    }
-    .workspace {
-        flex-direction: column;
-    }
+
+    /* Controllers */
     .panel-controllers {
         width: 100%;
         min-width: 100%;
@@ -920,6 +929,8 @@ body {
         width: 18px;
         height: 18px;
     }
+
+    /* Output */
     .panel-output {
         width: 100%;
         min-width: 100%;
@@ -947,9 +958,140 @@ body {
     .output-actions {
         width: 100%;
     }
+
+    /* Field */
     .panel-field {
+        border-left: none;
+        border-top: 1px solid var(--border-mid);
+        min-height: 250px;
         flex: 1;
+    }
+
+    /* Overlays */
+    .live-analytics {
+        display: none;
+    }
+
+    /* Result */
+    .result-codex {
+        grid-template-columns: 1fr;
+    }
+
+    /* Quiz */
+    .quiz-container {
+        padding: 12px;
+        gap: 10px;
+    }
+    .quiz-question {
+        font-size: 16px;
+    }
+    .quiz-option-btn {
+        padding: 12px 14px;
+    }
+    .quiz-likert-btn {
+        width: 48px;
+        padding: 8px 2px;
+    }
+    .quiz-likert-num {
+        font-size: 16px;
+    }
+    .quiz-result-card {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hud-header {
+        height: 40px;
+        padding: 0 10px;
+    }
+    .hud-logo-text {
+        display: none;
+    }
+    .hud-logo-icon {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+
+    .workspace {
+        grid-template-rows: auto auto 1fr;
+    }
+    .panel-controllers {
+        max-height: none;
+        padding: 8px;
+        gap: 6px;
+    }
+    .jog-dials {
+        gap: 6px;
+    }
+    .jog-dial-container {
+        width: 60px;
+    }
+    .jog-dial-track {
+        width: 48px;
+        height: 48px;
+    }
+    .jog-ring-svg {
+        width: 48px;
+        height: 48px;
+    }
+    .jog-label {
+        font-size: 9px;
+    }
+    .jog-value {
+        font-size: 14px;
+    }
+    .jog-label-ru {
+        font-size: 8px;
+    }
+
+    .panel-output {
+        flex-direction: column;
+        max-height: none;
+        gap: 6px;
+        padding: 8px;
+    }
+    .output-card {
+        min-width: 0;
+        width: 100%;
+        padding: 8px 10px;
+    }
+    .output-card-name {
+        font-size: 12px;
+    }
+
+    .panel-field {
         min-height: 200px;
+    }
+
+    .result-modal {
+        padding: 24px 16px 20px;
+        width: 96vw;
+    }
+    .result-name {
+        font-size: 24px;
+    }
+    .result-codex {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-container {
+        padding: 8px;
+    }
+    .quiz-question {
+        font-size: 15px;
+    }
+    .quiz-option-btn {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    .quiz-likert-btn {
+        width: 40px;
+        padding: 6px 2px;
+    }
+    .quiz-likert-num {
+        font-size: 14px;
     }
 }
 
@@ -1095,34 +1237,7 @@ body {
 }
 
 /* Hide on mobile */
-@media (max-width: 860px) {
-    .workspace {
-        grid-template-areas:
-            "controllers"
-            "output"
-            "field";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
-    }
-    .panel-field {
-        border-left: none;
-        border-top: 1px solid var(--border-mid);
-        min-height: 300px;
-    }
-    .panel-output {
-        width: 100%;
-        min-width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--border-subtle);
-        flex-direction: row;
-        align-items: center;
-        padding: 10px 20px;
-        gap: 16px;
-    }
-    .live-analytics {
-        display: none;
-    }
-}
+
 
 /* ==================== PIVOT SCAN OVERLAY ==================== */
 .pivot-scan-overlay {
@@ -1755,34 +1870,7 @@ body {
     word-break: break-all;
 }
 
-@media (max-width: 860px) {
-    .workspace {
-        grid-template-areas:
-            "controllers"
-            "output"
-            "field";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
-    }
-    .panel-field {
-        border-left: none;
-        border-top: 1px solid var(--border-mid);
-        min-height: 300px;
-    }
-    .panel-output {
-        width: 100%;
-        min-width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--border-subtle);
-        flex-direction: row;
-        align-items: center;
-        padding: 10px 20px;
-        gap: 16px;
-    }
-    .result-codex {
-        grid-template-columns: 1fr;
-    }
-}
+
 
 /* ==================== QUEST START SCREEN ==================== */
 .quest-start-overlay {
@@ -2698,28 +2786,7 @@ body {
 }
 
 /* ==================== QUIZ RESPONSIVE ==================== */
-@media (max-width: 860px) {
-    .quiz-container {
-        padding: 12px;
-        gap: 10px;
-    }
-    .quiz-question {
-        font-size: 16px;
-    }
-    .quiz-option-btn {
-        padding: 12px 14px;
-    }
-    .quiz-likert-btn {
-        width: 48px;
-        padding: 8px 2px;
-    }
-    .quiz-likert-num {
-        font-size: 16px;
-    }
-    .quiz-result-card {
-        gap: 12px;
-    }
-}
+
 
 /* ---- Quiz launch button in HUD header ---- */
 .quiz-launch-btn-header {
