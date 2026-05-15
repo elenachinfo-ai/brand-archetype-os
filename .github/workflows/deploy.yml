@@ -19,6 +19,7 @@ jobs:
           server-dir: ./
           local-dir: ./
           dangerous-clean-slate: true
+          state-name: fresh-deploy-state
           exclude: |
             **/.git/**
             **/.gitattributes
